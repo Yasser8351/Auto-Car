@@ -1,5 +1,8 @@
 import 'package:auto_car/config/app_config.dart';
+import 'package:auto_car/view/about_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'home.dart';
 
 class More extends StatelessWidget {
   const More({Key? key}) : super(key: key);
@@ -15,14 +18,30 @@ class More extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            buildCardItem(AppConfig.callUs, Icons.support_agent),
+            const SizedBox(height: 50),
+            buildCardItem(context, AppConfig.callUs, Icons.support_agent,
+                () => Navigator.of(context).pushNamed(Home.routeName)),
             buildDivider(),
-            buildCardItem(AppConfig.aboutUs, Icons.app_settings_alt),
+            buildCardItem(context, AppConfig.aboutApp, Icons.app_settings_alt,
+                () => Navigator.of(context).pushNamed(AboutScreen.routeName)),
             buildDivider(),
-            buildCardItem(AppConfig.faq, Icons.info_outline),
+            buildCardItem(context, AppConfig.versionApp, Icons.info_outline,
+                () => Navigator.of(context).pushNamed(Home.routeName)),
+            buildDivider(),
+            buildCardItem(context, AppConfig.shareApp, Icons.share_outlined,
+                () => Navigator.of(context).pushNamed(Home.routeName)),
             buildDivider(),
             buildCardItem(
-                AppConfig.termsAndConditions, Icons.contact_page_outlined),
+                context,
+                AppConfig.privacyPolicy,
+                Icons.verified_user_outlined,
+                () => Navigator.of(context).pushNamed(Home.routeName)),
+            buildDivider(),
+            buildCardItem(
+                context,
+                AppConfig.termsAndConditions,
+                Icons.contact_page_outlined,
+                () => Navigator.of(context).pushNamed(Home.routeName)),
             buildDivider(),
           ],
         ),
@@ -37,23 +56,27 @@ buildDivider() {
   );
 }
 
-buildCardItem(String title, IconData icons) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Icon(icons, size: 27, color: Colors.grey.shade600),
-        const SizedBox(width: 10),
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 20,
-            color: Color.fromARGB(255, 29, 29, 29),
+buildCardItem(
+    BuildContext context, String title, IconData icons, Function() onTap) {
+  return GestureDetector(
+    onTap: () => onTap(),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Icon(icons, size: 27, color: Colors.grey.shade600),
+          const SizedBox(width: 10),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 20,
+              color: Color.fromARGB(255, 29, 29, 29),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }
