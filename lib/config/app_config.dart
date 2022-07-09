@@ -21,6 +21,8 @@ class AppConfig {
 
   // Image Assets for All App
   static const logo = "assets/images/filter.png";
+  static const placeholder = "assets/images/placeholder.png";
+  static const imageCar = "assets/images/car.png";
   static const filter = "assets/images/filter.png"; //filter.svg
 
   // Text Style fpr All App
@@ -32,4 +34,6 @@ class AppConfig {
     fontSize: 18,
     color: Color(0xff7B838E),
   );
+  static const textTitleListCars =
+      TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold);
 }

@@ -1,7 +1,9 @@
 import 'package:auto_car/config/app_config.dart';
 import 'package:flutter/material.dart';
 
+import '../widget/card_with_image.dart';
 import '../widget/list_brand_widget.dart';
+import '../widget/list_cars_widget.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -9,19 +11,25 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xffF8F8F8),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          children: [
-            const SizedBox(height: 50),
-            buildTextTitleWidget(),
-            const SizedBox(height: 20),
-            buildSearchWidget(context),
-            const SizedBox(height: 40),
-            const ListBrandWidget(),
-          ],
+    final size = MediaQuery.of(context).size;
+    return SingleChildScrollView(
+      child: Container(
+        height: size.height,
+        color: const Color(0xffF8F8F8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              const SizedBox(height: 50),
+              buildTextTitleWidget(),
+              const SizedBox(height: 20),
+              buildSearchWidget(context),
+              const SizedBox(height: 40),
+              const ListBrandWidget(),
+              const SizedBox(height: 40),
+              const ListCarsWidget()
+            ],
+          ),
         ),
       ),
     );
@@ -73,15 +81,8 @@ buildSearchWidget(BuildContext context) {
         ),
       ),
       const SizedBox(width: 10),
-      Container(
-        height: 50,
-        width: 50,
-        decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Image.asset(AppConfig.filter),
-      ),
+      CardWithImage(
+          height: 50, width: 50, child: Image.asset(AppConfig.filter)),
     ],
   );
 }
