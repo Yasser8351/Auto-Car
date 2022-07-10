@@ -26,6 +26,11 @@ class AppConfig {
   static const logo = "assets/images/filter.png";
   static const placeholder = "assets/images/placeholder.png";
   static const imageCar = "assets/images/car.png";
+  static const imageCar2 = "assets/images/car2.jpeg";
+  static const imageCar3 = "assets/images/car3.jpeg";
+  static const imageCar4 = "assets/images/car4.jpeg";
+  static const imageCar5 = "assets/images/car5.jpeg";
+  static const imageCar6 = "assets/images/car6.jpeg";
   static const filter = "assets/images/filter.svg"; //filter.svg
   static const whatsapp = "assets/images/whatsapp.svg";
   static const tesla = "assets/images/tesla2.png";

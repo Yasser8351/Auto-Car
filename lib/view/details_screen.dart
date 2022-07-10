@@ -32,6 +32,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   List<ImageSliderCarModel> listImageSliderCar = [
     ImageSliderCarModel(AppConfig.imageCar),
+    ImageSliderCarModel(AppConfig.imageCar2),
+    ImageSliderCarModel(AppConfig.imageCar3),
+    ImageSliderCarModel(AppConfig.imageCar4),
+    ImageSliderCarModel(AppConfig.imageCar5),
+    ImageSliderCarModel(AppConfig.imageCar6),
   ];
 
   @override
