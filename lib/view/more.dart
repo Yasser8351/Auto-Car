@@ -2,6 +2,7 @@ import 'package:auto_car/config/app_config.dart';
 import 'package:auto_car/view/about_screen.dart';
 import 'package:auto_car/view/version_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'home.dart';
 
@@ -14,14 +15,14 @@ class More extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+        // margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
         elevation: 10,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 50),
-            buildCardItem(context, AppConfig.callUs, Icons.support_agent,
-                () => Navigator.of(context).pushNamed(Home.routeName)),
+            buildCardItem(
+                context, AppConfig.callUs, Icons.support_agent, () => {}),
             buildDivider(),
             buildCardItem(context, AppConfig.aboutApp, Icons.app_settings_alt,
                 () => Navigator.of(context).pushNamed(AboutScreen.routeName)),
@@ -30,7 +31,11 @@ class More extends StatelessWidget {
                 () => Navigator.of(context).pushNamed(VersionScreen.routeName)),
             buildDivider(),
             buildCardItem(context, AppConfig.shareApp, Icons.share_outlined,
-                () => Navigator.of(context).pushNamed(Home.routeName)),
+                () async {
+              await Share.share(AppConfig.shareDiscreption);
+            }),
+
+            // () async {await Share.share(AppConfig.shareDiscreption)};
             buildDivider(),
             buildCardItem(
                 context,

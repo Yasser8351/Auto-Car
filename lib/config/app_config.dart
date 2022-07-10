@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppConfig {
   // Text config for All the App
+  static const appName = "أوتوكارز";
   static const home = "Home";
   static const favert = "Favert";
   static const offers = "Offers";
@@ -19,9 +20,19 @@ class AppConfig {
   static const viewAll = "view All";
   static const brands = "Brands";
   static const bayNow = "Bay Now";
+  static const shareOffers = "احصل علي عرض السيارة الان";
+  static const shareDiscreption =
+      "حمل تطبيق اوتوكارز واحصل علي افضل عروض السيارات";
   static const specifications = "المواصفات";
+  static const aboutAppTitle = "ماهو تطبيق اوتوكارز؟";
+  static const howContactusTitle = "كيف يمكنني شراء السيارات؟";
+  static const howContactus =
+      "يمكنك التواصل معنا مباشرة عبر رقم الواتساب الموجود في كل اعلان , أو يمكنك التواصل مع فريق خدمة العملاء لدينا على الأرقام التالية: 010213311 ";
   static const carDetails =
       "تتميز العربية علي منظومة الدفع جر أمامي بسعة الموتور 1200 سي سي ، حصان ميكانيكي 87 ، أقصي سرعة لها 161 ، التسارع 13.7، السرعات 4 سرعات ، نوع الناقل أوتوماتيك ، الوقود 92 ، لتر / 100كيلو متر 5.4 ، تأتي السيارة بثلاث خيارات للمحرك أربع أسطوانات مع الكفاءة في استهلاك الوقود يتصل كل منهما";
+
+  static const aputAppDiscreption =
+      "اوتوكارز هو سوق الكتروني للسيارات يقوم الزوار من خلاله بشراء السيارات الجديدة والمستعملة وبسهولة تامه. كما يقوم التطبيق بعرض سيارات المعارض والافراد الجديدة والمستعملة القابلة للبيع نقدا وبالتقسيط والتنازل في جميع انحاء الامارات العربية المتحدة .\n كما أصبح بإمكانك تصفح الموقع عبر تطبيقات (الآيفون) و (الأندرويد)";
 
   // Image Assets for All App
   static const logo = "assets/images/filter.png";

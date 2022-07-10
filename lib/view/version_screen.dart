@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_car/config/app_config.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +30,6 @@ class _VersionScreenState extends State<VersionScreen> {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pop();
-        log("message");
       },
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -46,18 +43,18 @@ class _VersionScreenState extends State<VersionScreen> {
                   // revire.openStoreListing();
                 },
                 child: Image.asset(
-                  AppConfig.logo,
-                  height: 200,
+                  AppConfig.nissan,
+                  height: 150,
+                  color: Colors.white,
                 ),
               ),
+              const SizedBox(height: 40),
               Text(
                 'الاصدار  $version ',
                 style:
                     const TextStyle(fontFamily: 'Changa', color: Colors.white),
               ),
-              const SizedBox(
-                height: 5,
-              ),
+              const SizedBox(height: 5),
               const Text(
                 '© 2022',
                 style: TextStyle(

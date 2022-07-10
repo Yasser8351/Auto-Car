@@ -3,6 +3,7 @@ import 'package:auto_car/widget/full_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../config/app_config.dart';
 import '../model/image_slider_car_model.dart';
@@ -115,8 +116,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               color: Colors.black,
                             ),
                             colors: Colors.white,
-                            onTap: () {
+                            onTap: () async {
                               //share this offers
+                              await Share.share(AppConfig.shareOffers);
                             },
                           ),
                         ],
