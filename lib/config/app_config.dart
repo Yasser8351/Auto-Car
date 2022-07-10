@@ -18,6 +18,7 @@ class AppConfig {
   static const findCar = "find your car";
   static const viewAll = "view All";
   static const brands = "Brands";
+  static const bayNow = "Bay Now";
   static const specifications = "المواصفات";
   static const carDetails =
       "تتميز العربية علي منظومة الدفع جر أمامي بسعة الموتور 1200 سي سي ، حصان ميكانيكي 87 ، أقصي سرعة لها 161 ، التسارع 13.7، السرعات 4 سرعات ، نوع الناقل أوتوماتيك ، الوقود 92 ، لتر / 100كيلو متر 5.4 ، تأتي السيارة بثلاث خيارات للمحرك أربع أسطوانات مع الكفاءة في استهلاك الوقود يتصل كل منهما";

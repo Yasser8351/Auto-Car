@@ -1,3 +1,4 @@
+import 'package:auto_car/widget/button_confirm_custom.dart';
 import 'package:auto_car/widget/full_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -52,26 +53,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
               "السعر 12000 ",
               style: AppConfig.textOverview,
             ),
-            // Container(
-            //   decoration: const BoxDecoration(
-            //     color: Color(0xffDEDEDE),
-            //     borderRadius: BorderRadius.all(
-            //       Radius.circular(50),
-            //     ),
-            //   ),
             ElevatedButton(
                 onPressed: () {},
                 child: Row(
                   children: [
-                    const Text("Bay Now"),
+                    ButtonConfirmCustom(
+                        title: AppConfig.bayNow,
+                        color: Colors.black,
+                        onTap: () {}),
                     const SizedBox(width: 10),
                     SvgPicture.asset(
                       AppConfig.whatsapp,
                       height: 20,
                       width: 20,
-                      // color: Colors.white,
                     ),
-                    //  Image.asset(AppConfig.whatsapp),
                   ],
                 )),
           ],
@@ -85,7 +80,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
             children: [
               Container(
                 decoration: const BoxDecoration(
-                  color: Color(0xffDEDEDE),
+                  color: Color.fromARGB(151, 241, 241, 241),
+                  // color: Color.fromARGB(75, 241, 241, 241),
+                  // color: Color(0xffDEDEDE),
                   borderRadius: BorderRadius.all(
                     Radius.circular(40),
                   ),
@@ -131,18 +128,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           topLeft: Radius.circular(10),
                           topRight: Radius.circular(10)),
                       child: buildImageSlider(context, listImageSliderCar),
-                      // child: FadeInImage(
-                      //   placeholder: AssetImage(AppConfig.placeholder),
-                      //   image: AssetImage(AppConfig.imageCar),
-                      //   // image: NetworkImage(
-                      //   //   "https://www.nissanusa.com/content/dam/Nissan/us/homepage/hero/ariya/2023/2023-nissan-ariya-electric-crossover-suv.jpg",
-                      //   // ),
-                      //   width: double.infinity,
-                      //   height: 190,
-                      //   fit: BoxFit.contain,
-                      // ),
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 50),
                   ],
                 ),
               ),
@@ -239,46 +226,49 @@ buildListDetailsSpecifications(
 
 buildImageSlider(
     BuildContext context, List<ImageSliderCarModel> listImageSliderCar) {
-  return CarouselSlider(
-    items: listImageSliderCar
-        .map(
-          (e) => GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: ((context) => FullImage(e.imageUrl))));
-            },
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Stack(
-                children: [
-                  FadeInImage(
-                    placeholder: const AssetImage(AppConfig.placeholder),
-                    //  image:NetworkImage(e.linkEn.toString()),
-                    image: AssetImage(e.imageUrl.toString()),
-                    width: double.infinity,
-                    height: 200,
-                    fit: BoxFit.fill,
-                  )
-                ],
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    child: CarouselSlider(
+      items: listImageSliderCar
+          .map(
+            (e) => GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: ((context) => FullImage(e.imageUrl))));
+              },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Stack(
+                  children: [
+                    FadeInImage(
+                      placeholder: const AssetImage(AppConfig.placeholder),
+                      //  image:NetworkImage(e.linkEn.toString()),
+                      image: AssetImage(e.imageUrl.toString()),
+                      width: double.infinity,
+                      height: 200,
+                      fit: BoxFit.fill,
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        )
-        .toList(),
-    options: CarouselOptions(
-      height: 200,
-      aspectRatio: 16 / 9,
-      viewportFraction: 0.95,
-      initialPage: 0,
-      enableInfiniteScroll: true,
-      reverse: false,
-      autoPlay: true,
-      autoPlayInterval: const Duration(seconds: 2),
-      autoPlayAnimationDuration: const Duration(milliseconds: 800),
-      autoPlayCurve: Curves.fastOutSlowIn,
-      enlargeCenterPage: true,
-      scrollDirection: Axis.horizontal,
-      disableCenter: true,
+          )
+          .toList(),
+      options: CarouselOptions(
+        height: 200,
+        aspectRatio: 16 / 9,
+        viewportFraction: 0.95,
+        initialPage: 0,
+        enableInfiniteScroll: true,
+        reverse: false,
+        autoPlay: true,
+        autoPlayInterval: const Duration(seconds: 2),
+        autoPlayAnimationDuration: const Duration(milliseconds: 800),
+        autoPlayCurve: Curves.fastOutSlowIn,
+        enlargeCenterPage: true,
+        scrollDirection: Axis.horizontal,
+        disableCenter: true,
+      ),
     ),
   );
 }
