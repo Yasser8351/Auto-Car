@@ -6,6 +6,8 @@ import 'package:auto_car/view/tab_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'view/about_screen.dart';
+import 'view/details_screen.dart';
+import 'view/version_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -46,6 +48,8 @@ class MyApp extends StatelessWidget {
         Offers.routeName: (ctx) => const Offers(),
         More.routeName: (ctx) => const More(),
         AboutScreen.routeName: (ctx) => const AboutScreen(),
+        VersionScreen.routeName: (ctx) => const VersionScreen(),
+        DetailsScreen.routeName: (ctx) => const DetailsScreen(),
       },
     );
   }

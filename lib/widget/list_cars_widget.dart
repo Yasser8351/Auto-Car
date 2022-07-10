@@ -1,4 +1,5 @@
 import 'package:auto_car/config/app_config.dart';
+import 'package:auto_car/view/details_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'card_with_image.dart';
@@ -14,19 +15,22 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return SizedBox(
-      height: size.height / 2.2,
-      child: GridView.builder(
-        //physics: const NeverScrollableScrollPhysics(),
-        padding: const EdgeInsets.all(10.0),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 1 / 1.5,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10),
-        itemCount: 10,
-        itemBuilder: (ctx, index) => SingleChildScrollView(
-          child: Container(
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed(DetailsScreen.routeName);
+      },
+      child: SizedBox(
+        height: size.height / 2.2,
+        child: GridView.builder(
+          //physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(10.0),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 1 / 1.5,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10),
+          itemCount: 10,
+          itemBuilder: (ctx, index) => Container(
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.all(
@@ -63,7 +67,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 12),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5),
                   child: Row(
@@ -76,15 +80,15 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                           style: AppConfig.textTitle,
                         ),
                       ),
-                      GestureDetector(
+                      CardWithImage(
+                        height: 40,
+                        width: 40,
+                        child: const Icon(
+                          Icons.favorite_border,
+                          color: Colors.white,
+                        ),
+                        colors: Colors.black,
                         onTap: () {},
-                        child: const CardWithImage(
-                            height: 40,
-                            width: 40,
-                            child: Icon(
-                              Icons.favorite_border,
-                              color: Colors.white,
-                            )),
                       ),
 
                       // IconButton(
@@ -113,6 +117,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                     ],
                   ),
                 ),
+                //const SizedBox(height: 5),
               ],
             ),
           ),

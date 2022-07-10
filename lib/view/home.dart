@@ -1,5 +1,6 @@
 import 'package:auto_car/config/app_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../widget/card_with_image.dart';
 import '../widget/list_brand_widget.dart';
@@ -82,7 +83,19 @@ buildSearchWidget(BuildContext context) {
       ),
       const SizedBox(width: 10),
       CardWithImage(
-          height: 50, width: 50, child: Image.asset(AppConfig.filter)),
+        height: 50,
+        width: 50,
+        child: Center(
+          child: SvgPicture.asset(
+            AppConfig.filter,
+            height: 30,
+            width: 30,
+            color: Colors.white,
+          ),
+        ),
+        colors: Colors.black,
+        onTap: () {},
+      ),
     ],
   );
 }

@@ -1,5 +1,6 @@
 import 'package:auto_car/config/app_config.dart';
 import 'package:auto_car/view/about_screen.dart';
+import 'package:auto_car/view/version_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'home.dart';
@@ -26,7 +27,7 @@ class More extends StatelessWidget {
                 () => Navigator.of(context).pushNamed(AboutScreen.routeName)),
             buildDivider(),
             buildCardItem(context, AppConfig.versionApp, Icons.info_outline,
-                () => Navigator.of(context).pushNamed(Home.routeName)),
+                () => Navigator.of(context).pushNamed(VersionScreen.routeName)),
             buildDivider(),
             buildCardItem(context, AppConfig.shareApp, Icons.share_outlined,
                 () => Navigator.of(context).pushNamed(Home.routeName)),

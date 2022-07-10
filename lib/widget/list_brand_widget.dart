@@ -8,11 +8,11 @@ class ListBrandWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<BrandModel> listBrand = [
-      BrandModel("Mercedes", AppConfig.filter),
-      BrandModel("Audi", AppConfig.filter),
-      BrandModel("Tesla", AppConfig.filter),
-      BrandModel("Nissan", AppConfig.filter),
-      BrandModel("Ferrari", AppConfig.filter),
+      BrandModel("Mercedes", AppConfig.mercedes),
+      BrandModel("Audi", AppConfig.audi),
+      BrandModel("Tesla", AppConfig.tesla),
+      BrandModel("Nissan", AppConfig.nissan),
+      BrandModel("Ferrari", AppConfig.mercedes),
     ];
     return Column(
       children: [
@@ -50,18 +50,20 @@ class ListBrandWidget extends StatelessWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Image.asset(
-                        image,
-                        color: Colors.black,
-                        fit: BoxFit.cover,
-                        height: 60,
-                        width: 60,
+                      child: Center(
+                        child: Image.asset(
+                          image,
+                          color: Colors.black,
+                          fit: BoxFit.cover,
+                          height: 40,
+                          width: 40,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 10),
                     Text(
                       title,
-                      style: AppConfig.textViewAll,
+                      style: AppConfig.textSpecifications,
                     )
                   ],
                 ),

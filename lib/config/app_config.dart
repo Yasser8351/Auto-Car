@@ -18,12 +18,21 @@ class AppConfig {
   static const findCar = "find your car";
   static const viewAll = "view All";
   static const brands = "Brands";
+  static const specifications = "المواصفات";
+  static const carDetails =
+      "تتميز العربية علي منظومة الدفع جر أمامي بسعة الموتور 1200 سي سي ، حصان ميكانيكي 87 ، أقصي سرعة لها 161 ، التسارع 13.7، السرعات 4 سرعات ، نوع الناقل أوتوماتيك ، الوقود 92 ، لتر / 100كيلو متر 5.4 ، تأتي السيارة بثلاث خيارات للمحرك أربع أسطوانات مع الكفاءة في استهلاك الوقود يتصل كل منهما";
 
   // Image Assets for All App
   static const logo = "assets/images/filter.png";
   static const placeholder = "assets/images/placeholder.png";
   static const imageCar = "assets/images/car.png";
-  static const filter = "assets/images/filter.png"; //filter.svg
+  static const filter = "assets/images/filter.svg"; //filter.svg
+  static const whatsapp = "assets/images/whatsapp.svg";
+  static const tesla = "assets/images/tesla2.png";
+  static const ferrari = "assets/images/ferrari.png";
+  static const nissan = "assets/images/nissan.png";
+  static const mercedes = "assets/images/mercedes.png";
+  static const audi = "assets/images/audi.png";
 
   // Text Style fpr All App
   static const textTitle = TextStyle(
@@ -36,4 +45,14 @@ class AppConfig {
   );
   static const textTitleListCars =
       TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold);
+  static const textOverview = TextStyle(
+      color: Color(0xff262635), fontSize: 20, fontWeight: FontWeight.bold);
+  static const textDetails = TextStyle(
+      color: Color.fromARGB(255, 139, 139, 145),
+      fontSize: 17,
+      fontWeight: FontWeight.normal);
+  static const textSpecifications = TextStyle(
+    color: Color.fromARGB(255, 139, 139, 145),
+    fontSize: 16,
+  );
 }
