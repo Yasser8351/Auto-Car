@@ -4,7 +4,7 @@ import 'package:auto_car/view/version_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
-import 'home.dart';
+import 'terms_and_conditions_screen.dart';
 
 class More extends StatelessWidget {
   const More({Key? key}) : super(key: key);
@@ -41,13 +41,15 @@ class More extends StatelessWidget {
                 context,
                 AppConfig.privacyPolicy,
                 Icons.verified_user_outlined,
-                () => Navigator.of(context).pushNamed(Home.routeName)),
+                () => Navigator.of(context)
+                    .pushNamed(TermsAndConditions.routeName)),
             buildDivider(),
             buildCardItem(
                 context,
                 AppConfig.termsAndConditions,
                 Icons.contact_page_outlined,
-                () => Navigator.of(context).pushNamed(Home.routeName)),
+                () => Navigator.of(context)
+                    .pushNamed(TermsAndConditions.routeName)),
             buildDivider(),
           ],
         ),

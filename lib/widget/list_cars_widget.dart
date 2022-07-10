@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'card_with_image.dart';
 
 class ListCarsWidget extends StatefulWidget {
-  const ListCarsWidget({Key? key}) : super(key: key);
+  const ListCarsWidget({Key? key, required this.isOffers}) : super(key: key);
+
+  final bool isOffers;
 
   @override
   State<ListCarsWidget> createState() => _ListCarsWidgetState();
@@ -20,9 +22,15 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
         Navigator.of(context).pushNamed(DetailsScreen.routeName);
       },
       child: SizedBox(
-        height: size.height / 2.2,
+        // height: widget.isOffers ? size.height : size.height / 2.2,
+        height: widget.isOffers ? 1300 : 1183,
+        //height: 1300,
+
         child: GridView.builder(
-          //physics: const NeverScrollableScrollPhysics(),
+          // physics: widget.isOffers
+          //     ? const BouncingScrollPhysics()
+          //     : const NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           padding: const EdgeInsets.all(10.0),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
@@ -76,10 +84,11 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                       const Align(
                         alignment: Alignment.bottomLeft,
                         child: Text(
-                          "1500",
+                          "\$2100",
                           style: AppConfig.textTitle,
                         ),
                       ),
+
                       CardWithImage(
                         height: 40,
                         width: 40,
@@ -117,7 +126,19 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                     ],
                   ),
                 ),
-                //const SizedBox(height: 5),
+                widget.isOffers
+                    ? const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "\$2500",
+                            style: TextStyle(
+                                decoration: TextDecoration.lineThrough),
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),

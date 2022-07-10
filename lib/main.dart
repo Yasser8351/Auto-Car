@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'view/about_screen.dart';
 import 'view/details_screen.dart';
+import 'view/terms_and_conditions_screen.dart';
 import 'view/version_screen.dart';
 
 void main() {
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         AboutScreen.routeName: (ctx) => const AboutScreen(),
         VersionScreen.routeName: (ctx) => const VersionScreen(),
         DetailsScreen.routeName: (ctx) => const DetailsScreen(),
+        TermsAndConditions.routeName: (ctx) => const TermsAndConditions(),
       },
     );
   }
