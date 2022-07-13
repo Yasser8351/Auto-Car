@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           secondary: Color.fromARGB(255, 206, 3, 162),
           // secondary: const Color(0xffF8F8F8),
           onSecondary: Colors.white,
-          error: Colors.red,
+          error: Colors.grey,
           onError: Color.fromARGB(255, 250, 150, 0),
           surface: Color.fromARGB(255, 46, 231, 0),
           onSurface: Color.fromARGB(137, 175, 0, 0),

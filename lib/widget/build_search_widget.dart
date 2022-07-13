@@ -42,9 +42,9 @@ class BuildSearchWidget extends StatelessWidget {
         // ),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.grey)),
           height: 50,
           width: size.width / 1.3,
           child: TextField(
@@ -90,9 +90,10 @@ class BuildSearchWidget extends StatelessWidget {
               hintText: AppConfig.search,
               hintStyle: const TextStyle(color: Colors.black),
               border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+
                 borderRadius: BorderRadius.circular(5),
-                borderSide: const BorderSide(
-                    color: Color.fromARGB(255, 31, 30, 30), width: 1.0),
+                // borderSide: const BorderSide(color: Colors.black),
               ),
             ),
           ),
