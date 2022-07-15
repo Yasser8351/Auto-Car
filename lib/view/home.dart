@@ -29,7 +29,8 @@ class _HomeState extends State<Home> {
     carProvider = Provider.of<CarProvider>(context, listen: false);
     carProvider.getCars().then((value) => {
           listCars = value.data,
-          myLog("Home Screen", "${listCars.length}", value.toString()),
+          myLog("Home Screen", "${listCars.length}",
+              value.data.length.toString()),
           setState(() {})
         });
 
@@ -43,15 +44,26 @@ class _HomeState extends State<Home> {
     if (carProvider.loadingState == LoadingState.initial ||
         carProvider.loadingState == LoadingState.loading) {
       return const LoadingWidget(
-          msg: AppConfig.loading, msgColor: Colors.red, color: Colors.black);
+          msg: AppConfig.loading, msgColor: Colors.black, color: Colors.black);
     } else if (carProvider.loadingState == LoadingState.error) {
-      return const ReyTryErrorWidget(title: AppConfig.somthingWrong);
+      return ReyTryErrorWidget(
+        title: AppConfig.somthingWrong,
+        onTap: () {
+          carProvider.reloedListCars();
+        },
+      );
     } else if (carProvider.loadingState == LoadingState.noDataFound) {
-      return const ReyTryErrorWidget(title: AppConfig.noDataFound);
+      return ReyTryErrorWidget(
+        title: AppConfig.noDataFound,
+        onTap: () {
+          carProvider.reloedListCars();
+        },
+      );
     } else {
       return SingleChildScrollView(
         child: Container(
-          height: size.height * 2.1,
+          // height: size.height * listCars.length,
+          // height: size.height ,
           color: const Color(0xffF8F8F8),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -81,7 +93,7 @@ buildTextTitleWidget() {
       padding: EdgeInsets.symmetric(horizontal: 0),
       child: Text(
         AppConfig.findYourFavertCar,
-        style: AppConfig.textTitle,
+        style: AppConfig.textTitleHome,
       ),
     ),
   );

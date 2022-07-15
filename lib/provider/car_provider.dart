@@ -17,7 +17,7 @@ class CarProvider with ChangeNotifier {
     try {
       loadingState = LoadingState.loading;
       var response =
-          await http.get(ApiUrl.products).timeout(const Duration(seconds: 12));
+          await http.get(ApiUrl.products).timeout(const Duration(seconds: 20));
       if (response.statusCode == 200) {
         _listCars = carModelFromJson(response.body);
         if (_listCars.isEmpty) {
@@ -39,7 +39,7 @@ class CarProvider with ChangeNotifier {
     } catch (error) {
       setApiResponseValue(
           error.toString(), false, _listCars, LoadingState.error);
-      myLog("getCars", "error", error.toString());
+      myLog("getCars", "catch error", error.toString());
     }
     notifyListeners();
     return apiResponse;
@@ -47,7 +47,7 @@ class CarProvider with ChangeNotifier {
 
 //////////////////////// reloed List of Cars if the user refresh the Home Screen
 
-  reloed_listCars() {
+  reloedListCars() {
     return getCars();
   }
 

@@ -26,7 +26,8 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
       },
       child: SizedBox(
         // height: widget.isOffers ? size.height : size.height / 2.2,
-        height: widget.isOffers ? 1300 : 1183,
+        height:
+            widget.isOffers ? 1300 : size.height * widget.listCars.length / 6,
 
         child: GridView.builder(
             // physics: widget.isOffers
@@ -44,6 +45,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
               var image = widget.listCars[index].image;
               var price = widget.listCars[index].price;
               var title = widget.listCars[index].title;
+              var category = widget.listCars[index].rating!.rate.toString();
               return Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -61,25 +63,38 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                         placeholder: const AssetImage(AppConfig.placeholder),
                         // image: AssetImage(AppConfig.imageCar),
                         image: NetworkImage(image!),
-                        width: 200,
-                        height: 110,
-                        fit: BoxFit.cover,
+                        width: 120,
+                        height: 120,
+                        fit: BoxFit.fill,
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 7),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
                           title!,
                           overflow: TextOverflow.ellipsis,
                           style: AppConfig.textTitleListCars,
-                          textAlign: TextAlign.center,
+                          textAlign: TextAlign.start,
                         ),
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 7),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          category,
+                          overflow: TextOverflow.ellipsis,
+                          //style: AppConfig.textTitleListCars,
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: Row(
@@ -93,11 +108,12 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                             ),
                           ),
                           CardWithImage(
-                            height: 40,
-                            width: 40,
+                            height: 35,
+                            width: 35,
                             child: const Icon(
                               Icons.favorite_border,
                               color: Colors.white,
+                              size: 23,
                             ),
                             colors: Colors.black,
                             onTap: () {},
@@ -131,13 +147,13 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                       ),
                     ),
                     widget.isOffers
-                        ? const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5),
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "\$2500",
-                                style: TextStyle(
+                                "\$$price",
+                                style: const TextStyle(
                                     decoration: TextDecoration.lineThrough),
                               ),
                             ),

@@ -66,8 +66,13 @@ class AppConfig {
   static const audi = "assets/images/audi.png";
 
   // Text Style fpr All App
+  static const textTitleHome = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+    color: Color(0xff181B20),
+  );
   static const textTitle = TextStyle(
-    fontSize: 20,
+    fontSize: 16,
     color: Color(0xff181B20),
   );
   static const textViewAll = TextStyle(
@@ -75,9 +80,9 @@ class AppConfig {
     color: Color(0xff7B838E),
   );
   static const textTitleListCars =
-      TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold);
+      TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold);
   static const textOverview = TextStyle(
-      color: Color(0xff262635), fontSize: 20, fontWeight: FontWeight.bold);
+      color: Color(0xff262635), fontSize: 16, fontWeight: FontWeight.bold);
   static const textDetails = TextStyle(
       color: Color.fromARGB(255, 139, 139, 145),
       fontSize: 17,
