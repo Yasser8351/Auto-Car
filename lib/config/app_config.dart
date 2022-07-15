@@ -38,8 +38,11 @@ class AppConfig {
 
   //static const termsAndConditionsAr = "الشروط والأحكام :  ";
   static const termsAndConditionsAr = ": الشروط والاحكام";
+  static const loading = "جاري التحميل...";
+  static const tryAgain = "اعادة المحاولة";
+  static const noDataFound = "لايوجد بيانات";
+  static const somthingWrong = "حدث خطأ";
   // static const s = "";
-
   /*
   
   الشروط والأحكام:

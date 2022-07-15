@@ -40,6 +40,10 @@ dependencies:
   carousel_slider: ^4.0.0
   # share link
   share_plus: ^2.0.0
+  # state management
+  provider: ^6.0.2
+  # They allow you to make individual HTTP requests
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:

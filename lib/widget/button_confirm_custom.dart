@@ -17,9 +17,6 @@ class ButtonConfirmCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    var theme = Theme.of(context);
-    var colorScheme = theme.colorScheme;
-
     return Container(
       height: 45,
       margin: showMargin

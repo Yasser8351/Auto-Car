@@ -17,7 +17,7 @@ class Offers extends StatelessWidget {
             SizedBox(height: 60),
             BuildSearchWidget(),
             SizedBox(height: 20),
-            ListCarsWidget(isOffers: true),
+            ListCarsWidget(listCars: [], isOffers: true),
           ],
         ),
       ),
