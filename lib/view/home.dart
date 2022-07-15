@@ -1,9 +1,9 @@
 import 'package:auto_car/config/app_config.dart';
-import 'package:auto_car/debugger/my_debuger.dart';
 import 'package:auto_car/provider/car_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../debugger/my_debuger.dart';
 import '../enum/all_enum.dart';
 import '../model/car_model.dart';
 import '../widget/build_search_widget.dart';
@@ -26,11 +26,13 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    carProvider = Provider.of<CarProvider>(context);
+    carProvider = Provider.of<CarProvider>(context, listen: false);
     carProvider.getCars().then((value) => {
           listCars = value.data,
-          myLog("Home Screen", "${listCars.length}", value.toString())
+          myLog("Home Screen", "${listCars.length}", value.toString()),
+          setState(() {})
         });
+
     super.initState();
   }
 

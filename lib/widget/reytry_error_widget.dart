@@ -9,17 +9,15 @@ class ReyTryErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: Column(
-          children: [
-            Text(title),
-            const Icon(Icons.refresh),
-            ButtonConfirmCustom(
-                title: AppConfig.tryAgain, color: Colors.black, onTap: () {})
-          ],
-        ),
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          Text(title),
+          const Icon(Icons.refresh),
+          ButtonConfirmCustom(
+              title: AppConfig.tryAgain, color: Colors.black, onTap: () {})
+        ],
       ),
     );
   }
