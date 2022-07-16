@@ -5,7 +5,8 @@ import '../config/app_config.dart';
 import 'card_with_image.dart';
 
 class BuildSearchWidget extends StatelessWidget {
-  const BuildSearchWidget({Key? key}) : super(key: key);
+  const BuildSearchWidget({Key? key, required this.onTap}) : super(key: key);
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -15,31 +16,6 @@ class BuildSearchWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        // Container(
-        //   height: 50,
-        //   width: size.width / 1.3,
-        //   decoration: BoxDecoration(
-        //     color: Colors.white,
-        //     borderRadius: BorderRadius.circular(10),
-        //   ),
-        //   child: Padding(
-        //     padding: const EdgeInsets.only(left: 10),
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.start,
-        //       children: const [
-        //         Icon(
-        //           Icons.search,
-        //           color: Colors.grey,
-        //         ),
-        //         SizedBox(width: 10),
-        //         Text(
-        //           AppConfig.findCar,
-        //           style: TextStyle(color: Colors.grey, fontSize: 16),
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
         Container(
           decoration: BoxDecoration(
               color: Colors.white,
@@ -98,7 +74,6 @@ class BuildSearchWidget extends StatelessWidget {
             ),
           ),
         ),
-
         const SizedBox(width: 10),
         CardWithImage(
           height: 50,
@@ -112,7 +87,7 @@ class BuildSearchWidget extends StatelessWidget {
             ),
           ),
           colors: Colors.black,
-          onTap: () {},
+          onTap: onTap,
         ),
       ],
     );

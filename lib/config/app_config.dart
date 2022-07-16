@@ -36,12 +36,17 @@ class AppConfig {
   static const termsAndConditionsDiscripstion =
       " باستخدام موقع وتطبيق اواوتوكارز فأنت توافق على الالتزام بهذه الشروط والأحكام، وفي حال عدم موافقتك على الشروط والأحكام يتعين عليك عدم استخدام الموقع والتطبيق ، وعليه فإننا نحتفظ بحقنا بتغيير الشروط والأحكام من وقت لآخر وبالتالي  يتعين عليك الاطلاع على هذه الشروط والأحكام بشكلٍ دوري، ولا يتوجب علينا الاتصال بك أو إعلامك بأي تغييرات تم إجراؤها على الشروط والأحكام، ويعتبر استمرار استخدامك لموقع وتطبيق معاك  بمثابة موافقة على الشروط والأحكام المطبقة في وقت استخدامك للموقع والتطبيق كجزء من التزامنا بجعل موقع وتطبيق معاك مكانا ترغب في زيارته باستمرار فإننا نرحب بكافة تعليقاتك على أي من السياسات أو القواعد التي ندرجها أدناه.";
 
-  //static const termsAndConditionsAr = "الشروط والأحكام :  ";
   static const termsAndConditionsAr = ": الشروط والاحكام";
-  static const loading = "جاري التحميل...";
+  static const loading = "..جاري التحميل";
   static const tryAgain = "اعادة المحاولة";
   static const noDataFound = "لايوجد بيانات";
   static const somthingWrong = "حدث خطأ";
+  static const leesPrice = "الأقل سعراً";
+  static const topPrice = "الأعلي سعراً";
+  static const oldeOffer = "أحدث عرض";
+  static const lastOffer = "أقدم عرض";
+  static const showResultSearch = "تصفية العروض";
+  static const topOffer = "الأكثر مشاهدة";
   // static const s = "";
   /*
   

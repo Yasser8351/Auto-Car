@@ -3,10 +3,10 @@ import 'package:auto_car/provider/car_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../debugger/my_debuger.dart';
 import '../enum/all_enum.dart';
 import '../model/car_model.dart';
 import '../widget/build_search_widget.dart';
+import '../widget/filter_search_widget.dart';
 import '../widget/list_brand_widget.dart';
 import '../widget/list_cars_widget.dart';
 import '../widget/loading_widget.dart';
@@ -23,16 +23,14 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late CarProvider carProvider;
   List<CarModel> listCars = [];
+  bool isFilter = false;
 
   @override
   void initState() {
     carProvider = Provider.of<CarProvider>(context, listen: false);
-    carProvider.getCars().then((value) => {
-          listCars = value.data,
-          myLog("Home Screen", "${listCars.length}",
-              value.data.length.toString()),
-          setState(() {})
-        });
+    carProvider
+        .getCars()
+        .then((value) => {listCars = value.data, setState(() {})});
 
     super.initState();
   }
@@ -61,26 +59,34 @@ class _HomeState extends State<Home> {
       );
     } else {
       return SingleChildScrollView(
-        child: Container(
-          // height: size.height * listCars.length,
-          // height: size.height ,
-          color: const Color(0xffF8F8F8),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              children: [
-                const SizedBox(height: 50),
-                buildTextTitleWidget(),
-                const SizedBox(height: 20),
-                const BuildSearchWidget(),
-                const SizedBox(height: 40),
-                const ListBrandWidget(),
-                const SizedBox(height: 40),
-                ListCarsWidget(listCars: listCars, isOffers: false)
-              ],
-            ),
-          ),
-        ),
+        child: isFilter
+            ? FilterSearchWidget(onTap: () {
+                setState(() {
+                  isFilter = !isFilter;
+                });
+              })
+            : Container(
+                color: const Color(0xffF8F8F8),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 50),
+                      buildTextTitleWidget(),
+                      const SizedBox(height: 20),
+                      BuildSearchWidget(onTap: () {
+                        setState(() {
+                          isFilter = !isFilter;
+                        });
+                      }),
+                      const SizedBox(height: 40),
+                      const ListBrandWidget(),
+                      const SizedBox(height: 40),
+                      ListCarsWidget(listCars: listCars, isOffers: false)
+                    ],
+                  ),
+                ),
+              ),
       );
     }
   }
