@@ -47,14 +47,18 @@ class _HomeState extends State<Home> {
       return ReyTryErrorWidget(
         title: AppConfig.somthingWrong,
         onTap: () {
-          carProvider.reloedListCars();
+          carProvider
+              .getCars()
+              .then((value) => {listCars = value.data, setState(() {})});
         },
       );
     } else if (carProvider.loadingState == LoadingState.noDataFound) {
       return ReyTryErrorWidget(
         title: AppConfig.noDataFound,
         onTap: () {
-          carProvider.reloedListCars();
+          carProvider
+              .getCars()
+              .then((value) => {listCars = value.data, setState(() {})});
         },
       );
     } else {

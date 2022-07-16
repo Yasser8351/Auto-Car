@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_car/model/filter_model.dart';
 import 'package:flutter/material.dart';
 
@@ -17,75 +15,50 @@ class FilterSearchWidget extends StatelessWidget {
       FilterModel(AppConfig.topPrice),
       FilterModel(AppConfig.oldeOffer),
       FilterModel(AppConfig.lastOffer),
-      FilterModel(AppConfig.topOffer),
+      FilterModel(AppConfig.topViews),
     ];
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 7),
-      child: Stack(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: ElevatedButton(
-              onPressed: () {
-                log("message");
-              },
-              child: const Padding(
-                padding: EdgeInsets.all(12.0),
-                child: Text(
-                  AppConfig.showResultSearch,
-                ),
-              ),
+          TextButton(
+            onPressed: onTap,
+            child: const Icon(
+              Icons.close,
+              size: 40,
+              color: Colors.black,
             ),
-            // child: TextButton(
-            //   onPressed: onTap,
-            //   child: const Icon(
-            //     Icons.close,
-            //     size: 55,
-            //     color: Colors.black,
-            //   ),
-            // ),
-            // child: IconButton(
-            //   onPressed: onTap,
-            //   icon: const Icon(
-            //     Icons.close,
-            //     size: 55,
-            //     color: Colors.black,
-            //   ),
-            // ),
           ),
           Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                child: SizedBox(
-                  height: size.height - 180,
-                  //color: const Color.fromARGB(255, 204, 204, 204),
-                  child: ListView.builder(
-                    itemCount: listFilter.length,
-                    itemBuilder: (context, index) {
-                      final title = listFilter[index].title;
-                      return ListTile(
-                        title: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              title,
-                              style: AppConfig.textSpecifications,
-                            ),
-                            const Divider(),
-                            //const Spacer(),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
+              SizedBox(
+                height: size.height / 1.45,
+                child: ListView.builder(
+                  itemCount: listFilter.length,
+                  itemBuilder: (context, index) {
+                    final title = listFilter[index].title;
+                    return ListTile(
+                      title: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            title,
+                            style: AppConfig.textSpecifications,
+                          ),
+                          const Divider(),
+                          //const Spacer(),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
               ElevatedButton(
                 onPressed: onTap,
                 child: const Padding(
-                  padding: EdgeInsets.all(12.0),
+                  padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                   child: Text(
                     AppConfig.showResultSearch,
                   ),

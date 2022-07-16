@@ -1,10 +1,12 @@
+import 'dart:io';
+
+import 'package:auto_car/config/app_config.dart';
 import 'package:auto_car/model/car_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../api/api_constant.dart';
 import '../api/api_response.dart';
-import '../debugger/my_debuger.dart';
 import '../enum/all_enum.dart';
 
 class CarProvider with ChangeNotifier {
@@ -36,11 +38,18 @@ class CarProvider with ChangeNotifier {
         setApiResponseValue(
             'Somthing wrong error', false, _listCars, LoadingState.error);
       }
-    } catch (error) {
+    } on FormatException {
       setApiResponseValue(
-          error.toString(), false, _listCars, LoadingState.error);
-      myLog("getCars", "catch error", error.toString());
+          AppConfig.noInternet, false, _listCars, LoadingState.error);
+    } on SocketException {
+      setApiResponseValue(
+          AppConfig.serverError, false, _listCars, LoadingState.error);
     }
+    // } catch (error) {
+    //   setApiResponseValue(
+    //       error.toString(), false, _listCars, LoadingState.error);
+    //   myLog("getCars", "catch error", error.toString());
+    // }
     notifyListeners();
     return apiResponse;
   }

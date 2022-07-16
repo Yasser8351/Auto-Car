@@ -46,7 +46,9 @@ class AppConfig {
   static const oldeOffer = "أحدث عرض";
   static const lastOffer = "أقدم عرض";
   static const showResultSearch = "تصفية العروض";
-  static const topOffer = "الأكثر مشاهدة";
+  static const topViews = "الأكثر مشاهدة";
+  static const noInternet = "لايوجد اتصال انترنت";
+  static const serverError = "خطأ في الخادم";
   // static const s = "";
   /*
   
