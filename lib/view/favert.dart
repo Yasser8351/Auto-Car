@@ -56,9 +56,9 @@ class _FavertState extends State<Favert> {
                 crossAxisSpacing: 10),
             itemCount: listCars.length,
             itemBuilder: (ctx, index) {
-              var title = listCars[index]['title'];
-              var image = listCars[index]['imageUrl'];
-              var price = listCars[index]['price'];
+              String title = listCars[index]['title'] ?? '';
+              String image = listCars[index]['imageUrl'] ?? '';
+              String price = listCars[index]['price'] ?? '';
 
               return Container(
                 decoration: const BoxDecoration(
@@ -73,14 +73,17 @@ class _FavertState extends State<Favert> {
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(10),
                           topRight: Radius.circular(10)),
-                      child: FadeInImage(
-                        placeholder: const AssetImage(AppConfig.placeholder),
-                        //  image: AssetImage(AppConfig.imageCar),
-                        image: NetworkImage(image!),
-                        width: 120,
-                        height: 120,
-                        fit: BoxFit.fill,
-                      ),
+                      child: image.isEmpty
+                          ? Image.asset(AppConfig.placeholder)
+                          : FadeInImage(
+                              placeholder:
+                                  const AssetImage(AppConfig.placeholder),
+                              //image: AssetImage(AppConfig.imageCar),
+                              image: NetworkImage(image),
+                              width: 120,
+                              height: 120,
+                              fit: BoxFit.fill,
+                            ),
                     ),
                     const SizedBox(height: 20),
                     Padding(
@@ -88,7 +91,7 @@ class _FavertState extends State<Favert> {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          title!,
+                          title,
                           overflow: TextOverflow.ellipsis,
                           style: AppConfig.textTitleListCars,
                           textAlign: TextAlign.start,
