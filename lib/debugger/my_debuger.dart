@@ -23,5 +23,5 @@ class MyDebugger {
 }
 
 myLog(String key, String methodeName, String value) {
-  return log("methodeName : $methodeName \n  $key :  $value");
+  return log("methodeName : $methodeName \n  $key :  ${value.toString()}");
 }

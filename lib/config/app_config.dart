@@ -15,7 +15,7 @@ class AppConfig {
   static const privacyPolicy = "Privacy Policy";
   static const search = "Search";
   static const termsAndConditions = "Terms and Conditions";
-  static const findYourFavertCar = "Let,s find You favourite car here";
+  static const findYourFavertCar = "Let,s find You favorites car here";
   static const findCar = "find your car";
   static const viewAll = "view All";
   static const brands = "Brands";
@@ -49,6 +49,8 @@ class AppConfig {
   static const topViews = "الأكثر مشاهدة";
   static const noInternet = "لايوجد اتصال انترنت";
   static const serverError = "خطأ في الخادم";
+  static const addDataFavoritesSuccessfully = "تمت اضافة الي المفضلة";
+  static const addDataFavoritesFailed = "حدث خطأ , لم يتم الاضافة الي المفضلة";
   // static const s = "";
   /*
   

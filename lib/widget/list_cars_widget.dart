@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:auto_car/config/app_config.dart';
+import 'package:auto_car/database/sqldb.dart';
 import 'package:auto_car/model/car_model.dart';
 import 'package:auto_car/view/details_screen.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +20,11 @@ class ListCarsWidget extends StatefulWidget {
 }
 
 class _ListCarsWidgetState extends State<ListCarsWidget> {
+  SQLDatabase sqlDatabase = SQLDatabase();
+
+  //String sqlInsertOffers = "insert into 'MyFavorite' ('title')";
+  String sqlInsertOffers = "insert into 'MyFavorite' ('title,price,imageUrl')";
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -116,7 +124,21 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                               size: 23,
                             ),
                             colors: Colors.black,
-                            onTap: () {},
+                            onTap: () async {
+                              int response = await sqlDatabase.insertData(
+                                "INSERT INTO 'MyFavorite' ('title','price','imageUrl') VALUES ('$title','${price.toString()}','$image')",
+                              );
+
+                              if (response == 1) {
+                                toastMessage(
+                                    AppConfig.addDataFavoritesSuccessfully);
+                              } else {
+                                toastMessage(AppConfig.addDataFavoritesFailed);
+                              }
+                              setState(() {});
+
+                              log(response.toString());
+                            },
                           ),
 /* 
                           IconButton(
@@ -165,5 +187,9 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
             }),
       ),
     );
+  }
+
+  void toastMessage(String message) {
+    ScaffoldMessenger(child: SnackBar(content: Text(message)));
   }
 }
