@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:auto_car/config/app_config.dart';
 import 'package:auto_car/database/sqldb.dart';
-import 'package:auto_car/debugger/my_debuger.dart';
 import 'package:flutter/material.dart';
 
 import '../widget/card_with_image.dart';
@@ -30,9 +27,9 @@ class _FavertState extends State<Favert> {
   Future<void> getDataFromSqfLite() async {
     listCars = await sqlDatabase.getData("SELECT * FROM 'MyFavorite'");
 
-    listCars.asMap().forEach((index, item) => log("$index: $item"));
+    setState(() {});
 
-    myLog("Favert", "listCars", listCars.toString());
+    // myLog("Favert", "listCars", listCars.toString());
   }
 
   @override
@@ -44,13 +41,13 @@ class _FavertState extends State<Favert> {
       },
       child: SizedBox(
         // height: isOffers ? size.height : size.height / 2.2,
-        height: isOffers ? 1300 : size.height * listCars.length / 6,
+        height: size.height,
 
         child: GridView.builder(
             // physics: isOffers
             //     ? const BouncingScrollPhysics()
             //     : const NeverScrollableScrollPhysics(),
-            physics: const NeverScrollableScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.all(10.0),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -60,7 +57,7 @@ class _FavertState extends State<Favert> {
             itemCount: listCars.length,
             itemBuilder: (ctx, index) {
               var title = listCars[index]['title'];
-              var image = listCars[index]['image'];
+              var image = listCars[index]['imageUrl'];
               var price = listCars[index]['price'];
 
               return Container(
@@ -78,7 +75,7 @@ class _FavertState extends State<Favert> {
                           topRight: Radius.circular(10)),
                       child: FadeInImage(
                         placeholder: const AssetImage(AppConfig.placeholder),
-                        // image: AssetImage(AppConfig.imageCar),
+                        //  image: AssetImage(AppConfig.imageCar),
                         image: NetworkImage(image!),
                         width: 120,
                         height: 120,
