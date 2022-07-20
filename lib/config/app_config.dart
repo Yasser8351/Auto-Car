@@ -41,6 +41,7 @@ class AppConfig {
   static const loading = "..جاري التحميل";
   static const tryAgain = "اعادة المحاولة";
   static const noDataFound = "لايوجد بيانات";
+  static const noDataInFaverite = "لاتوجد بيانات في المفضلة";
   static const somthingWrong = "حدث خطأ";
   static const leesPrice = "الأقل سعراً";
   static const topPrice = "الأعلي سعراً";
@@ -50,8 +51,13 @@ class AppConfig {
   static const topViews = "الأكثر مشاهدة";
   static const noInternet = "لايوجد اتصال انترنت";
   static const serverError = "خطأ في الخادم";
-  static const addDataFavoritesSuccessfully = "تمت اضافة الي المفضلة";
-  static const addDataFavoritesFailed = "حدث خطأ , لم يتم الاضافة الي المفضلة";
+  static const addDataFavoritesSuccessfully = "تمت اضافة العنصر الي المفضلة";
+  static const addDataFavoritesFailed =
+      "حدث خطأ , لم يتم اضافة العنصر الي المفضلة";
+
+  static const deleteDataFavoritesSuccessfully = "تمت ازالة العنصر من المفضلة";
+  static const deleteDataFavoritesFailed =
+      "حدث خطأ , لم يتم ازالة العنصر من المفضلة";
   // static const s = "";
   /*
   

@@ -2,8 +2,6 @@ import 'package:sqflite/sqflite.dart';
 
 import 'package:path/path.dart';
 
-import '../debugger/my_debuger.dart';
-
 class SQLDatabase {
   static Database? _db;
 
@@ -34,14 +32,12 @@ class SQLDatabase {
     // When creating the db, create the table
     await db.execute('''
           CREATE TABLE "MyFavorite"(
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT,
             price TEXT, 
             imageUrl TEXT
             )
             ''');
-
-    myLog("_onCreate", "createDatabase", "create the Database");
   }
 
   _onUpgrade(Database db, int oldVersion, int newVersion) async {}
@@ -70,7 +66,7 @@ class SQLDatabase {
     return response;
   }
 
-  deleteData(String sql) async {
+  Future<int> deleteData(String sql) async {
     Database? myDB = await db;
 
     int response = await myDB!.rawDelete(sql);

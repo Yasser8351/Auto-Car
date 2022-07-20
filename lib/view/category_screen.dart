@@ -68,7 +68,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
       return Scaffold(
         body: SingleChildScrollView(
           child: SizedBox(
-            // height: size.height,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
@@ -86,16 +85,21 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     ],
                   ),
                   SizedBox(
-                    height: size.height / 1.31,
+                    height: size.height * listCategory.length / 4,
                     child: ListView.separated(
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 20),
                       itemCount: listCategory.length,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
-                        return ListCategoryWidget(
-                          listCategory: listCategory[index],
-                          size: size,
+                        return GestureDetector(
+                          onTap: () {
+                            //go to detailsScreen
+                          },
+                          child: ListCategoryWidget(
+                            listCategory: listCategory[index],
+                            size: size,
+                          ),
                         );
                       },
                     ),

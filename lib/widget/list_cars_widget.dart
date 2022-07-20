@@ -50,6 +50,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                 crossAxisSpacing: 10),
             itemCount: widget.listCars.length,
             itemBuilder: (ctx, index) {
+              var id = widget.listCars[index].id;
               var image = widget.listCars[index].image;
               var price = widget.listCars[index].price;
               var title = widget.listCars[index].title;
@@ -125,46 +126,27 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                             ),
                             colors: Colors.black,
                             onTap: () async {
-                              int response = await sqlDatabase.insertData(
-                                "INSERT INTO 'MyFavorite' ('title','price','imageUrl') VALUES ('$title','${price.toString()}','$image')",
-                              );
-
-                              if (response == 1) {
-                                toastMessage(
-                                    AppConfig.addDataFavoritesSuccessfully);
-                              } else {
-                                toastMessage(AppConfig.addDataFavoritesFailed);
-                              }
-                              setState(() {});
-
-                              log(response.toString());
+                              log(id.toString());
+                              sqlDatabase
+                                  .insertData(
+                                    "INSERT INTO 'MyFavorite' ('id','title','price','imageUrl') VALUES ('$id','$title','${price.toString()}','$image')",
+                                  )
+                                  .then(
+                                    (value) => {
+                                      if (value == 1)
+                                        {
+                                          toastMessage(AppConfig
+                                              .addDataFavoritesSuccessfully)
+                                        }
+                                      else
+                                        {
+                                          toastMessage(
+                                              AppConfig.addDataFavoritesFailed)
+                                        },
+                                    },
+                                  );
                             },
                           ),
-/* 
-                          IconButton(
-                              icon: const Icon(Icons.shopping_cart),
-                              onPressed: () {
-                                // cart.addItem(
-                                //   list[index].id.toString(),
-                                //   list[index].name,
-                                //   double.parse(list[index].price),
-                                // );
-                                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: const Text("تم اضافة المنتج الي السلة"),
-                                    duration: const Duration(seconds: 2),
-                                    action: SnackBarAction(
-                                      label: "إلغاء",
-                                      onPressed: () {
-                                        // cart.cancelOrder(list[index].id.toString());
-                                      },
-                                    ),
-                                  ),
-                                );
-                              },
-                              color: Theme.of(context).primaryColor),
-                  */
                         ],
                       ),
                     ),
@@ -190,6 +172,18 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
   }
 
   void toastMessage(String message) {
-    ScaffoldMessenger(child: SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 2),
+        action: SnackBarAction(
+          label: "إلغاء",
+          onPressed: () {
+            // cart.cancelOrder(list[index].id.toString());
+          },
+        ),
+      ),
+    );
   }
 }
