@@ -1,4 +1,6 @@
 import 'package:auto_car/provider/car_provider.dart';
+import 'package:auto_car/provider/category_provider.dart';
+import 'package:auto_car/view/category_screen.dart';
 import 'package:auto_car/view/favert.dart';
 import 'package:auto_car/view/home.dart';
 import 'package:auto_car/view/more.dart';
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => CarProvider()),
+        ChangeNotifierProvider(create: (context) => CategoryProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -50,6 +53,7 @@ class MyApp extends StatelessWidget {
         home: const TabScreen(),
         routes: {
           Home.routeName: (ctx) => const Home(),
+          CategoryScreen.routeName: (ctx) => const CategoryScreen(),
           Favert.routeName: (ctx) => const Favert(),
           Offers.routeName: (ctx) => const Offers(),
           More.routeName: (ctx) => const More(),

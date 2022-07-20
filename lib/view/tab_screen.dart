@@ -1,10 +1,10 @@
 import 'package:auto_car/config/app_config.dart';
 import 'package:flutter/material.dart';
 
+import 'category_screen.dart';
 import 'favert.dart';
 import 'home.dart';
 import 'more.dart';
-import 'offers.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class _TabScreenState extends State<TabScreen> {
 
   final List<Widget> _pages = [
     const More(),
-    const Offers(),
+    const CategoryScreen(),
     const Favert(),
     const Home(),
   ];
@@ -46,8 +46,8 @@ class _TabScreenState extends State<TabScreen> {
             label: AppConfig.more,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.local_offer_sharp),
-            label: AppConfig.offers,
+            icon: Icon(Icons.category),
+            label: AppConfig.category,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite_border),

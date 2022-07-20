@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 class AppConfig {
   // Text config for All the App
   static const appName = "أوتوكارز";
-  static const home = "Home";
-  static const favert = "Favert";
-  static const offers = "Offers";
-  static const more = "More";
-  static const faq = "FAQ";
+  static const home = "الرئيسية";
+  static const category = "الأقسام";
+  static const favert = "المفضلة";
+  static const offers = "العروض";
+  static const more = "المزيد";
+  static const faq = "الأسئلة الشائعة";
   static const shareApp = "Share App";
   static const aboutApp = "About App";
   static const versionApp = "Version App";
@@ -58,7 +59,8 @@ class AppConfig {
    باستخدام موقع وتطبيق معاك فأنت توافق على الالتزام بهذه الشروط والأحكام، وفي حال عدم موافقتك على الشروط والأحكام يتعين عليك عدم استخدام الموقع والتطبيق ، وعليه فإننا نحتفظ بحقنا بتغيير الشروط والأحكام من وقت لآخر وبالتالي  يتعين عليك الاطلاع على هذه الشروط والأحكام بشكلٍ دوري، ولا يتوجب علينا الاتصال بك أو إعلامك بأي تغييرات تم إجراؤها على الشروط والأحكام، ويعتبر استمرار استخدامك لموقع وتطبيق معاك  بمثابة موافقة على الشروط والأحكام المطبقة في وقت استخدامك للموقع والتطبيق كجزء من التزامنا بجعل موقع وتطبيق معاك مكانا ترغب في زيارته باستمرار فإننا نرحب بكافة تعليقاتك على أي من السياسات أو القواعد التي ندرجها أدناه.
   */
   // Image Assets for All App
-  static const logo = "assets/images/filter.png";
+  static const logo = "assets/images/logo.png";
+  static const logoSvg = "assets/images/logo.svg";
   static const placeholder = "assets/images/placeholder.png";
   static const imageCar = "assets/images/car.png";
   static const imageCar2 = "assets/images/car2.jpeg";
@@ -100,4 +102,7 @@ class AppConfig {
     color: Color.fromARGB(255, 139, 139, 145),
     fontSize: 16,
   );
+
+  static const textStyle1 =
+      TextStyle(color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold);
 }

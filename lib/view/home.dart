@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
     carProvider = Provider.of<CarProvider>(context, listen: false);
     carProvider
         .getCars()
-        .then((value) => {listCars = value.data, setState(() {})});
+        .then((value) => {listCars = value.dataCar, setState(() {})});
 
     super.initState();
   }
@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
         onTap: () {
           carProvider
               .getCars()
-              .then((value) => {listCars = value.data, setState(() {})});
+              .then((value) => {listCars = value.dataCar, setState(() {})});
         },
       );
     } else if (carProvider.loadingState == LoadingState.noDataFound) {
@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
         onTap: () {
           carProvider
               .getCars()
-              .then((value) => {listCars = value.data, setState(() {})});
+              .then((value) => {listCars = value.dataCar, setState(() {})});
         },
       );
     } else {

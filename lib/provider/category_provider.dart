@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:auto_car/config/app_config.dart';
-import 'package:auto_car/model/car_model.dart';
+import 'package:auto_car/model/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,45 +9,45 @@ import '../api/api_constant.dart';
 import '../api/api_response.dart';
 import '../enum/all_enum.dart';
 
-class CarProvider with ChangeNotifier {
-  List<CarModel> _listCars = [];
+class CategoryProvider with ChangeNotifier {
+  List<CategoryModel> _listCategory = [];
   ApiResponse apiResponse = ApiResponse();
   LoadingState loadingState = LoadingState.initial;
 
-//////////////////////// get List of Cars in Home Screen
-  Future<ApiResponse> getCars() async {
+//////////////////////// get List of Category in Category Screen
+  Future<ApiResponse> getListCategory() async {
     try {
       loadingState = LoadingState.loading;
       var response =
           await http.get(ApiUrl.products).timeout(const Duration(seconds: 20));
       if (response.statusCode == 200) {
-        _listCars = carModelFromJson(response.body);
-        if (_listCars.isEmpty) {
+        _listCategory = categoryModelFromJson(response.body);
+        if (_listCategory.isEmpty) {
           loadingState = LoadingState.noDataFound;
         } else {
-          setApiResponseValue('get Data Cars Sucsessfuly', true, _listCars,
+          setApiResponseValue('get Data Cars Sucsessfuly', true, _listCategory,
               LoadingState.loaded);
         }
       } else if (response.statusCode == 401) {
         setApiResponseValue(
-            'Un autaristion', false, _listCars, LoadingState.error);
+            'Un autaristion', false, _listCategory, LoadingState.error);
       } else if (response.statusCode == 500) {
         setApiResponseValue(
-            'Server error', false, _listCars, LoadingState.error);
+            'Server error', false, _listCategory, LoadingState.error);
       } else {
         setApiResponseValue(
-            'Somthing wrong error', false, _listCars, LoadingState.error);
+            'Somthing wrong error', false, _listCategory, LoadingState.error);
       }
     } on FormatException {
       setApiResponseValue(
-          AppConfig.noInternet, false, _listCars, LoadingState.error);
+          AppConfig.noInternet, false, _listCategory, LoadingState.error);
     } on SocketException {
       setApiResponseValue(
-          AppConfig.serverError, false, _listCars, LoadingState.error);
+          AppConfig.serverError, false, _listCategory, LoadingState.error);
     }
     // } catch (error) {
     //   setApiResponseValue(
-    //       error.toString(), false, _listCars, LoadingState.error);
+    //       error.toString(), false, _listCategory, LoadingState.error);
     //   myLog("getCars", "catch error", error.toString());
     // }
     notifyListeners();
@@ -57,14 +57,14 @@ class CarProvider with ChangeNotifier {
 //////////////////////// reloed List of Cars if the user refresh the Home Screen
 
   reloedListCars() {
-    return getCars();
+    return getListCategory();
   }
 
-  setApiResponseValue(
-      String message, bool status, List<CarModel> data, LoadingState state) {
+  setApiResponseValue(String message, bool status, List<CategoryModel> data,
+      LoadingState state) {
     apiResponse.message = message;
     apiResponse.status = status;
-    apiResponse.dataCar = data;
+    apiResponse.dataCategory = data;
     loadingState = state;
   }
 }
