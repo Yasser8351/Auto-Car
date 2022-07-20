@@ -126,22 +126,23 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                             ),
                             colors: Colors.black,
                             onTap: () async {
-                              log(id.toString());
+                              // log(id.toString());
                               sqlDatabase
                                   .insertData(
                                     "INSERT INTO 'MyFavorite' ('id','title','price','imageUrl') VALUES ('$id','$title','${price.toString()}','$image')",
                                   )
                                   .then(
                                     (value) => {
+                                      log("value " + value.toString()),
                                       if (value == 1)
                                         {
-                                          toastMessage(AppConfig
-                                              .addDataFavoritesSuccessfully)
+                                          toastMessage(
+                                              AppConfig.itemAleradyInFaverite)
                                         }
                                       else
                                         {
-                                          toastMessage(
-                                              AppConfig.addDataFavoritesFailed)
+                                          toastMessage(AppConfig
+                                              .addDataFavoritesSuccessfully)
                                         },
                                     },
                                   );
@@ -176,13 +177,8 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
+        backgroundColor: Colors.black,
         duration: const Duration(seconds: 2),
-        action: SnackBarAction(
-          label: "إلغاء",
-          onPressed: () {
-            // cart.cancelOrder(list[index].id.toString());
-          },
-        ),
       ),
     );
   }

@@ -58,6 +58,7 @@ class AppConfig {
   static const deleteDataFavoritesSuccessfully = "تمت ازالة العنصر من المفضلة";
   static const deleteDataFavoritesFailed =
       "حدث خطأ , لم يتم ازالة العنصر من المفضلة";
+  static const itemAleradyInFaverite = "هذا العنصر موجود في المفضلة";
   // static const s = "";
   /*
   

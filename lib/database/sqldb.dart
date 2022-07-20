@@ -50,12 +50,14 @@ class SQLDatabase {
     return response;
   }
 
-  insertData(String sql) async {
+  Future<int> insertData(String sql) async {
     Database? myDB = await db;
-
-    int response = await myDB!.rawInsert(sql);
-
-    return response;
+    try {
+      int response = await myDB!.rawInsert(sql);
+      return response;
+    } catch (error) {
+      return 1;
+    }
   }
 
   updateData(String sql) async {
