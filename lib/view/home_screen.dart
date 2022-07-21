@@ -93,11 +93,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 50),
                       buildTextTitleWidget(),
                       const SizedBox(height: 20),
-                      BuildSearchWidget(onTap: () {
-                        setState(() {
-                          isFilter = !isFilter;
-                        });
-                      }),
+                      BuildSearchWidget(
+                        onTap: () {
+                          setState(() {
+                            isFilter = !isFilter;
+                          });
+                        },
+                      ),
                       const SizedBox(height: 40),
                       const ListBrandWidget(),
                       const SizedBox(height: 40),

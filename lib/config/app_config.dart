@@ -44,6 +44,7 @@ class AppConfig {
   static const loading = "..جاري التحميل";
   static const tryAgain = "اعادة المحاولة";
   static const noDataFound = "لايوجد بيانات";
+  static const noDataFoundInThisResult = "لايوجد بيانات تطابق نتائج البحث";
   static const noDataInFaverite = "لاتوجد بيانات في المفضلة";
   static const somthingWrong = "حدث خطأ";
   static const leesPrice = "الأقل سعراً";
@@ -62,9 +63,11 @@ class AppConfig {
   static const deleteDataFavoritesFailed =
       "حدث خطأ , لم يتم ازالة العنصر من المفضلة";
   static const itemAleradyInFaverite = "هذا العنصر موجود في المفضلة";
+  static const recentlyArrived = "وصل حديثاً";
+
   // static const s = "";
+
   /*
-  
   الشروط والأحكام:
    باستخدام موقع وتطبيق معاك فأنت توافق على الالتزام بهذه الشروط والأحكام، وفي حال عدم موافقتك على الشروط والأحكام يتعين عليك عدم استخدام الموقع والتطبيق ، وعليه فإننا نحتفظ بحقنا بتغيير الشروط والأحكام من وقت لآخر وبالتالي  يتعين عليك الاطلاع على هذه الشروط والأحكام بشكلٍ دوري، ولا يتوجب علينا الاتصال بك أو إعلامك بأي تغييرات تم إجراؤها على الشروط والأحكام، ويعتبر استمرار استخدامك لموقع وتطبيق معاك  بمثابة موافقة على الشروط والأحكام المطبقة في وقت استخدامك للموقع والتطبيق كجزء من التزامنا بجعل موقع وتطبيق معاك مكانا ترغب في زيارته باستمرار فإننا نرحب بكافة تعليقاتك على أي من السياسات أو القواعد التي ندرجها أدناه.
   */
@@ -91,6 +94,7 @@ class AppConfig {
   static const nissan = "assets/images/nissan.png";
   static const mercedes = "assets/images/mercedes.png";
   static const audi = "assets/images/audi.png";
+  static const searchSvg = "assets/images/search.svg";
 
   // Text Style fpr All App
   static const textTitleHome = TextStyle(

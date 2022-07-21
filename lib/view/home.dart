@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../enum/all_enum.dart';
 import '../model/car_model.dart';
+import '../widget/filter_search_widget.dart';
 import '../widget/list_brand_text_widget.dart';
 import '../widget/list_cars_widget.dart';
 import '../widget/loading_widget.dart';
@@ -24,7 +25,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late CarProvider carProvider;
   List<CarModel> listCars = [];
-  bool isFilter = false;
+  bool isSearch = false;
 
   @override
   void initState() {
@@ -77,22 +78,34 @@ class _HomeState extends State<Home> {
       );
     } else {
       return SingleChildScrollView(
-        child: Container(
-          color: const Color(0xffF8F8F8),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              children: [
-                const SizedBox(height: 50),
-                const SearchWidgetWithLogo(),
-                const SizedBox(height: 40),
-                const ListBrandTextWidget(),
-                const SizedBox(height: 40),
-                ListCarsWidget(listCars: listCars, isOffers: false)
-              ],
-            ),
-          ),
-        ),
+        child: isSearch
+            ? FilterSearchWidget(onTap: () {
+                setState(() {
+                  isSearch = !isSearch;
+                });
+              })
+            : Container(
+                color: const Color(0xffF8F8F8),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 50),
+                      SearchWidgetWithLogo(
+                        onTap: () {
+                          setState(() {
+                            isSearch = !isSearch;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      const ListBrandTextWidget(),
+                      const SizedBox(height: 40),
+                      ListCarsWidget(listCars: listCars, isOffers: false)
+                    ],
+                  ),
+                ),
+              ),
       );
     }
   }
@@ -141,7 +154,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late CarProvider carProvider;
   List<CarModel> listCars = [];
-  bool isFilter = false;
+  bool isSearch = false;
 
   @override
   void initState() {
@@ -194,10 +207,10 @@ class _HomeState extends State<Home> {
       );
     } else {
       return SingleChildScrollView(
-        child: isFilter
+        child: isSearch
             ? FilterSearchWidget(onTap: () {
                 setState(() {
-                  isFilter = !isFilter;
+                  isSearch = !isSearch;
                 });
               })
             : Container(
@@ -211,7 +224,7 @@ class _HomeState extends State<Home> {
                       const SizedBox(height: 20),
                       BuildSearchWidget(onTap: () {
                         setState(() {
-                          isFilter = !isFilter;
+                          isSearch = !isSearch;
                         });
                       }),
                       const SizedBox(height: 40),

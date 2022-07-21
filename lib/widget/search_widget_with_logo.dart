@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../config/app_config.dart';
 
 class SearchWidgetWithLogo extends StatelessWidget {
-  const SearchWidgetWithLogo({Key? key}) : super(key: key);
+  const SearchWidgetWithLogo({Key? key, required this.onTap}) : super(key: key);
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +18,18 @@ class SearchWidgetWithLogo extends StatelessWidget {
           height: size.height * .05,
           width: size.width * .4,
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 6),
-          child: Icon(Icons.search, size: 30),
+        GestureDetector(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: SvgPicture.asset(
+              AppConfig.searchSvg,
+              height: 22,
+              width: 22,
+              color: Colors.black,
+            ),
+            // child: Icon(Icons.search, size: 30),
+          ),
         ),
       ],
     );

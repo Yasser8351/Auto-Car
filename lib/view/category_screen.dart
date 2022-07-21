@@ -3,6 +3,7 @@ import 'package:auto_car/config/app_config.dart';
 import 'package:auto_car/enum/all_enum.dart';
 import 'package:auto_car/model/category_model.dart';
 import 'package:auto_car/provider/category_provider.dart';
+import 'package:auto_car/widget/text_faild_search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   List<CategoryModel> listCategory = [];
   late ApiResponse apiResponse;
+
+  TextEditingController textSearchController = TextEditingController();
+
+  bool isSearch = false;
 
   @override
   void initState() {
@@ -54,12 +59,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           setState(() {
             categoryProvider.loadingState = LoadingState.loading;
           });
-          categoryProvider.reloedListCategory().then(
-                (value) => {
-                  listCategory = value.dataCategory,
-                  setState(() {}),
-                },
-              );
+          getDataCategory();
         },
       );
     } else if (categoryProvider.loadingState == LoadingState.noDataFound) {
@@ -69,54 +69,96 @@ class _CategoryScreenState extends State<CategoryScreen> {
           setState(() {
             categoryProvider.loadingState = LoadingState.loading;
           });
-          categoryProvider.reloedListCategory().then(
-                (value) => {
-                  listCategory = value.dataCategory,
-                  setState(() {}),
-                },
-              );
+          getDataCategory();
         },
       );
     } else {
       var height = size.height / 2.278 * listCategory.length;
 
-      return Scaffold(
-        body: SingleChildScrollView(
-          child: SizedBox(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                children: [
-                  const SizedBox(height: 40),
-                  const SearchWidgetWithLogo(),
-                  SizedBox(
-                    height: height,
-                    //height: size.height * listCategory.length / 3,
-                    // height: size.height * listCategory.length / 4,
-                    child: ListView.separated(
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 20),
-                      itemCount: listCategory.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            //go to detailsScreen
-                          },
-                          child: ListCategoryWidget(
-                            listCategory: listCategory[index],
-                            size: size,
-                          ),
-                        );
-                      },
-                    ),
+      if (listCategory.isEmpty) {
+        return const Center(child: Text(AppConfig.noDataFoundInThisResult));
+      } else {
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: isSearch
+                ? TextFaildSearchWidget(
+                    textSearchController: textSearchController,
+                    onTap: () {
+                      setState(
+                        () {
+                          isSearch = !isSearch;
+                        },
+                      );
+                    },
+                    onTapSearch: () {
+                      setState(
+                        () {
+                          isSearch = !isSearch;
+                          if (textSearchController.text.isEmpty) {
+                            getDataCategory();
+                          }
+
+                          listCategory = listCategory
+                              .where(
+                                (element) =>
+                                    element.title == textSearchController.text,
+                              )
+                              .toList();
+                        },
+                      );
+                    },
                   )
-                ],
-              ),
-            ),
+                : SizedBox(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 40),
+                          SearchWidgetWithLogo(
+                            onTap: () {
+                              setState(() {
+                                isSearch = !isSearch;
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            height: height,
+                            //height: size.height * listCategory.length / 3,
+                            // height: size.height * listCategory.length / 4,
+                            child: ListView.separated(
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 20),
+                              itemCount: listCategory.length,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    //go to detailsScreen
+                                  },
+                                  child: ListCategoryWidget(
+                                    listCategory: listCategory[index],
+                                    size: size,
+                                  ),
+                                );
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
           ),
-        ),
-      );
+        );
+      }
     }
+  }
+
+  void getDataCategory() {
+    categoryProvider.reloedListCategory().then(
+          (value) => {
+            listCategory = value.dataCategory,
+            setState(() {}),
+          },
+        );
   }
 }

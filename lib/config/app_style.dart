@@ -20,4 +20,6 @@ class AppStyle {
       TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold);
   static const textStyle2 = TextStyle(
       color: Colors.black, fontSize: 20, fontWeight: FontWeight.normal);
+  static const textWhite = TextStyle(
+      color: Colors.white, fontSize: 14, fontWeight: FontWeight.normal);
 }
