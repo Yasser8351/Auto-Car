@@ -30,33 +30,33 @@ class CategoryProvider with ChangeNotifier {
         }
       } else if (response.statusCode == 401) {
         setApiResponseValue(
-            'Un autaristion', false, _listCategory, LoadingState.error);
+            //'Un autaristion'
+            AppConfig.unAutaristion,
+            false,
+            _listCategory,
+            LoadingState.error);
       } else if (response.statusCode == 500) {
         setApiResponseValue(
-            'Server error', false, _listCategory, LoadingState.error);
+            AppConfig.serverError, false, _listCategory, LoadingState.error);
       } else {
         setApiResponseValue(
-            'Somthing wrong error', false, _listCategory, LoadingState.error);
+            AppConfig.somthingWrong, false, _listCategory, LoadingState.error);
       }
-    } on FormatException {
+    } on SocketException {
       setApiResponseValue(
           AppConfig.noInternet, false, _listCategory, LoadingState.error);
-    } on SocketException {
+    } on FormatException {
       setApiResponseValue(
           AppConfig.serverError, false, _listCategory, LoadingState.error);
     }
-    // } catch (error) {
-    //   setApiResponseValue(
-    //       error.toString(), false, _listCategory, LoadingState.error);
-    //   myLog("getCars", "catch error", error.toString());
-    // }
+
     notifyListeners();
     return apiResponse;
   }
 
 //////////////////////// reloed List of Cars if the user refresh the Home Screen
 
-  reloedListCars() {
+  reloedListCategory() {
     return getListCategory();
   }
 

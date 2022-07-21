@@ -57,8 +57,6 @@ class CarProvider with ChangeNotifier {
 //////////////////////// reloed List of Cars if the user refresh the Home Screen
 
   reloedListCars() {
-    loadingState = LoadingState.initial;
-    notifyListeners();
     return getCars();
   }
 

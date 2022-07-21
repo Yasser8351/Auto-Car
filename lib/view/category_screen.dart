@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../widget/list_category_widget.dart';
 import '../widget/loading_widget.dart';
 import '../widget/reytry_error_widget.dart';
+import '../widget/search_widget_with_logo.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key? key}) : super(key: key);
@@ -48,23 +49,37 @@ class _CategoryScreenState extends State<CategoryScreen> {
           msg: AppConfig.loading, msgColor: Colors.black, color: Colors.black);
     } else if (categoryProvider.loadingState == LoadingState.error) {
       return ReyTryErrorWidget(
-        title: AppConfig.somthingWrong,
+        title: categoryProvider.apiResponse.message,
         onTap: () {
-          // categoryProvider
-          //     .getCars()
-          //     .then((value) => {listCars = value.dataCar, setState(() {})});
+          setState(() {
+            categoryProvider.loadingState = LoadingState.loading;
+          });
+          categoryProvider.reloedListCategory().then(
+                (value) => {
+                  listCategory = value.dataCategory,
+                  setState(() {}),
+                },
+              );
         },
       );
     } else if (categoryProvider.loadingState == LoadingState.noDataFound) {
       return ReyTryErrorWidget(
         title: AppConfig.noDataFound,
         onTap: () {
-          // categoryProvider
-          //     .getCars()
-          //     .then((value) => {listCars = value.dataCar, setState(() {})});
+          setState(() {
+            categoryProvider.loadingState = LoadingState.loading;
+          });
+          categoryProvider.reloedListCategory().then(
+                (value) => {
+                  listCategory = value.dataCategory,
+                  setState(() {}),
+                },
+              );
         },
       );
     } else {
+      var height = size.height / 2.278 * listCategory.length;
+
       return Scaffold(
         body: SingleChildScrollView(
           child: SizedBox(
@@ -73,19 +88,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
               child: Column(
                 children: [
                   const SizedBox(height: 40),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Image.asset(
-                        AppConfig.logo,
-                        height: 70,
-                        width: 140,
-                      ),
-                      const Icon(Icons.search, size: 28),
-                    ],
-                  ),
+                  const SearchWidgetWithLogo(),
                   SizedBox(
-                    height: size.height * listCategory.length / 4,
+                    height: height,
+                    //height: size.height * listCategory.length / 3,
+                    // height: size.height * listCategory.length / 4,
                     child: ListView.separated(
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 20),

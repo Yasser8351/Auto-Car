@@ -23,6 +23,7 @@ class AppConfig {
   static const viewAll = "view All";
   static const brands = "Brands";
   static const bayNow = "اشتري الأن";
+  static const unAutaristion = "دخول غير مصرح به";
   static const shareOffers = "احصل علي عرض السيارة الان";
   static const shareDiscreption =
       "حمل تطبيق اوتوكارز واحصل علي افضل عروض السيارات";

@@ -28,15 +28,14 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    var height = size.height / 6 * widget.listCars.length;
+
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(DetailsScreen.routeName);
       },
       child: SizedBox(
-        // height: widget.isOffers ? size.height : size.height / 2.2,
-        height:
-            widget.isOffers ? 1300 : size.height * widget.listCars.length / 6,
-
+        height: height,
         child: GridView.builder(
             // physics: widget.isOffers
             //     ? const BouncingScrollPhysics()
