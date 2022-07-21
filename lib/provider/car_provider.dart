@@ -38,10 +38,10 @@ class CarProvider with ChangeNotifier {
         setApiResponseValue(
             'Somthing wrong error', false, _listCars, LoadingState.error);
       }
-    } on FormatException {
+    } on SocketException {
       setApiResponseValue(
           AppConfig.noInternet, false, _listCars, LoadingState.error);
-    } on SocketException {
+    } on FormatException {
       setApiResponseValue(
           AppConfig.serverError, false, _listCars, LoadingState.error);
     }
@@ -57,6 +57,8 @@ class CarProvider with ChangeNotifier {
 //////////////////////// reloed List of Cars if the user refresh the Home Screen
 
   reloedListCars() {
+    loadingState = LoadingState.initial;
+    notifyListeners();
     return getCars();
   }
 

@@ -5,6 +5,7 @@ import 'package:auto_car/view/favert.dart';
 import 'package:auto_car/view/home.dart';
 import 'package:auto_car/view/more.dart';
 import 'package:auto_car/view/offers.dart';
+import 'package:auto_car/view/tab_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -50,8 +51,8 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.light,
           ),
         ),
-        home: const More(),
-        // home: const TabScreen(),
+        //home: const More(),
+        home: const TabScreen(),
         routes: {
           Home.routeName: (ctx) => const Home(),
           CategoryScreen.routeName: (ctx) => const CategoryScreen(),

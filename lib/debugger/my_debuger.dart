@@ -25,3 +25,7 @@ class MyDebugger {
 myLog(String key, String methodeName, String value) {
   return log("methodeName : $methodeName \n  $key :  ${value.toString()}");
 }
+
+myLogs(String key, dynamic value) {
+  return log("methodeName : $key :  ${value.toString()}");
+}

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_car/config/app_config.dart';
 import 'package:auto_car/provider/car_provider.dart';
 import 'package:flutter/material.dart';
@@ -45,20 +47,30 @@ class _HomeState extends State<Home> {
           msg: AppConfig.loading, msgColor: Colors.black, color: Colors.black);
     } else if (carProvider.loadingState == LoadingState.error) {
       return ReyTryErrorWidget(
-        title: AppConfig.somthingWrong,
+        title: carProvider.apiResponse.message,
         onTap: () {
-          carProvider
-              .getCars()
-              .then((value) => {listCars = value.dataCar, setState(() {})});
+          setState(() {
+            carProvider.loadingState = LoadingState.loading;
+          });
+          log(carProvider.loadingState.toString());
+          carProvider.reloedListCars().then(
+                (value) => {
+                  listCars = value.dataCar,
+                  setState(() {}),
+                },
+              );
         },
       );
     } else if (carProvider.loadingState == LoadingState.noDataFound) {
       return ReyTryErrorWidget(
         title: AppConfig.noDataFound,
         onTap: () {
-          carProvider
-              .getCars()
-              .then((value) => {listCars = value.dataCar, setState(() {})});
+          carProvider.reloedListCars().then(
+                (value) => {
+                  listCars = value.dataCar,
+                  setState(() {}),
+                },
+              );
         },
       );
     } else {

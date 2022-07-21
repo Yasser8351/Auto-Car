@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AppStyle {
-  // Text Style fpr All App
+  // Text Style for All App
+  //
+  //Text Size for All App
+  //Primary 22
+  //Secondary 17
+  //Three 14
 
   static const textMoreScreenScendry = TextStyle(
     fontSize: 17,

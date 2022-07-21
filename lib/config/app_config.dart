@@ -70,6 +70,12 @@ class AppConfig {
   // Image Assets for All App
   static const logo = "assets/images/logo.png";
   static const logoSvg = "assets/images/logo.svg";
+  static const logoWhitePng = "assets/images/logowhite.png";
+  static const logoWhiteSvg = "assets/images/logowhite.svg";
+  static const logoWithoutBackgroundSvg =
+      "assets/images/logowithoutbackground.svg";
+  static const logoWithoutBackgroundPng =
+      "assets/images/logowithoutbackground.png";
   static const placeholder = "assets/images/placeholder.png";
   static const imageCar = "assets/images/car.png";
   static const imageCar2 = "assets/images/car2.jpeg";
