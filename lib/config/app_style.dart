@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 class AppStyle {
   // Text Style fpr All App
 
+  static const textMoreScreenScendry = TextStyle(
+    fontSize: 17,
+    color: Color.fromARGB(255, 29, 29, 29),
+  );
+  static final textMoreScreenTitle = TextStyle(
+    fontSize: 17,
+    color: Colors.grey.shade600,
+  );
   static const textStyle1 =
       TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold);
   static const textStyle2 = TextStyle(

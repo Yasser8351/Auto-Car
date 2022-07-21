@@ -1,9 +1,10 @@
 import 'package:auto_car/config/app_config.dart';
-import 'package:auto_car/view/about_screen.dart';
+import 'package:auto_car/config/app_style.dart';
 import 'package:auto_car/view/version_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
+import 'about_screen.dart';
 import 'terms_and_conditions_screen.dart';
 
 class More extends StatelessWidget {
@@ -14,43 +15,81 @@ class More extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Card(
-        // margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
-        elevation: 10,
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 50),
-            buildCardItem(
-                context, AppConfig.callUs, Icons.support_agent, () => {}),
-            buildDivider(),
-            buildCardItem(context, AppConfig.aboutApp, Icons.app_settings_alt,
-                () => Navigator.of(context).pushNamed(AboutScreen.routeName)),
-            buildDivider(),
-            buildCardItem(context, AppConfig.versionApp, Icons.info_outline,
-                () => Navigator.of(context).pushNamed(VersionScreen.routeName)),
-            buildDivider(),
-            buildCardItem(context, AppConfig.shareApp, Icons.share_outlined,
-                () async {
-              await Share.share(AppConfig.shareDiscreption);
-            }),
-
-            // () async {await Share.share(AppConfig.shareDiscreption)};
-            buildDivider(),
-            buildCardItem(
-                context,
-                AppConfig.privacyPolicy,
-                Icons.verified_user_outlined,
-                () => Navigator.of(context)
-                    .pushNamed(TermsAndConditions.routeName)),
-            buildDivider(),
-            buildCardItem(
-                context,
-                AppConfig.termsAndConditions,
-                Icons.contact_page_outlined,
-                () => Navigator.of(context)
-                    .pushNamed(TermsAndConditions.routeName)),
-            buildDivider(),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  AppConfig.privacyApp,
+                  style: AppStyle.textMoreScreenTitle,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Card(
+              elevation: 10,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 14),
+                  buildCardItem(
+                      context,
+                      AppConfig.privacyPolicy,
+                      Icons.verified_user,
+                      () => Navigator.of(context)
+                          .pushNamed(TermsAndConditions.routeName)),
+                  buildDivider(),
+                  buildCardItem(
+                      context,
+                      AppConfig.termsAndConditions,
+                      Icons.front_hand,
+                      () => Navigator.of(context)
+                          .pushNamed(TermsAndConditions.routeName)),
+                  const SizedBox(height: 14),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            Card(
+              elevation: 10,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 14),
+                  buildCardItem(
+                      context, AppConfig.rateApp, Icons.star, () => {}),
+                  buildDivider(),
+                  buildCardItem(
+                      context, AppConfig.callUs, Icons.phone, () => {}),
+                  buildDivider(),
+                  buildCardItem(
+                      context,
+                      AppConfig.aboutApp,
+                      Icons.app_settings_alt,
+                      () => Navigator.of(context)
+                          .pushNamed(AboutScreen.routeName)),
+                  buildDivider(),
+                  buildCardItem(
+                      context, AppConfig.shareApp, Icons.share_outlined,
+                      () async {
+                    await Share.share(AppConfig.shareDiscreption);
+                  }),
+                  buildDivider(),
+                  buildCardAboutApp(
+                      context,
+                      AppConfig.appName,
+                      AppConfig.logo,
+                      () => Navigator.of(context)
+                          .pushNamed(VersionScreen.routeName)),
+                  const SizedBox(height: 14),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -69,19 +108,76 @@ buildCardItem(
   return GestureDetector(
     onTap: () => onTap(),
     child: Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(icons, size: 27, color: Colors.grey.shade600),
-          const SizedBox(width: 10),
+          Icon(Icons.navigate_before, size: 27, color: Colors.grey.shade600),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(title, style: AppStyle.textMoreScreenScendry),
+              const SizedBox(width: 16),
+              Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xffFD4C4C),
+                    borderRadius: BorderRadius.circular(3),
+                  ),
+                  height: 30,
+                  width: 30,
+                  child: Icon(icons, size: 17, color: Colors.white)),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+buildCardAboutApp(
+    BuildContext context, String title, String icons, Function() onTap) {
+  return GestureDetector(
+    onTap: () => onTap(),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          //Icon(Icons.navigate_before, size: 27, color: Colors.grey.shade600),
           Text(
-            title,
-            style: const TextStyle(
-              fontSize: 20,
-              color: Color.fromARGB(255, 29, 29, 29),
+            " 1.0 ",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey.shade600,
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Color.fromARGB(255, 29, 29, 29),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xffFD4C4C),
+                  borderRadius: BorderRadius.circular(3),
+                ),
+                height: 30,
+                width: 30,
+                child: Center(
+                  child: Image.asset(icons,
+                      width: 20, height: 20, color: Colors.white),
+                ),
+              ),
+              // child: Icon(icons, size: 20, color: Colors.white)),
+            ],
           ),
         ],
       ),

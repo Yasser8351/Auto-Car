@@ -5,7 +5,6 @@ import 'package:auto_car/view/favert.dart';
 import 'package:auto_car/view/home.dart';
 import 'package:auto_car/view/more.dart';
 import 'package:auto_car/view/offers.dart';
-import 'package:auto_car/view/tab_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +32,9 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          //fontFamily: 'Changa',
+          // const Color(0xff7B838E)   grey
+          // const Color(0xffFD4C4C)   red.shade
+          fontFamily: 'Changa',
           primaryColor: Colors.black,
           colorScheme: const ColorScheme(
             primary: Colors.black,
@@ -41,7 +42,6 @@ class MyApp extends StatelessWidget {
             background: Colors.yellow,
             onBackground: Colors.black,
             secondary: Color.fromARGB(255, 206, 3, 162),
-            // secondary: const Color(0xffF8F8F8),
             onSecondary: Colors.white,
             error: Colors.grey,
             onError: Color.fromARGB(255, 250, 150, 0),
@@ -50,7 +50,8 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.light,
           ),
         ),
-        home: const TabScreen(),
+        home: const More(),
+        // home: const TabScreen(),
         routes: {
           Home.routeName: (ctx) => const Home(),
           CategoryScreen.routeName: (ctx) => const CategoryScreen(),

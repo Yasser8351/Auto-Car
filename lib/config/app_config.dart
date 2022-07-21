@@ -9,18 +9,20 @@ class AppConfig {
   static const offers = "العروض";
   static const more = "المزيد";
   static const faq = "الأسئلة الشائعة";
-  static const shareApp = "Share App";
-  static const aboutApp = "About App";
-  static const versionApp = "Version App";
-  static const callUs = "Call Us";
-  static const privacyPolicy = "Privacy Policy";
-  static const search = "Search";
-  static const termsAndConditions = "Terms and Conditions";
+  static const shareApp = "مشاركة التطبيق";
+  static const aboutApp = "حول التطبيق";
+  static const versionApp = "اصدار التطبيق";
+  static const callUs = "اتصل بنا";
+  static const privacyPolicy = "سياسة الخصوصية";
+  static const privacyApp = "سياسات التطبيق";
+  static const rateApp = "قيم التطبيق";
+  static const search = "بحث...";
+  static const termsAndConditions = "الشروط والأحكام";
   static const findYourFavertCar = "Let,s find You favorites car here";
   static const findCar = "find your car";
   static const viewAll = "view All";
   static const brands = "Brands";
-  static const bayNow = "Bay Now";
+  static const bayNow = "اشتري الأن";
   static const shareOffers = "احصل علي عرض السيارة الان";
   static const shareDiscreption =
       "حمل تطبيق اوتوكارز واحصل علي افضل عروض السيارات";
@@ -75,7 +77,7 @@ class AppConfig {
   static const imageCar4 = "assets/images/car4.jpeg";
   static const imageCar5 = "assets/images/car5.jpeg";
   static const imageCar6 = "assets/images/car6.jpeg";
-  static const filter = "assets/images/filter.svg"; //filter.svg
+  static const filter = "assets/images/filter.svg";
   static const whatsapp = "assets/images/whatsapp.svg";
   static const tesla = "assets/images/tesla2.png";
   static const ferrari = "assets/images/ferrari.png";
