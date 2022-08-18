@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:auto_car/api/api_constant.dart';
 import 'package:auto_car/config/app_config.dart';
@@ -48,7 +47,7 @@ class OfferDetailsProvider with ChangeNotifier {
       myLogs("response", response.body.toString());
 
       if (response.statusCode == 200) {
-        var responseFromBody = offerDetailsModelFromJson(response.body);
+        var responseFromBody = offerDetailModelFromJson(response.body);
 
         _listImageGallary = responseFromBody.imageGallaries;
         _listFeature = responseFromBody.featuresTypes;
@@ -79,16 +78,16 @@ class OfferDetailsProvider with ChangeNotifier {
         setApiResponseValue(AppConfig.somthingWrong, false, _listImageGallary,
             LoadingState.error);
       }
-    } on SocketException {
-      setApiResponseValue(
-          AppConfig.noInternet, false, _listImageGallary, LoadingState.error);
-    } on FormatException {
-      setApiResponseValue(
-          AppConfig.serverError, false, _listImageGallary, LoadingState.error);
+      // } on SocketException {
+      //   setApiResponseValue(
+      //       AppConfig.noInternet, false, _listImageGallary, LoadingState.error);
+      // } on FormatException {
+      //   setApiResponseValue(
+      //       AppConfig.serverError, false, _listImageGallary, LoadingState.error);
+      // }
+    } catch (e) {
+      myLogs("error", e.toString());
     }
-    // } catch (e) {
-    //   myLogs("error", e.toString());
-    // }
 
     notifyListeners();
     return apiResponse;

@@ -234,22 +234,25 @@ class _HomeState extends State<Home> {
                         },
                       ),
                       const SizedBox(height: 10),
-                      ListBrandWidget(
-                        brandProvider: brandProvider,
-                        listBrand: listBrands,
-                        onTap: () {
-                          log("message");
-                          setState(() {
-                            search = "mercedes benz";
-                          });
-                          carProvider.getCars(1, search).then((value) => {
-                                setState(() {
-                                  listCars = value.dataCar;
-                                  totalRecords = value.totalRecords;
-                                }),
-                              });
-                        },
-                        widget: buildListBrand(size),
+                      SizedBox(
+                        height: 150,
+                        child: ListBrandWidget(
+                          brandProvider: brandProvider,
+                          listBrand: listBrands,
+                          onTap: () {
+                            log("message");
+                            setState(() {
+                              search = "mercedes benz";
+                            });
+                            carProvider.getCars(1, search).then((value) => {
+                                  setState(() {
+                                    listCars = value.dataCar;
+                                    totalRecords = value.totalRecords;
+                                  }),
+                                });
+                          },
+                          widget: buildListBrand(size),
+                        ),
                       ),
                       const SizedBox(height: 0),
                       carProvider.loadingState == LoadingState.noDataFound

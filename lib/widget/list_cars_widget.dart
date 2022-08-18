@@ -64,12 +64,11 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
       },
       builder: (data, index) {
         var id = widget.listCars[index].id;
-        var image = widget.listCars[index].brandModel.brand.logoPath;
+        var image =
+            'http://207.180.223.113:8975/Resources/Images/210bd027-d020-4c0e-8fa0-f1b951c8fcc7_jannis-lucas-jBmNhftLcrY-unsplash.jpg'; // var image = widget.listCars[index].brandModel.brand.logoPath;
         var price = widget.listCars[index].price;
         var title = widget.listCars[index].brandModel.modelName;
         var year = widget.listCars[index].year.yearName;
-        // List<ImageGallary> listImageGallaries =
-        //     widget.listCars[index].imageGallaries;
 
         return GestureDetector(
           onTap: () {

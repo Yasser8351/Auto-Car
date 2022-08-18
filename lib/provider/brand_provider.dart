@@ -25,7 +25,7 @@ class BrandProvider with ChangeNotifier {
     try {
       loadingState = LoadingState.loading;
       var response = await http
-          .get(ApiUrl.getAllBrand)
+          .get(ApiUrl.getAllBrand, headers: ApiUrl.getHeader())
           .timeout(const Duration(seconds: 20));
       if (response.statusCode == 200) {
         //  _listBrands = carModelFromJson(response.body);
