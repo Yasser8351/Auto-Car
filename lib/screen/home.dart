@@ -132,6 +132,7 @@ class _HomeState extends State<Home> {
             listBrands = value.dataBrand;
           }),
         });
+
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       myLogs("onMessageOpenedApp", message);
       toastMessage('onMessageOpenedApp');
@@ -187,8 +188,20 @@ class _HomeState extends State<Home> {
       return ReyTryErrorWidget(
         title: carProvider.apiResponse.message,
         onTap: () {
-          setState(() => carProvider.loadingState = LoadingState.loading);
-          getDataCars();
+          setState(() => {});
+          // getDataCars();
+          carProvider.getCars(1, 10, '').then((value) => {
+                setState(() {
+                  // carProvider.loadingState = LoadingState.loading;
+                  listCars = value.dataCar;
+                  totalRecords = value.totalRecords;
+                }),
+              });
+          brandProvider.getBrands().then((value) => {
+                setState(() {
+                  listBrands = value.dataBrand;
+                }),
+              });
         },
       );
     } else {
