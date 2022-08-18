@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 import '../config/app_config.dart';
 
-import '../config/app_style.dart';
 import '../widget/button_boarder.dart';
 import 'complet_send.dart';
 
@@ -29,26 +30,26 @@ class InvoiceScreen extends StatefulWidget {
 class _InvoiceScreenState extends State<InvoiceScreen>
     with TickerProviderStateMixin {
   SQLDatabase sqlDatabase = SQLDatabase();
+
+  late AnimationController controller;
   final _zibCodeController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _cityController = TextEditingController();
+  final _carColorController = TextEditingController();
   final _localController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _countryController = TextEditingController();
   final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _numerCarsController = TextEditingController();
 
   bool _pinned = true;
   bool _snap = false;
   bool _floating = false;
-
   bool _isLoading = false;
-  bool _isSend = false;
-
   bool isSearch = false;
 
-  late AnimationController controller;
-
   List<Map> listUserData = [];
+
+  final ImagePicker _picker = ImagePicker();
+  File? _storedImage;
 
   @override
   void initState() {
@@ -78,8 +79,8 @@ class _InvoiceScreenState extends State<InvoiceScreen>
       _nameController.text = listUserData[0]['name'];
       _emailController.text = listUserData[0]['email'];
       _phoneController.text = listUserData[0]['phone'];
-      _countryController.text = listUserData[0]['country'];
-      _cityController.text = listUserData[0]['city'];
+      _numerCarsController.text = listUserData[0]['country'];
+      _carColorController.text = listUserData[0]['city'];
       _localController.text = listUserData[0]['local'];
       _zibCodeController.text = listUserData[0]['zibCode'];
     }
@@ -100,47 +101,43 @@ class _InvoiceScreenState extends State<InvoiceScreen>
         );
   }
 
-/*
-  sendEmail({required String body, required String title}) async {
-    // String username = 'infomsc33@gmail.com';
-    String username = 'infomsc33@gmail.com';
-    String password = '123yasserMsc8';
+  Future<void> takeImageFromGallery() async {
+    final imageFile =
+        await _picker.pickImage(source: ImageSource.gallery, imageQuality: 50);
 
-    // try {
-    //   final Email email = Email(
-    //     body: 'Email body',
-    //     subject: 'Email subject',
-    //     recipients: ['yassermsc8@gmail.com'],
-    //     //cc: ['cc@example.com'],
-    //     //bcc: ['bcc@example.com'],
-    //     attachmentPaths: ['/path/to/attachment.zip'],
-    //     isHTML: false,
-    //   );
-
-    //   await FlutterEmailSender.send(email);
-    // } catch (e) {
-    //   myLog("Expation", e.toString());
-    // }
+    if (imageFile == null) {
+      return;
+    }
+    setState(() {
+      _storedImage = File(imageFile.path);
+    });
   }
-*/
+
   sendEmail({required String body, required String title}) async {
     String data =
-        '<html><body><style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style><table style="width:100%"><tr><th>${_nameController.text}</th> <th>اسم العميل</th></tr><tr><th>${_emailController.text}</th> <th>ايميل العميل</th></tr><tr><th>${_phoneController.text}</th> <th>رقم الهاتف</th><tr><th>${widget.carName}</th> <th>اسم السيارة</th></tr></tr><tr><tr><th>${widget.carPrice}</th> <th>سعر السيارة</th></tr></table></body></html>';
+        '<html><body><style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style><table style="width:100%"><tr><th>${_nameController.text}</th> <th>اسم العميل</th></tr><tr><th>${_emailController.text}</th> <th>ايميل العميل</th></tr><tr><th>${_phoneController.text}</th> <th>رقم الهاتف</th><tr><th>${widget.carName}</th> <th>اسم السيارة</th></tr></tr><tr><tr><th>${widget.carPrice}</th> <th>سعر السيارة</th></tr><tr><th>${_numerCarsController.text}</th> <th>عدد السيارات</th></tr><tr><th>${_carColorController.text}</th> <th>لون السيارة</th></tr></table></body></html>';
 
     setState(() {
       _isLoading = true;
     });
 
-    String username = "username@c-pinal.com";
-    String password = "password";
-
-    final smtpServer = new SmtpServer("domin.com",
-        username: username, password: password, port: 465, ssl: true);
+    String username = "sender@gulfsmo.net";
+    String password = "-zxu[vtQ.pU(";
+    final smtpServer = new SmtpServer("mail.gulfsmo.net",
+        // String username = "username@c-pinal.com";
+        // String password = "password";
+        //final smtpServer = new SmtpServer("domin.com",
+        username: username,
+        password: password,
+        port: 465,
+        ssl: true);
 
     final message = Message()
       ..from = Address(username, AppConfig.appName)
-      ..recipients.add('yasser8351@gmail.com')
+      ..recipients.add('batagroup.info@gmail.com')
+      // ..recipients.add('yasser8351@gmail.com')
       ..subject = AppConfig.invoice
+      ..attachments.add(FileAttachment(_storedImage!))
       ..text = data
       ..html = data;
 
@@ -148,7 +145,6 @@ class _InvoiceScreenState extends State<InvoiceScreen>
       await send(message, smtpServer);
       setState(() {
         _isLoading = false;
-        _isSend = true;
       });
       Navigator.of(context)
           .push(MaterialPageRoute(builder: ((context) => CompletSend())));
@@ -156,7 +152,6 @@ class _InvoiceScreenState extends State<InvoiceScreen>
       setState(
         () {
           _isLoading = false;
-          _isSend = false;
         },
       );
 
@@ -240,6 +235,7 @@ class _InvoiceScreenState extends State<InvoiceScreen>
                                         label: AppConfig.name,
                                         controller: _nameController,
                                         obscure: false,
+                                        inputType: TextInputType.text,
                                       ),
                                       const SizedBox(
                                         height: 16.0,
@@ -248,6 +244,7 @@ class _InvoiceScreenState extends State<InvoiceScreen>
                                         label: AppConfig.phone,
                                         controller: _phoneController,
                                         obscure: false,
+                                        inputType: TextInputType.number,
                                       ),
                                       const SizedBox(
                                         height: 16.0,
@@ -256,50 +253,61 @@ class _InvoiceScreenState extends State<InvoiceScreen>
                                         label: AppConfig.email,
                                         controller: _emailController,
                                         obscure: false,
+                                        inputType: TextInputType.text,
                                       ),
                                       const SizedBox(
                                         height: 16.0,
                                       ),
                                       _buildTextfield(
-                                        label: AppConfig.country,
-                                        controller: _countryController,
+                                        label: AppConfig.numberOfCar,
+                                        controller: _numerCarsController,
                                         obscure: false,
+                                        inputType: TextInputType.number,
                                       ),
                                       const SizedBox(
                                         height: 16.0,
                                       ),
                                       _buildTextfield(
-                                        label: AppConfig.city,
-                                        controller: _cityController,
+                                        label: AppConfig.carColor,
+                                        controller: _carColorController,
                                         obscure: false,
+                                        inputType: TextInputType.text,
                                       ),
                                       const SizedBox(
                                         height: 16.0,
                                       ),
-                                      _buildTextfield(
-                                        label: AppConfig.local,
-                                        controller: _localController,
-                                        obscure: false,
-                                      ),
-                                      const SizedBox(
-                                        height: 16.0,
-                                      ),
-                                      _buildTextfield(
-                                        label: AppConfig.zibCode,
-                                        controller: _zibCodeController,
-                                        obscure: false,
+                                      GestureDetector(
+                                        onTap: () async {
+                                          await takeImageFromGallery();
+                                        },
+                                        child: _storedImage == null
+                                            ? Image.asset(
+                                                AppConfig.placeholder,
+                                                width: 136,
+                                                height: 136,
+                                              )
+                                            : ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(40),
+                                                child: Image.file(
+                                                  _storedImage!,
+                                                  width: 100,
+                                                  height: 100,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
                                       ),
                                       const SizedBox(
                                         height: 30.0,
                                       ),
-                                      Text(
-                                        AppConfig.invoiceNote,
-                                        style: AppStyle.textBlack18,
-                                        textAlign: TextAlign.right,
-                                      ),
-                                      const SizedBox(
-                                        height: 50.0,
-                                      ),
+                                      // Text(
+                                      //   AppConfig.invoiceNote,
+                                      //   style: AppStyle.textBlack18,
+                                      //   textAlign: TextAlign.right,
+                                      // ),
+                                      // const SizedBox(
+                                      //   height: 50.0,
+                                      // ),
                                       _isLoading
                                           ? Center(
                                               child:
@@ -309,11 +317,15 @@ class _InvoiceScreenState extends State<InvoiceScreen>
                                               color: Colors.red,
                                               icon: Icons.send,
                                               onTap: () {
-                                                if (_emailController
+                                                if (_nameController
                                                         .text.isEmpty ||
-                                                    _zibCodeController
+                                                    _phoneController
                                                         .text.isEmpty ||
-                                                    _countryController
+                                                    _emailController
+                                                        .text.isEmpty ||
+                                                    _carColorController
+                                                        .text.isEmpty ||
+                                                    _numerCarsController
                                                         .text.isEmpty) {
                                                   toast(AppConfig
                                                       .allFieldsrequired);
@@ -324,15 +336,15 @@ class _InvoiceScreenState extends State<InvoiceScreen>
                                                     _nameController.text,
                                                     _phoneController.text,
                                                     _emailController.text,
-                                                    _countryController.text,
-                                                    _cityController.text,
+                                                    _numerCarsController.text,
+                                                    _carColorController.text,
                                                     _localController.text,
                                                     _zibCodeController.text,
                                                   );
 
                                                   sendEmail(
                                                       title: AppConfig.appName,
-                                                      body: _countryController
+                                                      body: _numerCarsController
                                                           .text);
                                                 }
                                               },
@@ -348,145 +360,6 @@ class _InvoiceScreenState extends State<InvoiceScreen>
           ),
         ],
       ),
-
-      /*  
-      body: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          color: Colors.white,
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Theme(
-            data: ThemeData(
-              primaryColor: Colors.black,
-              primaryColorDark: Colors.black,
-              focusColor: Colors.black,
-              colorScheme: const ColorScheme(
-                primary: Colors.black,
-                onPrimary: Colors.black,
-                secondary: Colors.black,
-                onSecondary: Colors.white,
-                brightness: Brightness.light,
-                background: Colors.black,
-                onBackground: Colors.black,
-                error: Colors.black,
-                onError: Colors.black,
-                surface: Colors.black,
-                onSurface: Colors.black,
-              ),
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 24.0, vertical: 10),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _buildTextfield(
-                        label: AppConfig.name,
-                        controller: _emailController,
-                        obscure: false,
-                      ),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                      _buildTextfield(
-                        label: AppConfig.phone,
-                        controller: _phoneController,
-                        obscure: false,
-                      ),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                      _buildTextfield(
-                        label: AppConfig.email,
-                        controller: _emailController,
-                        obscure: false,
-                      ),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                      _buildTextfield(
-                        label: AppConfig.country,
-                        controller: _countryController,
-                        obscure: false,
-                      ),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                      _buildTextfield(
-                        label: AppConfig.city,
-                        controller: _cityController,
-                        obscure: false,
-                      ),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                      _buildTextfield(
-                        label: AppConfig.local,
-                        controller: _localController,
-                        obscure: false,
-                      ),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                      _buildTextfield(
-                        label: AppConfig.zibCode,
-                        controller: _zibCodeController,
-                        obscure: false,
-                      ),
-                      const SizedBox(
-                        height: 30.0,
-                      ),
-                      Text(
-                        AppConfig.invoiceNote,
-                        style: AppStyle.textBlack18,
-                        textAlign: TextAlign.right,
-                      ),
-                      const SizedBox(
-                        height: 50.0,
-                      ),
-                      _isLoading
-                          ? Center(child: CircularProgressIndicator())
-                          : BorderButtonCustom(
-                              title: AppConfig.sendInvoice,
-                              // backgroundColor: Colors.transparent,
-                              //foregroundColor: Colors.red,
-                              //borderColor: Color.fromARGB(255, 125, 96, 96),
-                              color: Colors.red,
-                              icon: Icons.send,
-                              onTap: () {
-                                if (_emailController.text.isEmpty ||
-                                    _zibCodeController.text.isEmpty ||
-                                    _countryController.text.isEmpty) {
-                                  toast(AppConfig.allFieldsrequired);
-                                  // ScaffoldMessenger.of(context).showSnackBar(
-                                  //     SnackBar(
-                                  //         content: Text(
-                                  //             AppLocalizations.of(context)!
-                                  //                 .fieldsrequired,)));
-                                } else {
-                                  sendEmail(
-                                      title: _emailController.text,
-                                      body: _countryController.text);
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //     builder: ((context) => CompletSend())));
-
-                                  //stop
-                                  // Navigator.of(context).push(MaterialPageRoute(
-                                  //     builder: ((context) => CompletSend())));
-                                }
-                              },
-                            ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-  */
     );
   }
 
@@ -494,6 +367,7 @@ class _InvoiceScreenState extends State<InvoiceScreen>
     required TextEditingController controller,
     required String label,
     required bool obscure,
+    required TextInputType inputType,
   }) {
     return Material(
       elevation: 1,
@@ -504,7 +378,7 @@ class _InvoiceScreenState extends State<InvoiceScreen>
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: TextField(
-            keyboardType: TextInputType.text,
+            keyboardType: inputType,
             obscureText: obscure,
             textAlign: TextAlign.right,
             decoration: InputDecoration(

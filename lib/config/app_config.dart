@@ -73,6 +73,8 @@ class AppConfig {
   static const name = "الاسم بالكامل";
   static const city = "المدينة";
   static const email = "البريد الالكتروني";
+  static const numberOfCar = "عدد السيارات";
+  static const carColor = "لون السيارة";
   static const country = "الدولة";
   static const zibCode = "الرمز البريدي";
   static const local = "المحلية";

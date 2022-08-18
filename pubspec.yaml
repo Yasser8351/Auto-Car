@@ -58,8 +58,8 @@ dependencies:
   # paginated list view 3.0.2
   paginated_list: ^1.0.2
 
-  # paginated list view 2.10.4
-  #pagination_view: ^2.0.0
+  # get Image From gallery Or camera
+  image_picker: ^0.8.5+3
 
   # firebase setup
   firebase_messaging: ^11.4.2
