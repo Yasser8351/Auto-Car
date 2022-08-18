@@ -5,6 +5,7 @@ import 'package:auto_car/database/sqldb.dart';
 import 'package:auto_car/model/car_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:paginated_list/paginated_list.dart';
 
 import '../config/app_style.dart';
 import '../debugger/my_debuger.dart';
@@ -42,26 +43,26 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return ListView.builder(
+    return PaginatedList(
       shrinkWrap: true,
-      // loadingIndicator: Padding(
-      //   padding: EdgeInsets.symmetric(vertical: 20),
-      //   child: widget.totalRecords == widget.listCars.length
-      //       ? SizedBox()
-      //       : Center(
-      //           child: CircularProgressIndicator(
-      //               color: Theme.of(context).colorScheme.background),
-      //         ),
-      // ),
+      loadingIndicator: Padding(
+        padding: EdgeInsets.symmetric(vertical: 20),
+        child: widget.totalRecords == widget.listCars.length
+            ? SizedBox()
+            : Center(
+                child: CircularProgressIndicator(
+                    color: Theme.of(context).colorScheme.background),
+              ),
+      ),
       physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-      itemCount: widget.listCars.length,
-      // isRecentSearch: false,
-      // isLastPage: false,
-      // onLoadMore: (index) {
-      //   widget.onTap();
-      // },
-      itemBuilder: (data, index) {
+      items: widget.listCars,
+      isRecentSearch: false,
+      isLastPage: false,
+      onLoadMore: (index) {
+        widget.onTap();
+      },
+      builder: (data, index) {
         var id = widget.listCars[index].id;
         var image = widget.listCars[index].brandModel.brand.logoPath;
         var price = widget.listCars[index].price;

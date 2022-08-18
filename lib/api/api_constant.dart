@@ -3,6 +3,9 @@ class ApiUrl {
   //static const String _root = 'https://fakestoreapi.com/';
   static const String _root = 'http://207.180.223.113:8975/api/v1/';
 
+  static const String token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImUxZGFjMDE4LWQ5YjUtNDI1NC1hZjdhLTRiNGFhMzg0MWY4YSIsIm5hbWVpZCI6ImUxZGFjMDE4LWQ5YjUtNDI1NC1hZjdhLTRiNGFhMzg0MWY4YSIsInN1YiI6Inlhc3NlcjgzNTFAZ21haWwuY29tIiwiZW1haWwiOiJ5YXNzZXI4MzUxQGdtYWlsLmNvbSIsImp0aSI6ImZmNThkYjkwLTk4NWEtNDM3Ni1iMzcxLTg2NTA2NjljNjVjZCIsIm5iZiI6MTY2MDgwNjU0NSwiZXhwIjoxNjYwODA3MTQ1LCJpYXQiOjE2NjA4MDY1NDV9.mad3vnwdgVl8D8DdzTdS9H2kf-8w_0e1rp-4OCGplXE";
+
   /// production parameters
   static String get getAllOffer =>
       'http://207.180.223.113:8975/api/v1/Offer/MGetAll?';
@@ -20,8 +23,13 @@ class ApiUrl {
 
   static Map<String, String> getHeader() {
     return <String, String>{
-      "content-type": "application/json",
-      "accept": "application/json",
+      // 'Authorization': 'Bearer $token',
+      // "content-type": "application/json",
+      // "accept": "application/json",
+      'accept': '*/*',
+      'Authorization':
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImUxZGFjMDE4LWQ5YjUtNDI1NC1hZjdhLTRiNGFhMzg0MWY4YSIsIm5hbWVpZCI6ImUxZGFjMDE4LWQ5YjUtNDI1NC1hZjdhLTRiNGFhMzg0MWY4YSIsInN1YiI6Inlhc3NlcjgzNTFAZ21haWwuY29tIiwiZW1haWwiOiJ5YXNzZXI4MzUxQGdtYWlsLmNvbSIsImp0aSI6ImZmNThkYjkwLTk4NWEtNDM3Ni1iMzcxLTg2NTA2NjljNjVjZCIsIm5iZiI6MTY2MDgwNjU0NSwiZXhwIjoxNjYwODA3MTQ1LCJpYXQiOjE2NjA4MDY1NDV9.mad3vnwdgVl8D8DdzTdS9H2kf-8w_0e1rp-4OCGplXE',
+      'Content-Type': 'application/json'
     };
   }
 }

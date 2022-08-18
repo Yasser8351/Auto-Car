@@ -24,7 +24,7 @@ class CategoryProvider with ChangeNotifier {
     try {
       loadingState = LoadingState.loading;
       var response = await http
-          .get(ApiUrl.getAllCateory)
+          .get(ApiUrl.getAllCateory, headers: ApiUrl.getHeader())
           .timeout(const Duration(seconds: 20));
       if (response.statusCode == 200) {
         _listCategory = categoryModelFromJson(response.body);

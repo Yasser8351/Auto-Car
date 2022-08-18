@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:auto_car/debugger/my_debuger.dart';
 import 'package:auto_car/model/car_model.dart';
@@ -30,17 +29,19 @@ class CarProvider with ChangeNotifier {
     myLogs("getCars", getCars);
     try {
       loadingState = LoadingState.loading;
-      var response = await http.post(
-          Uri.parse(
-              'http://207.180.223.113:8975/api/v1/Offer/MGetAll?PageNumber=1&PageSize=5'
-              //  ApiUrl.getAllOffer + 'PageNumber=$pageNumber&PageSize=1',
-              ),
-          headers: ApiUrl.getHeader(),
-          body: json.encode(
-            {
-              "search": search //mercedes benz
-            },
-          ));
+      var response = await http
+          .post(
+              Uri.parse(
+                  'http://207.180.223.113:8975/api/v1/Offer/MGetAll?PageNumber=$pageNumber&PageSize=5'
+                  //  ApiUrl.getAllOffer + 'PageNumber=$pageNumber&PageSize=1',
+                  ),
+              headers: ApiUrl.getHeader(),
+              body: json.encode(
+                {
+                  "search": search //mercedes benz
+                },
+              ))
+          .timeout(Duration(seconds: 10));
 
       myLogs("response.body", response.body);
       myLogs("response.statusCode", response.statusCode);
@@ -64,6 +65,8 @@ class CarProvider with ChangeNotifier {
         setApiResponseValue(
             AppConfig.errorOoccurred, false, _listCars, LoadingState.error);
       }
+      /*
+    
     } on SocketException {
       setApiResponseValue(
           AppConfig.noInternet, false, _listCars, LoadingState.error);
@@ -72,13 +75,14 @@ class CarProvider with ChangeNotifier {
           AppConfig.serverError, false, _listCars, LoadingState.error);
     }
 
-    /*
+    
+    */
     } catch (error) {
       setApiResponseValue(
           error.toString(), false, _listCars, LoadingState.error);
       myLog("getCars", "catch error", error.toString());
     }
-     */
+
     notifyListeners();
     return apiResponse;
   }
