@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "142166400665",
+    "project_id": "auto-car-af4bd",
+    "storage_bucket": "auto-car-af4bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142166400665:android:b7dcef93159ddd83156208",
+        "android_client_info": {
+          "package_name": "com.app.autocar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "142166400665-9d00f93rgs3adbtufm8pll2nf56mr6iu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5jxBkaPDig7h4xdQgOoRbqB9p_5p9DYk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "142166400665-9d00f93rgs3adbtufm8pll2nf56mr6iu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
