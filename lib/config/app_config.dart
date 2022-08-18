@@ -84,7 +84,7 @@ class AppConfig {
   static const sendInvoice = "طلب فاتورة مبدئية";
   static const invoice = "فاتورة مبدئية";
   static const sendInvoiceCompleted =
-      "تم ارسال فاتورة مبدئية في الايميل الخاص بك";
+      "تم ارسال فاتورة مبدئية سيتم التواصل معك قريباً";
   static const backToHome = "رجوع للصفحة الرئيسية";
   static const invoiceNote =
       "* ملحوظة \n سيتم ارسال فاتورة مبدئية في الايميل الخاص بك";
@@ -94,6 +94,9 @@ class AppConfig {
   static const imageFromNetwork =
       'http://207.180.223.113:8975/Resources/Images/210bd027-d020-4c0e-8fa0-f1b951c8fcc7_jannis-lucas-jBmNhftLcrY-unsplash.jpg';
 
+  static const uploadId = 'ارفق صورة الهوية او الجواز * ';
+  static const chargeCar = 'هل تريد شحن السيارة؟';
+  static const selectTheImageId = "صورة الهوية مطلوبة";
   //static const s = "";
 
   /* 
@@ -111,7 +114,8 @@ class AppConfig {
       "assets/images/logowithoutbackground.svg";
   static const logoWithoutBackgroundPng =
       "assets/images/logowithoutbackground.png";
-  static const placeholder = "assets/images/logo.png"; // placeholder.png
+  static const placeholder = "assets/images/logo.png";
+  static const placeholder2 = "assets/images/placeholder.png";
   static const imageCar = "assets/images/cars.png";
   static const imageCar2 = "assets/images/car2.jpeg";
   static const imageCar3 = "assets/images/car3.jpeg";

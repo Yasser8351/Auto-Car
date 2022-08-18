@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../config/app_config.dart';
 
+import '../config/app_style.dart';
 import '../widget/button_boarder.dart';
 import 'complet_send.dart';
 
@@ -50,6 +51,8 @@ class _InvoiceScreenState extends State<InvoiceScreen>
 
   final ImagePicker _picker = ImagePicker();
   File? _storedImage;
+
+  int? _value = 2;
 
   @override
   void initState() {
@@ -115,7 +118,7 @@ class _InvoiceScreenState extends State<InvoiceScreen>
 
   sendEmail({required String body, required String title}) async {
     String data =
-        '<html><body><style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style><table style="width:100%"><tr><th>${_nameController.text}</th> <th>اسم العميل</th></tr><tr><th>${_emailController.text}</th> <th>ايميل العميل</th></tr><tr><th>${_phoneController.text}</th> <th>رقم الهاتف</th><tr><th>${widget.carName}</th> <th>اسم السيارة</th></tr></tr><tr><tr><th>${widget.carPrice}</th> <th>سعر السيارة</th></tr><tr><th>${_numerCarsController.text}</th> <th>عدد السيارات</th></tr><tr><th>${_carColorController.text}</th> <th>لون السيارة</th></tr></table></body></html>';
+        '<html><body><style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style><table style="width:100%"><tr><th>${_nameController.text}</th> <th>اسم العميل</th></tr><tr><th>${_emailController.text}</th> <th>ايميل العميل</th></tr><tr><th>${_phoneController.text}</th> <th>رقم الهاتف</th><tr><th>${widget.carName}</th> <th>اسم السيارة</th></tr></tr><tr><tr><th>${widget.carPrice}</th> <th>سعر السيارة</th></tr><tr><th>${_numerCarsController.text}</th> <th>عدد السيارات</th></tr><tr><th>${_carColorController.text}</th> <th>لون السيارة</th></tr><tr><th>${_value == 1 ? "لا" : "نعم"}</th> <th>شحن السيارة</th></tr></table></body></html>';
 
     setState(() {
       _isLoading = true;
@@ -135,7 +138,7 @@ class _InvoiceScreenState extends State<InvoiceScreen>
     final message = Message()
       ..from = Address(username, AppConfig.appName)
       ..recipients.add('batagroup.info@gmail.com')
-      // ..recipients.add('yasser8351@gmail.com')
+      //..recipients.add('yasser8351@gmail.com')
       ..subject = AppConfig.invoice
       ..attachments.add(FileAttachment(_storedImage!))
       ..text = data
@@ -274,21 +277,43 @@ class _InvoiceScreenState extends State<InvoiceScreen>
                                         inputType: TextInputType.text,
                                       ),
                                       const SizedBox(
-                                        height: 16.0,
+                                        height: 30.0,
+                                      ),
+                                      _buildRadioButton(),
+                                      const SizedBox(
+                                        height: 30.0,
+                                      ),
+                                      Text(
+                                        AppConfig.uploadId,
+                                        style: AppStyle.textBlack20,
+                                        textAlign: TextAlign.right,
+                                      ),
+                                      const SizedBox(
+                                        height: 10.0,
                                       ),
                                       GestureDetector(
                                         onTap: () async {
                                           await takeImageFromGallery();
                                         },
                                         child: _storedImage == null
-                                            ? Image.asset(
-                                                AppConfig.placeholder,
-                                                width: 136,
-                                                height: 136,
+                                            ? Container(
+                                                width: size.width,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  border: Border.all(
+                                                      color: Colors.black),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Image.asset(
+                                                  AppConfig.placeholder2,
+                                                  width: size.width * .3,
+                                                  height: size.width * .4,
+                                                ),
                                               )
                                             : ClipRRect(
                                                 borderRadius:
-                                                    BorderRadius.circular(40),
+                                                    BorderRadius.circular(5),
                                                 child: Image.file(
                                                   _storedImage!,
                                                   width: 100,
@@ -300,14 +325,6 @@ class _InvoiceScreenState extends State<InvoiceScreen>
                                       const SizedBox(
                                         height: 30.0,
                                       ),
-                                      // Text(
-                                      //   AppConfig.invoiceNote,
-                                      //   style: AppStyle.textBlack18,
-                                      //   textAlign: TextAlign.right,
-                                      // ),
-                                      // const SizedBox(
-                                      //   height: 50.0,
-                                      // ),
                                       _isLoading
                                           ? Center(
                                               child:
@@ -317,6 +334,11 @@ class _InvoiceScreenState extends State<InvoiceScreen>
                                               color: Colors.red,
                                               icon: Icons.send,
                                               onTap: () {
+                                                if (_storedImage == null) {
+                                                  toast(AppConfig
+                                                      .selectTheImageId);
+                                                  return;
+                                                }
                                                 if (_nameController
                                                         .text.isEmpty ||
                                                     _phoneController
@@ -395,6 +417,55 @@ class _InvoiceScreenState extends State<InvoiceScreen>
           ),
         ),
       ),
+    );
+  }
+
+  _buildRadioButton() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(children: [
+          Row(
+            children: [
+              Radio<int>(
+                  value: 1,
+                  groupValue: _value,
+                  onChanged: (value) {
+                    setState(() {
+                      _value = value;
+                    });
+                  }),
+              Text(
+                'لا',
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Radio<int>(
+                  value: 2,
+                  groupValue: _value,
+                  onChanged: (value) {
+                    setState(() {
+                      _value = value;
+                    });
+                  }),
+              Text(
+                'نعم',
+                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              ),
+            ],
+          )
+        ]),
+        Text(
+          AppConfig.chargeCar,
+          style: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+              fontSize: 20,
+              fontWeight: FontWeight.w500),
+        ),
+      ],
     );
   }
 }
