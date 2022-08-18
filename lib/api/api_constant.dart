@@ -9,11 +9,10 @@ class ApiUrl {
   /// production parameters
   static String get getAllOffer =>
       'http://207.180.223.113:8975/api/v1/Offer/MGetAll?';
-  //static String get getAllOffer => _root + 'Offer/GetAll?';
+  static String get getOfferDetails => _root + 'Offer/MGetOfferDetails';
   // static Uri get getAllOffer =>
   //     Uri.parse(_root + 'Offer/GetAll?PageNumber=1&PageSize=10');
-  static Uri get getOfferDetails =>
-      Uri.parse(_root + 'Offer/MGetOfferDetails?bid=');
+
   static Uri get getAllBrand => Uri.parse(_root + 'Brand/GetAll');
   static Uri get getAllCateory => Uri.parse(_root + 'Cartype/GetAll');
 

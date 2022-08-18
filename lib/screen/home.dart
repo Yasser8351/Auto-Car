@@ -55,7 +55,7 @@ class _HomeState extends State<Home> {
             String title = listBrands[index].name;
             return GestureDetector(
               onTap: () {
-                carProvider.getCars(1, search).then((value) => {
+                carProvider.getCars(1, 10, search).then((value) => {
                       setState(() {
                         listCars = value.dataCar;
                         totalRecords = value.totalRecords;
@@ -119,7 +119,7 @@ class _HomeState extends State<Home> {
     FirebaseMessaging.instance.subscribeToTopic("test");
 
     carProvider = Provider.of<CarProvider>(context, listen: false);
-    carProvider.getCars(1, search).then((value) => {
+    carProvider.getCars(1, 10, search).then((value) => {
           setState(() {
             listCars = value.dataCar;
             totalRecords = value.totalRecords;
@@ -207,7 +207,7 @@ class _HomeState extends State<Home> {
                   //getDataCars();
                 }
                 carProvider
-                    .getCars(1, textSearchController.text)
+                    .getCars(1, 10, textSearchController.text)
                     .then((value) => {
                           setState(() {
                             expandedIndex = -1;
@@ -244,7 +244,7 @@ class _HomeState extends State<Home> {
                             setState(() {
                               search = "mercedes benz";
                             });
-                            carProvider.getCars(1, search).then((value) => {
+                            carProvider.getCars(1, 10, search).then((value) => {
                                   setState(() {
                                     listCars = value.dataCar;
                                     totalRecords = value.totalRecords;
@@ -304,7 +304,7 @@ class _HomeState extends State<Home> {
   }
 
   void getDataCarsProvider(int pageNumber) {
-    carProvider.reloedListCars(pageNumber, search).then(
+    carProvider.reloedListCars(pageNumber, 10, search).then(
           (value) => {
             // listCars = value.dataCar,
             listCars.addAll(value.dataCar),

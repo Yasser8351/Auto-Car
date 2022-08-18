@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:auto_car/api/api_constant.dart';
 import 'package:auto_car/config/app_config.dart';
@@ -6,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../api/api_response.dart';
-import '../debugger/my_debuger.dart';
 import '../enum/all_enum.dart';
 import '../model/offer_details_model.dart';
 
@@ -36,15 +36,10 @@ class OfferDetailsProvider with ChangeNotifier {
     try {
       loadingState = LoadingState.loading;
       var response = await http
-          .post(
-              Uri.parse(
-                  "http://207.180.223.113:8975/api/v1/Offer/MGetOfferDetails?bid=$id"),
+          .post(Uri.parse(ApiUrl.getOfferDetails + "?bid=$id"),
               headers: ApiUrl.getHeader(),
               body: json.encode({"updateSummary": true}))
-          .timeout(const Duration(seconds: 200));
-
-      myLogs("statusCode", response.statusCode);
-      myLogs("response", response.body.toString());
+          .timeout(const Duration(seconds: 20));
 
       if (response.statusCode == 200) {
         var responseFromBody = offerDetailModelFromJson(response.body);
@@ -78,16 +73,16 @@ class OfferDetailsProvider with ChangeNotifier {
         setApiResponseValue(AppConfig.somthingWrong, false, _listImageGallary,
             LoadingState.error);
       }
-      // } on SocketException {
-      //   setApiResponseValue(
-      //       AppConfig.noInternet, false, _listImageGallary, LoadingState.error);
-      // } on FormatException {
-      //   setApiResponseValue(
-      //       AppConfig.serverError, false, _listImageGallary, LoadingState.error);
-      // }
-    } catch (e) {
-      myLogs("error", e.toString());
+    } on SocketException {
+      setApiResponseValue(
+          AppConfig.noInternet, false, _listImageGallary, LoadingState.error);
+    } on FormatException {
+      setApiResponseValue(
+          AppConfig.serverError, false, _listImageGallary, LoadingState.error);
     }
+    // } catch (e) {
+    //   myLogs("error", e.toString());
+    // }
 
     notifyListeners();
     return apiResponse;

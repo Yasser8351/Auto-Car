@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:auto_car/debugger/my_debuger.dart';
 import 'package:auto_car/model/car_model.dart';
@@ -25,16 +26,18 @@ class CarProvider with ChangeNotifier {
   //This function call the data from the API
   //The Post type function takes the search value from the body
   //get List of Cars in Home Screen
-  Future<ApiResponse> getCars(int pageNumber, String search) async {
+  Future<ApiResponse> getCars(
+      int pageNumber, int pageSize, String search) async {
     myLogs("getCars", getCars);
     try {
       loadingState = LoadingState.loading;
       var response = await http
           .post(
               Uri.parse(
-                  'http://207.180.223.113:8975/api/v1/Offer/MGetAll?PageNumber=$pageNumber&PageSize=5'
-                  //  ApiUrl.getAllOffer + 'PageNumber=$pageNumber&PageSize=1',
-                  ),
+                //'http://207.180.223.113:8975/api/v1/Offer/MGetAll?PageNumber=$pageNumber&PageSize=$pageSize'
+                ApiUrl.getAllOffer +
+                    'PageNumber=$pageNumber&PageSize=$pageSize',
+              ),
               headers: ApiUrl.getHeader(),
               body: json.encode(
                 {
@@ -43,8 +46,6 @@ class CarProvider with ChangeNotifier {
               ))
           .timeout(Duration(seconds: 10));
 
-      myLogs("response.body", response.body);
-      myLogs("response.statusCode", response.statusCode);
       if (response.statusCode == 200) {
         //  _listCars = carModelFromJson(response.body);
         apiResponse.totalRecords = carModelFromJson(response.body).totalRecords;
@@ -65,8 +66,6 @@ class CarProvider with ChangeNotifier {
         setApiResponseValue(
             AppConfig.errorOoccurred, false, _listCars, LoadingState.error);
       }
-      /*
-    
     } on SocketException {
       setApiResponseValue(
           AppConfig.noInternet, false, _listCars, LoadingState.error);
@@ -75,13 +74,14 @@ class CarProvider with ChangeNotifier {
           AppConfig.serverError, false, _listCars, LoadingState.error);
     }
 
+    /* 
     
-    */
     } catch (error) {
       setApiResponseValue(
           error.toString(), false, _listCars, LoadingState.error);
       myLog("getCars", "catch error", error.toString());
     }
+    */
 
     notifyListeners();
     return apiResponse;
@@ -90,8 +90,8 @@ class CarProvider with ChangeNotifier {
   //This methode call to Refresh Data in Screen,
   //when user Scroll to refresh Screen
   //The function takes tow varibles pageNumber and key of the Search
-  reloedListCars(int pageNumber, String search) {
-    return getCars(pageNumber, search);
+  reloedListCars(int pageNumber, int pageSize, String search) {
+    return getCars(pageNumber, pageSize, search);
   }
 
   setApiResponseValue(

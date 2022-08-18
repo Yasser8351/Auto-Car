@@ -89,7 +89,9 @@ class AppConfig {
   static const notsendemail = "حدث خطأ اثناء الارسال";
   static const exitApp = "اضغط مرة أخري للخروج من التطبيق";
   static const noOfferFound = "لايوجد عروض سيارات";
-  //static const  'Server error' = "";
+  static const imageFromNetwork =
+      'http://207.180.223.113:8975/Resources/Images/210bd027-d020-4c0e-8fa0-f1b951c8fcc7_jannis-lucas-jBmNhftLcrY-unsplash.jpg';
+
   //static const s = "";
 
   /* 
