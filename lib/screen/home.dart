@@ -219,6 +219,8 @@ class _HomeState extends State<Home> {
                   isSearch = false;
                   //getDataCars();
                 }
+                setState(() => {});
+                // getDataCars();
                 carProvider
                     .getCars(1, 10, textSearchController.text)
                     .then((value) => {
@@ -228,6 +230,15 @@ class _HomeState extends State<Home> {
                             totalRecords = value.totalRecords;
                           }),
                         });
+                // carProvider
+                //     .getCars(1, 10, textSearchController.text)
+                //     .then((value) => {
+                //           setState(() {
+                //             expandedIndex = -1;
+                //             listCars = value.dataCar;
+                //             totalRecords = value.totalRecords;
+                //           }),
+                //         });
               },
             );
           } else {

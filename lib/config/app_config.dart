@@ -92,8 +92,7 @@ class AppConfig {
   static const exitApp = "اضغط مرة أخري للخروج من التطبيق";
   static const noOfferFound = "لايوجد عروض سيارات";
   static const imageFromNetwork =
-      'http://207.180.223.113:8975/Resources/Images/210bd027-d020-4c0e-8fa0-f1b951c8fcc7_jannis-lucas-jBmNhftLcrY-unsplash.jpg';
-
+      'http://207.180.223.113:8975/Resources/Images/47fd9f93-88ab-4d88-be42-fed4c22797c1_car2.jpg';
   static const uploadId = 'ارفق صورة الهوية او الجواز * ';
   static const chargeCar = 'هل تريد شحن السيارة؟';
   static const selectTheImageId = "صورة الهوية مطلوبة";
