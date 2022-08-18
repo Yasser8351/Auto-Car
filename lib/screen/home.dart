@@ -55,6 +55,7 @@ class _HomeState extends State<Home> {
             String title = listBrands[index].name;
             return GestureDetector(
               onTap: () {
+                setState(() => search = title);
                 carProvider.getCars(1, 10, search).then((value) => {
                       setState(() {
                         listCars = value.dataCar;
@@ -86,7 +87,7 @@ class _HomeState extends State<Home> {
                           height: size.height * .54,
                           filterQuality: FilterQuality.low,
                           imageUrl: logo,
-                          //color: Colors.black,
+                          //color: Colors.white,
                           placeholder: (context, url) => FadeInImage(
                             placeholder: AssetImage(AppConfig.placeholder),
                             image: AssetImage(AppConfig.placeholder),
@@ -144,7 +145,6 @@ class _HomeState extends State<Home> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
 
     ///forground work
@@ -240,9 +240,9 @@ class _HomeState extends State<Home> {
                           brandProvider: brandProvider,
                           listBrand: listBrands,
                           onTap: () {
-                            log("message");
+                            myLogs("search", search);
                             setState(() {
-                              search = "mercedes benz";
+                              search = search;
                             });
                             carProvider.getCars(1, 10, search).then((value) => {
                                   setState(() {
