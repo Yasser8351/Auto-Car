@@ -1,3 +1,4 @@
+import 'package:auto_car/config/app_style.dart';
 import 'package:flutter/material.dart';
 
 import '../config/app_config.dart';
@@ -11,8 +12,7 @@ class NoDataFoundWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return Align(
-      alignment: Alignment.topCenter,
+    return Material(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -20,7 +20,7 @@ class NoDataFoundWidget extends StatelessWidget {
           SizedBox(height: size.height * .1),
           Text(
             title,
-            style: const TextStyle(fontSize: 22),
+            style: AppStyle.textBlack25,
           ),
           SizedBox(height: size.height * .05),
           GestureDetector(

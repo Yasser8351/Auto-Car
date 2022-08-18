@@ -10,6 +10,10 @@ class ApiUrl {
   static String get getAllOffer =>
       'http://207.180.223.113:8975/api/v1/Offer/MGetAll?';
   static String get getOfferDetails => _root + 'Offer/MGetOfferDetails';
+  static String get getOffersByCategory => _root + 'Offer/MGetOffersByCarType?';
+
+  //http://207.180.223.113:8975/api/v1/Offer/MGetOffersByCarType?PageNumber=1&PageSize=10
+
   // static Uri get getAllOffer =>
   //     Uri.parse(_root + 'Offer/GetAll?PageNumber=1&PageSize=10');
 

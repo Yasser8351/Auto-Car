@@ -26,6 +26,65 @@ class CarProvider with ChangeNotifier {
   //This function call the data from the API
   //The Post type function takes the search value from the body
   //get List of Cars in Home Screen
+
+  Future<ApiResponse> getCarsByCategory(
+      int pageNumber, int pageSize, String search) async {
+    myLogs("getCarsByCategory", getCarsByCategory);
+    try {
+      loadingState = LoadingState.loading;
+      var response = await http
+          .post(
+              Uri.parse(
+                ApiUrl.getOffersByCategory +
+                    'PageNumber=$pageNumber&PageSize=$pageSize',
+              ),
+              headers: ApiUrl.getHeader(),
+              body: json.encode(
+                {
+                  //"search": search,
+                  "search": "276962eb-055f-467b-8323-04bce51ec348"
+                },
+              ))
+          .timeout(Duration(seconds: 10));
+
+      if (response.statusCode == 200) {
+        //  _listCars = carModelFromJson(response.body);
+        apiResponse.totalRecords = carModelFromJson(response.body).totalRecords;
+        _listCars = carModelFromJson(response.body).data;
+        if (_listCars.isEmpty) {
+          loadingState = LoadingState.noDataFound;
+        } else {
+          setApiResponseValue('get Data Cars Sucsessfuly', true, _listCars,
+              LoadingState.loaded);
+        }
+      } else if (response.statusCode == 401) {
+        setApiResponseValue(
+            AppConfig.unAutaristion, false, _listCars, LoadingState.error);
+      } else if (response.statusCode == 500) {
+        setApiResponseValue(
+            AppConfig.serverError, false, _listCars, LoadingState.error);
+      } else {
+        setApiResponseValue(
+            AppConfig.errorOoccurred, false, _listCars, LoadingState.error);
+      }
+      // } on SocketException {
+      //   setApiResponseValue(
+      //       AppConfig.noInternet, false, _listCars, LoadingState.error);
+      // } on FormatException {
+      //   setApiResponseValue(
+      //       AppConfig.serverError, false, _listCars, LoadingState.error);
+      // }
+
+    } catch (error) {
+      setApiResponseValue(
+          error.toString(), false, _listCars, LoadingState.error);
+      myLog("getCarsByCategory", "catch error", error.toString());
+    }
+
+    notifyListeners();
+    return apiResponse;
+  }
+
   Future<ApiResponse> getCars(
       int pageNumber, int pageSize, String search) async {
     myLogs("getCars", getCars);
@@ -34,7 +93,6 @@ class CarProvider with ChangeNotifier {
       var response = await http
           .post(
               Uri.parse(
-                //'http://207.180.223.113:8975/api/v1/Offer/MGetAll?PageNumber=$pageNumber&PageSize=$pageSize'
                 ApiUrl.getAllOffer +
                     'PageNumber=$pageNumber&PageSize=$pageSize',
               ),
@@ -92,6 +150,10 @@ class CarProvider with ChangeNotifier {
   //The function takes tow varibles pageNumber and key of the Search
   reloedListCars(int pageNumber, int pageSize, String search) {
     return getCars(pageNumber, pageSize, search);
+  }
+
+  reloedListCarsByCategory(int pageNumber, int pageSize, String search) {
+    return getCarsByCategory(pageNumber, pageSize, search);
   }
 
   setApiResponseValue(

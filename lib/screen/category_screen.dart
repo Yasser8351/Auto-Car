@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_car/api/api_response.dart';
 import 'package:auto_car/config/app_config.dart';
 import 'package:auto_car/config/app_style.dart';
@@ -5,6 +7,7 @@ import 'package:auto_car/debugger/my_debuger.dart';
 import 'package:auto_car/enum/all_enum.dart';
 import 'package:auto_car/model/category_model.dart';
 import 'package:auto_car/provider/category_provider.dart';
+import 'package:auto_car/screen/offers_by_category.dart';
 import 'package:auto_car/widget/text_faild_search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -146,7 +149,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
-                                  //go to detailsScreen
+                                  log("message");
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          OffersByCategory()));
                                 },
                                 child: ListCategoryWidget(
                                   listCategory: listCategory[index],
