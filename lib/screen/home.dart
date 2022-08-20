@@ -43,21 +43,11 @@ class _HomeState extends State<Home> {
   int expandedIndex = -1;
 
   SizedBox buildListBrand(Size size) {
-    ScrollController _scrollController = new ScrollController();
-    final itemKey = GlobalKey();
-
-    Future scrollToItem() async {
-      final context = itemKey.currentContext;
-      await Scrollable.ensureVisible(context!);
-    }
-
     return SizedBox(
-      key: itemKey,
       height: size.height * .11,
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: ListView.builder(
-          controller: _scrollController,
           scrollDirection: Axis.horizontal,
           itemCount: listBrands.length,
           itemBuilder: (context, index) {
@@ -65,16 +55,7 @@ class _HomeState extends State<Home> {
             String title = listBrands[index].name;
             return GestureDetector(
               onTap: () {
-                setState(() => {
-                      // _scrollController.animateTo(
-                      //   index.toDouble(),
-                      //   curve: Curves.easeOut,
-                      //   duration: const Duration(milliseconds: 300),
-                      // ),
-                      //_scrollController.jumpTo(10.0),
-                      scrollToItem(),
-                      search = title
-                    });
+                setState(() => {search = title});
                 carProvider.getCars(1, 10, search).then((value) => {
                       setState(() {
                         listCars = value.dataCar;
@@ -84,6 +65,7 @@ class _HomeState extends State<Home> {
                     });
               },
               child: Padding(
+                //
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -112,7 +94,7 @@ class _HomeState extends State<Home> {
                             image: AssetImage(AppConfig.placeholder),
                             width: double.infinity,
                             height: size.height * .163,
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                           ),
                           errorWidget: (context, url, error) =>
                               Icon(Icons.error),
@@ -264,15 +246,6 @@ class _HomeState extends State<Home> {
                             totalRecords = value.totalRecords;
                           }),
                         });
-                // carProvider
-                //     .getCars(1, 10, textSearchController.text)
-                //     .then((value) => {
-                //           setState(() {
-                //             expandedIndex = -1;
-                //             listCars = value.dataCar;
-                //             totalRecords = value.totalRecords;
-                //           }),
-                //         });
               },
             );
           } else {
@@ -293,12 +266,11 @@ class _HomeState extends State<Home> {
                       ),
                       const SizedBox(height: 10),
                       SizedBox(
-                        height: 150,
+                        height: size.height * .22,
                         child: ListBrandWidget(
                           brandProvider: brandProvider,
                           listBrand: listBrands,
                           onTap: () {
-                            myLogs("search", search);
                             setState(() {
                               search = search;
                             });
@@ -312,7 +284,6 @@ class _HomeState extends State<Home> {
                           widget: buildListBrand(size),
                         ),
                       ),
-                      const SizedBox(height: 0),
                       carProvider.loadingState == LoadingState.noDataFound
                           ? NoDataFoundWidget(
                               title: AppConfig.noOfferFound,
@@ -321,6 +292,7 @@ class _HomeState extends State<Home> {
                                 carProvider.getCars(1, 10, '').then((value) => {
                                       setState(() {
                                         // carProvider.loadingState = LoadingState.loading;
+                                        expandedIndex = -1;
                                         listCars = value.dataCar;
                                         totalRecords = value.totalRecords;
                                       }),
