@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_car/config/app_config.dart';
 import 'package:auto_car/debugger/my_debuger.dart';
 import 'package:auto_car/model/brand_model.dart';
@@ -9,6 +7,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../enum/all_enum.dart';
 import '../model/car_model.dart';
@@ -43,11 +43,21 @@ class _HomeState extends State<Home> {
   int expandedIndex = -1;
 
   SizedBox buildListBrand(Size size) {
+    ScrollController _scrollController = new ScrollController();
+    final itemKey = GlobalKey();
+
+    Future scrollToItem() async {
+      final context = itemKey.currentContext;
+      await Scrollable.ensureVisible(context!);
+    }
+
     return SizedBox(
+      key: itemKey,
       height: size.height * .11,
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: ListView.builder(
+          controller: _scrollController,
           scrollDirection: Axis.horizontal,
           itemCount: listBrands.length,
           itemBuilder: (context, index) {
@@ -55,7 +65,16 @@ class _HomeState extends State<Home> {
             String title = listBrands[index].name;
             return GestureDetector(
               onTap: () {
-                setState(() => search = title);
+                setState(() => {
+                      // _scrollController.animateTo(
+                      //   index.toDouble(),
+                      //   curve: Curves.easeOut,
+                      //   duration: const Duration(milliseconds: 300),
+                      // ),
+                      //_scrollController.jumpTo(10.0),
+                      scrollToItem(),
+                      search = title
+                    });
                 carProvider.getCars(1, 10, search).then((value) => {
                       setState(() {
                         listCars = value.dataCar;
@@ -134,8 +153,9 @@ class _HomeState extends State<Home> {
         });
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      //_showTopFlash(style: FlashBehavior.fixed);
       myLogs("onMessageOpenedApp", message);
-      toastMessage('onMessageOpenedApp');
+      //toastMessage('onMessageOpenedApp');
 
       // Navigator.of(context).pushNamed(More.routeName);
       // Future.delayed(const Duration(seconds: 3));
@@ -151,10 +171,25 @@ class _HomeState extends State<Home> {
     ///forground work
     FirebaseMessaging.onMessage.listen((message) {
       if (message.notification != null) {
-        toastMessage(message.notification!.body.toString());
-        log("forground work");
-        log(message.notification!.body.toString());
-        log(message.notification!.title.toString());
+        showTopSnackBar(
+          animationDuration: Duration(seconds: 7),
+          context,
+          Material(
+            child: Column(
+              children: [
+                Text(AppConfig.newNotifcation, style: AppConfig.textDetails),
+                SizedBox(height: 10),
+                CustomSnackBar.success(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  message:
+                      "${message.notification!.title} \n  ${message.notification!.body}",
+                ),
+                // Image.network(AppConfig.imageFromNetwork, height: 100)
+              ],
+            ),
+          ),
+        );
+
         Navigator.of(context).pushNamed(message.notification!.body.toString());
       }
 
@@ -189,7 +224,6 @@ class _HomeState extends State<Home> {
         title: carProvider.apiResponse.message,
         onTap: () {
           setState(() => {});
-          // getDataCars();
           carProvider.getCars(1, 10, '').then((value) => {
                 setState(() {
                   // carProvider.loadingState = LoadingState.loading;
@@ -283,11 +317,14 @@ class _HomeState extends State<Home> {
                           ? NoDataFoundWidget(
                               title: AppConfig.noOfferFound,
                               onTap: () {
-                                setState(() {
-                                  carProvider.loadingState =
-                                      LoadingState.loading;
-                                });
-                                getDataCars();
+                                setState(() {});
+                                carProvider.getCars(1, 10, '').then((value) => {
+                                      setState(() {
+                                        // carProvider.loadingState = LoadingState.loading;
+                                        listCars = value.dataCar;
+                                        totalRecords = value.totalRecords;
+                                      }),
+                                    });
                               },
                             )
                           : ListCarsWidget(
@@ -341,9 +378,10 @@ class _HomeState extends State<Home> {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        dismissDirection: DismissDirection.endToStart,
         content: Text(message),
         backgroundColor: Theme.of(context).colorScheme.onBackground,
-        duration: const Duration(seconds: 2),
+        duration: const Duration(seconds: 5),
       ),
     );
   }

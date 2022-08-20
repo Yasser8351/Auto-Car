@@ -68,6 +68,7 @@ class Datum {
     required this.currency,
     required this.isActive,
     required this.ytLink,
+    required this.cartype,
   });
 
   String id;
@@ -78,6 +79,7 @@ class Datum {
   String kilometer;
   double price;
   Currency currency;
+  CarType cartype;
   bool isActive;
   String ytLink;
 
@@ -92,6 +94,7 @@ class Datum {
         currency: Currency.fromJson(json["currency"]),
         isActive: json["isActive"] ?? false,
         ytLink: json["ytLink"] ?? '',
+        cartype: CarType.fromJson(json["cartype"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -105,6 +108,35 @@ class Datum {
         "currency": currency.toJson(),
         "isActive": isActive,
         "ytLink": ytLink,
+      };
+}
+
+class CarType {
+  CarType({
+    required this.id,
+    required this.typeName,
+    required this.typeNameAr,
+    required this.imgPath,
+  });
+
+  String id;
+  String typeName;
+  String typeNameAr;
+  String imgPath;
+  // List<Feature> features;
+
+  factory CarType.fromJson(Map<String, dynamic> json) => CarType(
+        id: json["id"] ?? '',
+        typeName: json["typeName"] ?? '',
+        typeNameAr: json["typeNameAr"] ?? '',
+        imgPath: json["imgPath"] ?? '',
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "typeName": typeName,
+        "typeNameAr": typeNameAr,
+        "imgPath": imgPath == null ? null : imgPath,
       };
 }
 

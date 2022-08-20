@@ -68,7 +68,11 @@ dependencies:
   flutter_local_notifications: ^9.7.0
 
   overlay_support: ^2.0.1
+  # send email from App using SMTP server
   mailer: ^5.2.0
+  top_snackbar_flutter: ^2.1.1
+
+  # toast message
 
 dev_dependencies:
   flutter_test:

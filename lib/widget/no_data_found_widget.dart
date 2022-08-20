@@ -38,8 +38,8 @@ class NoDataFoundWidget extends StatelessWidget {
                   Icon(Icons.refresh, color: Colors.white),
                   SizedBox(width: 10),
                   Text(
-                    AppConfig.tryAgain,
-                    style: TextStyle(color: Colors.white),
+                    AppConfig.viewAll,
+                    style: TextStyle(color: Colors.white, fontSize: 19),
                   ),
                 ],
               ),

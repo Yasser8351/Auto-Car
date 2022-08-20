@@ -124,16 +124,10 @@ class _InvoiceScreenState extends State<InvoiceScreen>
       _isLoading = true;
     });
 
-    String username = "sender@gulfsmo.net";
-    String password = "-zxu[vtQ.pU(";
-    final smtpServer = new SmtpServer("mail.gulfsmo.net",
-        // String username = "username@c-pinal.com";
-        // String password = "password";
-        //final smtpServer = new SmtpServer("domin.com",
-        username: username,
-        password: password,
-        port: 465,
-        ssl: true);
+    String username = "username@c-pinal.com";
+    String password = "password";
+    final smtpServer = new SmtpServer("domin.com",
+        username: username, password: password, port: 465, ssl: true);
 
     final message = Message()
       ..from = Address(username, AppConfig.appName)

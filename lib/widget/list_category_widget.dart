@@ -22,8 +22,8 @@ class ListCategoryWidget extends StatelessWidget {
                 topLeft: Radius.circular(10), topRight: Radius.circular(10)),
             child: FadeInImage(
               placeholder: const AssetImage(AppConfig.placeholder),
-              image: const AssetImage(AppConfig.cars),
-              //image: NetworkImage(listCategory.imgPath),
+              //image: const AssetImage(AppConfig.cars),
+              image: NetworkImage(listCategory.imgPath),
               width: size.width,
               height: size.height * .3,
               fit: BoxFit.fill,

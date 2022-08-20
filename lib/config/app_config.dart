@@ -90,12 +90,13 @@ class AppConfig {
       "* ملحوظة \n سيتم ارسال فاتورة مبدئية في الايميل الخاص بك";
   static const notsendemail = "حدث خطأ اثناء الارسال";
   static const exitApp = "اضغط مرة أخري للخروج من التطبيق";
-  static const noOfferFound = "لايوجد عروض سيارات";
+  static const noOfferFound = "لايوجد عروض سيارات تطابق البحث";
   static const imageFromNetwork =
       'http://207.180.223.113:8975/Resources/Images/47fd9f93-88ab-4d88-be42-fed4c22797c1_car2.jpg';
   static const uploadId = 'ارفق صورة الهوية او الجواز * ';
   static const chargeCar = 'هل تريد شحن السيارة؟';
   static const selectTheImageId = "صورة الهوية مطلوبة";
+  static const newNotifcation = "اشعار جديد";
   //static const s = "";
 
   /* 
