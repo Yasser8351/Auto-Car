@@ -1,6 +1,5 @@
 import 'package:auto_car/config/app_config.dart';
 import 'package:auto_car/debugger/my_debuger.dart';
-import 'package:auto_car/screen/home_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +30,7 @@ class _TabScreenState extends State<TabScreen> {
     const More(),
     const CategoryScreen(),
     const Favert(),
-    const HomeScreen(userId: false),
+    const Home(userId: false),
   ];
 
   @override

@@ -67,11 +67,11 @@ class _HomeState extends State<Home> {
           }),
         });
     brandProvider = Provider.of<BrandProvider>(context, listen: false);
-    brandProvider.getBrands().then((value) => {
-          setState(() {
-            listBrands = value.dataBrand;
-          }),
-        });
+    // brandProvider.getBrands().then((value) => {
+    //       setState(() {
+    //         listBrands = value.dataBrand;
+    //       }),
+    //     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       //_showTopFlash(style: FlashBehavior.fixed);
@@ -87,6 +87,8 @@ class _HomeState extends State<Home> {
 
   @override
   void didChangeDependencies() {
+    listBrands = Provider.of<BrandProvider>(context, listen: true).listBrands;
+
     super.didChangeDependencies();
 
     ///forground work

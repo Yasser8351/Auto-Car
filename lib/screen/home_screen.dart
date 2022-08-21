@@ -55,6 +55,80 @@ class _HomeScreenState extends State<HomeScreen> {
     myLogs("userId Form Home Screen :", userId);
   }
 
+  SizedBox buildListBrand(Size size) {
+    return SizedBox(
+      height: size.height * .11,
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: listBrands.length,
+          itemBuilder: (context, index) {
+            String logo = listBrands[index].logo;
+            String title = listBrands[index].name;
+            return GestureDetector(
+              onTap: () {
+                setState(() => {search = title});
+                carProvider.getCars(1, 10, search).then((value) => {
+                      setState(() {
+                        listCars = value.dataCar;
+                        totalRecords = value.totalRecords;
+                        expandedIndex = index;
+                      }),
+                    });
+              },
+              child: Padding(
+                //
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: size.height * .07,
+                      width: size.width * .144,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: expandedIndex == index
+                                ? Colors.black
+                                : Colors.white),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: CachedNetworkImage(
+                          width: size.width,
+                          fit: BoxFit.contain,
+                          height: size.height * .54,
+                          filterQuality: FilterQuality.low,
+                          imageUrl: logo,
+                          //color: Colors.white,
+                          placeholder: (context, url) => FadeInImage(
+                            placeholder: AssetImage(AppConfig.placeholder),
+                            image: AssetImage(AppConfig.placeholder),
+                            width: double.infinity,
+                            height: size.height * .163,
+                            fit: BoxFit.cover,
+                          ),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      title,
+                      style: AppConfig.textSpecifications,
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   void initState() {
     _getUSerFromSharedPref();
@@ -177,7 +251,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     //getDataCars();
                   }
                   setState(() => {});
-                  // getDataCars();
                   carProvider
                       .getCars(1, 10, textSearchController.text)
                       .then((value) => {
@@ -224,9 +297,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                         }),
                                       });
                             },
-                            widget: buildListBrand(size, search, expandedIndex),
+                            widget: buildListBrand(size),
                           ),
                         ),
+                        // SizedBox(
+                        //   height: size.height * .22,
+                        //   child: ListBrandWidget(
+                        //     brandProvider: brandProvider,
+                        //     listBrand: listBrands,
+                        //     onTap: () {
+                        //       setState(() {
+                        //         search = search;
+                        //       });
+                        //       carProvider
+                        //           .getCars(1, 10, search)
+                        //           .then((value) => {
+                        //                 setState(() {
+                        //                   listCars = value.dataCar;
+                        //                   totalRecords = value.totalRecords;
+                        //                 }),
+                        //               });
+                        //     },
+                        //     widget: buildListBrand(size, search, expandedIndex),
+                        //   ),
+                        // ),
+
                         carProvider.loadingState == LoadingState.noDataFound
                             ? NoDataFoundWidget(
                                 title: AppConfig.noOfferFound,
@@ -365,71 +460,72 @@ class _HomeScreenState extends State<HomeScreen> {
   //   }
   // }
 
-  SizedBox buildListBrand(Size size, String search, int expandedIndex) {
-    return SizedBox(
-      height: size.height * .11,
-      child: Directionality(
-        textDirection: TextDirection.rtl,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: listBrands.length,
-          itemBuilder: (context, index) {
-            String logo = listBrands[index].logo;
-            String title = listBrands[index].name;
-            return GestureDetector(
-              onTap: () {
-                setState(() => {search = title});
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: size.height * .07,
-                      width: size.width * .144,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color: expandedIndex == index
-                                ? Colors.black
-                                : Colors.white),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: CachedNetworkImage(
-                          width: size.width,
-                          fit: BoxFit.contain,
-                          height: size.height * .54,
-                          filterQuality: FilterQuality.low,
-                          imageUrl: logo,
-                          //color: Colors.white,
-                          placeholder: (context, url) => FadeInImage(
-                            placeholder: AssetImage(AppConfig.placeholder),
-                            image: AssetImage(AppConfig.placeholder),
-                            width: double.infinity,
-                            height: size.height * .163,
-                            fit: BoxFit.cover,
-                          ),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      title,
-                      style: AppConfig.textSpecifications,
-                    )
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
+  // SizedBox buildListBrand(Size size, String search, int expandedIndex) {
+  //   return SizedBox(
+  //     height: size.height * .11,
+  //     child: Directionality(
+  //       textDirection: TextDirection.rtl,
+  //       child: ListView.builder(
+  //         scrollDirection: Axis.horizontal,
+  //         itemCount: listBrands.length,
+  //         itemBuilder: (context, index) {
+  //           String logo = listBrands[index].logo;
+  //           String title = listBrands[index].name;
+  //           return GestureDetector(
+  //             onTap: () {
+  //               setState(() => {search = title});
+  //             },
+  //             child: Padding(
+  //               padding: const EdgeInsets.symmetric(horizontal: 10),
+  //               child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.center,
+  //                 children: [
+  //                   Container(
+  //                     height: size.height * .07,
+  //                     width: size.width * .144,
+  //                     decoration: BoxDecoration(
+  //                       border: Border.all(
+  //                           color: expandedIndex == index
+  //                               ? Colors.black
+  //                               : Colors.white),
+  //                       color: Colors.white,
+  //                       borderRadius: BorderRadius.circular(10),
+  //                     ),
+  //                     child: Center(
+  //                       child: CachedNetworkImage(
+  //                         width: size.width,
+  //                         fit: BoxFit.contain,
+  //                         height: size.height * .54,
+  //                         filterQuality: FilterQuality.low,
+  //                         imageUrl: logo,
+  //                         //color: Colors.white,
+  //                         placeholder: (context, url) => FadeInImage(
+  //                           placeholder: AssetImage(AppConfig.placeholder),
+  //                           image: AssetImage(AppConfig.placeholder),
+  //                           width: double.infinity,
+  //                           height: size.height * .163,
+  //                           fit: BoxFit.cover,
+  //                         ),
+  //                         errorWidget: (context, url, error) =>
+  //                             Icon(Icons.error),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                   const SizedBox(height: 10),
+  //                   Text(
+  //                     title,
+  //                     style: AppConfig.textSpecifications,
+  //                   )
+  //                 ],
+  //               ),
+  //             ),
+  //           );
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
+
 }
 /* 
 
