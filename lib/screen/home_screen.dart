@@ -1,288 +1,266 @@
-// import 'dart:developer';
-
-// import 'package:auto_car/config/app_config.dart';
-// import 'package:auto_car/provider/car_provider.dart';
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-
-// import '../enum/all_enum.dart';
-// import '../model/car_model.dart';
-// import '../widget/build_search_widget.dart';
-// import '../widget/filter_search_widget.dart';
-// import '../widget/list_brand_widget.dart';
-// import '../widget/list_cars_widget.dart';
-// import '../widget/loading_widget.dart';
-// import '../widget/reytry_error_widget.dart';
-
-// class HomeScreen extends StatefulWidget {
-//   const HomeScreen({Key? key}) : super(key: key);
-//   static const routeName = "HomeScreen";
-
-//   @override
-//   State<HomeScreen> createState() => _HomeScreenState();
-// }
-
-// class _HomeScreenState extends State<HomeScreen> {
-//   late CarProvider carProvider;
-//   List<CarModel> listCars = [];
-//   bool isFilter = false;
-
-//   @override
-//   void initState() {
-//     carProvider = Provider.of<CarProvider>(context, listen: false);
-//     carProvider
-//         .getCars()
-//         .then((value) => {listCars = value.dataCar, setState(() {})});
-
-//     super.initState();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final size = MediaQuery.of(context).size;
-
-//     if (carProvider.loadingState == LoadingState.initial ||
-//         carProvider.loadingState == LoadingState.loading) {
-//       return const LoadingWidget(
-//           msg: AppConfig.loading, msgColor: Colors.black, color: Colors.black);
-//     } else if (carProvider.loadingState == LoadingState.error) {
-//       return ReyTryErrorWidget(
-//         title: carProvider.apiResponse.message,
-//         onTap: () {
-//           setState(() {
-//             carProvider.loadingState = LoadingState.loading;
-//           });
-//           log(carProvider.loadingState.toString());
-//           carProvider.reloedListCars().then(
-//                 (value) => {
-//                   listCars = value.dataCar,
-//                   setState(() {}),
-//                 },
-//               );
-//         },
-//       );
-//     } else if (carProvider.loadingState == LoadingState.noDataFound) {
-//       return ReyTryErrorWidget(
-//         title: AppConfig.noDataFound,
-//         onTap: () {
-//           setState(() {
-//             carProvider.loadingState = LoadingState.loading;
-//           });
-//           carProvider.reloedListCars().then(
-//                 (value) => {
-//                   listCars = value.dataCar,
-//                   setState(() {}),
-//                 },
-//               );
-//         },
-//       );
-//     } else {
-//       return SingleChildScrollView(
-//         child: isFilter
-//             ? FilterSearchWidget(onTap: () {
-//                 setState(() {
-//                   isFilter = !isFilter;
-//                 });
-//               })
-//             : Container(
-//                 color: const Color(0xffF8F8F8),
-//                 child: Padding(
-//                   padding: const EdgeInsets.symmetric(horizontal: 10),
-//                   child: Column(
-//                     children: [
-//                       const SizedBox(height: 50),
-//                       buildTextTitleWidget(),
-//                       const SizedBox(height: 20),
-//                       BuildSearchWidget(
-//                         onTap: () {
-//                           setState(() {
-//                             isFilter = !isFilter;
-//                           });
-//                         },
-//                       ),
-//                       const SizedBox(height: 40),
-//                       const ListBrandWidget(),
-//                       const SizedBox(height: 40),
-//                       ListCarsWidget(
-//                         listCars: listCars,
-//                         isOffers: false,
-//                         listCarsById: [],
-//                       )
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//       );
-//     }
-//   }
-// }
-
-// buildTextTitleWidget() {
-//   return const Align(
-//     alignment: Alignment.centerLeft,
-//     child: Padding(
-//       padding: EdgeInsets.symmetric(horizontal: 0),
-//       child: Text(
-//         AppConfig.findYourFavertCar,
-//         style: AppConfig.textTitleHome,
-//       ),
-//     ),
-//   );
-// }
-/*
-
-import 'dart:developer';
-
 import 'package:auto_car/config/app_config.dart';
 import 'package:auto_car/debugger/my_debuger.dart';
+import 'package:auto_car/model/brand_model.dart';
+import 'package:auto_car/provider/brand_provider.dart';
 import 'package:auto_car/provider/car_provider.dart';
-import 'package:auto_car/widget/search_widget_with_logo.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../database/sqldb.dart';
 import '../enum/all_enum.dart';
 import '../model/car_model.dart';
-import '../widget/list_brand_text_widget.dart';
+import '../widget/list_brand_widget.dart';
 import '../widget/list_cars_widget.dart';
 import '../widget/loading_widget.dart';
 import '../widget/reytry_error_widget.dart';
-import '../widget/text_faild_search_widget.dart';
+import '../widget/search_widget_with_logo.dart';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key, required this.userId}) : super(key: key);
   static const routeName = AppConfig.home;
 
+  final userId;
+
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeScreenState extends State<HomeScreen> {
+  late BrandProvider brandProvider;
   late CarProvider carProvider;
-  List<CarModel> listCars = [];
   bool isSearch = false;
-  List<Map<String, dynamic>> _id = [];
-  TextEditingController textSearchController = TextEditingController();
 
-  Future<void> getDataFromSqfLite() async {
-    SQLDatabase sqlDatabase = SQLDatabase();
+  String search = '';
+  int expandedIndex = -1;
 
-    _id = await sqlDatabase.getData("SELECT id FROM 'MyFavorite'");
-    // if (_id.contains(1)) {
-    //   log("1");
-    //   log("Map id ${_id[0]['id']}");
-    // } else {
-    //   log("not faund Map id ${_id[1]['id']}");
-    // }
-
-    // setState(() {});
-  }
+  List<BrandsModel> listBrands = [];
+  List<Datum> listCars = [];
 
   @override
   void initState() {
-    FirebaseMessaging.instance.subscribeToTopic("test");
-    getDataFromSqfLite();
-
+    brandProvider = Provider.of<BrandProvider>(context, listen: false);
     carProvider = Provider.of<CarProvider>(context, listen: false);
-    carProvider.getCars().then((value) => {
-          setState(() {
-            listCars = value.dataCar;
-          }),
-        });
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      myLogs("onMessageOpenedApp", message);
-      toastMessage('onMessageOpenedApp');
-
-      // Navigator.of(context).pushNamed(More.routeName);
-      // Future.delayed(const Duration(seconds: 3));
-    });
-
-    FirebaseMessaging.instance.getInitialMessage().then((message) {
-      if (message != null) {
-        myLogs("message", message.data.toString());
-        myLogs("message", message.from);
-        final routeFromMessage = message.data["route"];
-        myLogs("routeFromMessage", routeFromMessage);
-
-        Navigator.of(context).pushNamed(routeFromMessage);
-      }
-    });
-
-    ///forground work
-    FirebaseMessaging.onMessage.listen((message) {
-      if (message.notification != null) {
-        log("forground work");
-        log(message.notification!.body.toString());
-        log(message.notification!.title.toString());
-      }
-
-      //  LocalNotificationService.display(message);
-    });
-
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    listBrands = Provider.of<BrandProvider>(context, listen: true).listBrands;
+    listCars = Provider.of<CarProvider>(context, listen: true).listCars;
+    myLogs("listCars", listCars.length);
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
+    //brandProvider
+
     if (carProvider.loadingState == LoadingState.initial ||
         carProvider.loadingState == LoadingState.loading) {
-      return const LoadingWidget(
-          msg: AppConfig.loading, msgColor: Colors.black, color: Colors.black);
+      return LoadingWidget(
+        msg: AppConfig.loading,
+        msgColor: Theme.of(context).colorScheme.onSecondary,
+        color: Theme.of(context).colorScheme.onBackground,
+      );
     } else if (carProvider.loadingState == LoadingState.error) {
       return ReyTryErrorWidget(
         title: carProvider.apiResponse.message,
-        onTap: () {
-          setState(() {
-            carProvider.loadingState = LoadingState.loading;
-          });
-          getDataCars();
-        },
+        onTap: () {},
       );
-    } else if (carProvider.loadingState == LoadingState.noDataFound) {
+    } else {
+      if (brandProvider.loadingState == LoadingState.initial ||
+          brandProvider.loadingState == LoadingState.loading) {
+        return LoadingWidget(
+          msg: AppConfig.loading,
+          msgColor: Theme.of(context).colorScheme.onSecondary,
+          color: Theme.of(context).colorScheme.onBackground,
+        );
+      } else if (brandProvider.loadingState == LoadingState.error) {
+        return ReyTryErrorWidget(
+          title: brandProvider.apiResponse.message,
+          onTap: () {},
+        );
+      } else {
+        return Scaffold(
+          body: Container(
+            color: const Color(0xffF8F8F8),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 50),
+                    SearchWidgetWithLogo(
+                      onTap: () {
+                        setState(() => isSearch = !isSearch);
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      height: size.height * .22,
+                      child: ListBrandWidget(
+                        brandProvider: brandProvider,
+                        listBrand: listBrands,
+                        onTap: () {},
+                        widget: buildListBrand(size, search, expandedIndex),
+                      ),
+                    ),
+                    ListCarsWidget(
+                      listCars: listCars,
+                      totalRecords: 12,
+                      isOffers: false,
+                      listCarsById: [],
+                      onTap: () {
+                        myLogs(listCars.length.toString(),
+                            "no data found  --------  loade more");
+                        if (listCars.length == 12) {
+                        } else {
+                          myLogs(listCars.length.toString(),
+                              "Home  --------  loade more");
+                          carProvider.getCars(2, 10, search);
+                          listBrands.addAll(listBrands);
+                          //getDataCarsProvider(pageNumber + 1);
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      }
+    }
+  }
+
+  SizedBox buildListBrand(Size size, String search, int expandedIndex) {
+    return SizedBox(
+      height: size.height * .11,
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: listBrands.length,
+          itemBuilder: (context, index) {
+            String logo = listBrands[index].logo;
+            String title = listBrands[index].name;
+            return GestureDetector(
+              onTap: () {
+                setState(() => {search = title});
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: size.height * .07,
+                      width: size.width * .144,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: expandedIndex == index
+                                ? Colors.black
+                                : Colors.white),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: CachedNetworkImage(
+                          width: size.width,
+                          fit: BoxFit.contain,
+                          height: size.height * .54,
+                          filterQuality: FilterQuality.low,
+                          imageUrl: logo,
+                          //color: Colors.white,
+                          placeholder: (context, url) => FadeInImage(
+                            placeholder: AssetImage(AppConfig.placeholder),
+                            image: AssetImage(AppConfig.placeholder),
+                            width: double.infinity,
+                            height: size.height * .163,
+                            fit: BoxFit.cover,
+                          ),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      title,
+                      style: AppConfig.textSpecifications,
+                    )
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+/* 
+
+    if (brandProvider.loadingState == LoadingState.initial ||
+        brandProvider.loadingState == LoadingState.loading) {
+      return LoadingWidget(
+        msg: AppConfig.loading,
+        msgColor: Theme.of(context).colorScheme.onSecondary,
+        color: Theme.of(context).colorScheme.onBackground,
+      );
+    } else if (brandProvider.loadingState == LoadingState.error) {
       return ReyTryErrorWidget(
-        title: AppConfig.noDataFound,
+        title: brandProvider.apiResponse.message,
         onTap: () {
-          setState(() {
-            carProvider.loadingState = LoadingState.loading;
-          });
-          getDataCars();
+          setState(() => {});
+          brandProvider.getCars(1, 10, '').then((value) => {
+                setState(() {
+                  // brandProvider.loadingState = LoadingState.loading;
+                  listCars = value.dataCar;
+                  totalRecords = value.totalRecords;
+                }),
+              });
+          brandProvider.getBrands().then((value) => {
+                setState(() {
+                  listBrands = value.dataBrand;
+                }),
+              });
         },
       );
     } else {
-      return SingleChildScrollView(
-        child: isSearch
-            ? TextFaildSearchWidget(
-                textSearchController: textSearchController,
-                onTap: () {
-                  setState(
-                    () {
-                      isSearch = !isSearch;
-                    },
-                  );
-                },
-                onTapSearch: () {
-                  setState(
-                    () {
-                      isSearch = !isSearch;
-                      if (textSearchController.text.isEmpty) {
-                        getDataCars();
-                      }
-
-                      listCars = listCars
-                          .where(
-                            (element) =>
-                                element.title == textSearchController.text,
-                          )
-                          .toList();
-                    },
-                  );
-                },
-              )
-            : Container(
-                color: const Color(0xffF8F8F8),
+      return Builder(
+        builder: (context) {
+          if (isSearch) {
+            return TextFaildSearchWidget(
+              textSearchController: textSearchController,
+              onTap: () {
+                setState(() => isSearch = !isSearch);
+              },
+              onTapSearch: () {
+                setState(() => isSearch = !isSearch);
+                if (textSearchController.text.isEmpty) {
+                  isSearch = false;
+                  //getDataCars();
+                }
+                setState(() => {});
+                // getDataCars();
+                brandProvider
+                    .getCars(1, 10, textSearchController.text)
+                    .then((value) => {
+                          setState(() {
+                            expandedIndex = -1;
+                            listCars = value.dataCar;
+                            totalRecords = value.totalRecords;
+                          }),
+                        });
+              },
+            );
+          } else {
+            return Container(
+              color: const Color(0xffF8F8F8),
+              child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
@@ -296,25 +274,82 @@ class _HomeState extends State<Home> {
                         },
                       ),
                       const SizedBox(height: 10),
-                      const ListBrandTextWidget(),
-                      const SizedBox(height: 40),
-                      ListCarsWidget(
-                        listCars: listCars,
-                        isOffers: false,
-                        listCarsById: _id,
-                      )
+                      SizedBox(
+                        height: size.height * .22,
+                        child: ListBrandWidget(
+                          brandProvider: brandProvider,
+                          listBrand: listBrands,
+                          onTap: () {
+                            setState(() {
+                              search = search;
+                            });
+                            brandProvider.getCars(1, 10, search).then((value) => {
+                                  setState(() {
+                                    listCars = value.dataCar;
+                                    totalRecords = value.totalRecords;
+                                  }),
+                                });
+                          },
+                          widget: buildListBrand(size),
+                        ),
+                      ),
+                      brandProvider.loadingState == LoadingState.noDataFound
+                          ? NoDataFoundWidget(
+                              title: AppConfig.noOfferFound,
+                              onTap: () {
+                                setState(() {});
+                                brandProvider.getCars(1, 10, '').then((value) => {
+                                      setState(() {
+                                        // brandProvider.loadingState = LoadingState.loading;
+                                        expandedIndex = -1;
+                                        listCars = value.dataCar;
+                                        totalRecords = value.totalRecords;
+                                      }),
+                                    });
+                              },
+                            )
+                          : ListCarsWidget(
+                              listCars: listCars,
+                              totalRecords: totalRecords,
+                              isOffers: false,
+                              listCarsById: _id,
+                              onTap: () {
+                                myLogs(listCars.length.toString(),
+                                    "no data found  --------  loade more");
+                                if (listCars.length == totalRecords) {
+                                } else {
+                                  myLogs(listCars.length.toString(),
+                                      "HomeScreen  --------  loade more");
+                                  getDataCarsProvider(pageNumber + 1);
+                                }
+                              },
+                            ),
                     ],
                   ),
                 ),
               ),
+            );
+          }
+        },
       );
     }
   }
 
   void getDataCars() {
-    carProvider.reloedListCars().then(
+    getDataCarsProvider(pageNumber);
+    brandProvider.reloedListBrands().then(
           (value) => {
-            listCars = value.dataCar,
+            listBrands = value.dataBrand,
+            setState(() {}),
+          },
+        );
+  }
+
+  void getDataCarsProvider(int pageNumber) {
+    brandProvider.reloedListCars(pageNumber, 10, search).then(
+          (value) => {
+            // listCars = value.dataCar,
+            listCars.addAll(value.dataCar),
             setState(() {}),
           },
         );
@@ -324,9 +359,10 @@ class _HomeState extends State<Home> {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        dismissDirection: DismissDirection.endToStart,
         content: Text(message),
-        backgroundColor: Colors.black,
-        duration: const Duration(seconds: 2),
+        backgroundColor: Theme.of(context).colorScheme.onBackground,
+        duration: const Duration(seconds: 5),
       ),
     );
   }
@@ -344,5 +380,4 @@ buildTextTitleWidget() {
     ),
   );
 }
-
-*/
+ */

@@ -1,4 +1,5 @@
 import 'package:auto_car/config/app_config.dart';
+import 'package:auto_car/debugger/my_debuger.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,8 @@ import 'home.dart';
 import 'more.dart';
 
 class TabScreen extends StatefulWidget {
-  const TabScreen({Key? key}) : super(key: key);
+  const TabScreen({Key? key, required this.userId}) : super(key: key);
+  final String userId;
 
   @override
   State<TabScreen> createState() => _TabScreenState();
@@ -28,12 +30,14 @@ class _TabScreenState extends State<TabScreen> {
     const More(),
     const CategoryScreen(),
     const Favert(),
-    const Home(),
+    const Home(userId: false),
   ];
 
   @override
   void initState() {
     super.initState();
+    _pages.add(Home(userId: widget.userId));
+    myLogs('userId from TabScreen', widget.userId);
     FirebaseMessaging.instance.subscribeToTopic('test');
   }
 

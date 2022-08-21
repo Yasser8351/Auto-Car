@@ -14,22 +14,25 @@ class BrandProvider with ChangeNotifier {
   ApiResponse apiResponse = ApiResponse();
   LoadingState loadingState = LoadingState.initial;
 
+  List<BrandsModel> get listBrands => _listBrands;
+
   // getBrands();
 
-  // BrandProvider(){
-  //   getBrands();
-  // }
+  BrandProvider() {
+    getBrands();
+  }
 
 //////////////////////// get List of Brand in Home Screen
   Future<ApiResponse> getBrands() async {
     try {
       loadingState = LoadingState.loading;
-      var response = await http
-          .get(ApiUrl.getAllBrand, headers: ApiUrl.getHeader())
-          .timeout(const Duration(seconds: 20));
+      var response =
+          await http.get(ApiUrl.getAllBrand, headers: ApiUrl.getHeader());
+      // .timeout(const Duration(seconds: 20));
       if (response.statusCode == 200) {
         //  _listBrands = carModelFromJson(response.body);
         _listBrands = brandsModelFromJson(response.body);
+        // myLogs('_listBrands', _listBrands.length);
         if (_listBrands.isEmpty) {
           loadingState = LoadingState.noDataFound;
         } else {

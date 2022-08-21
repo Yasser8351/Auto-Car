@@ -36,16 +36,23 @@ dependencies:
 
   # view svg icons
   flutter_svg: ^1.0.3
+
   # image slider
   carousel_slider: ^4.0.0
+
   # share link
   share_plus: ^2.0.0
+
   # state management
   provider: ^6.0.2
+
   # They allow you to make individual HTTP requests
   http: ^0.13.4
-  # sqllite Database
+
+  # local storage Data
   sqflite: ^2.0.2
+  shared_preferences: ^2.0.15
+
   # anmiation  image slider
   smooth_page_indicator: ^1.0.0+2
 
@@ -69,11 +76,16 @@ dependencies:
 
   overlay_support: ^2.0.1
 
+  is_first_run: ^1.0.0
+
   # send email from App using SMTP server
   mailer: ^5.2.0
-  top_snackbar_flutter: ^2.1.1
 
   # toast message
+  top_snackbar_flutter: ^2.1.1
+
+  #Generate random user id
+  uuid: ^3.0.6
 
 dev_dependencies:
   flutter_test:

@@ -16,12 +16,14 @@ class CarProvider with ChangeNotifier {
   ApiResponse apiResponse = ApiResponse();
   LoadingState loadingState = LoadingState.initial;
 
+  List<Datum> get listCars => _listCars;
+
   //This Constracter when execut Then Call Data from API
   //the aprothe to improve performancie when because the provider
 
-  // CarProvider(){
-  //   getCars();
-  // }
+  CarProvider() {
+    getCars(1, 10, '');
+  }
 
   //This function call the data from the API
   //The Post type function takes the search value from the body
@@ -32,20 +34,19 @@ class CarProvider with ChangeNotifier {
     myLogs("getCarsByCategory", getCarsByCategory);
     try {
       loadingState = LoadingState.loading;
-      var response = await http
-          .post(
-              Uri.parse(
-                ApiUrl.getOffersByCategory +
-                    'PageNumber=$pageNumber&PageSize=$pageSize',
-              ),
-              headers: ApiUrl.getHeader(),
-              body: json.encode(
-                {
-                  //"search": search,
-                  "search": "276962eb-055f-467b-8323-04bce51ec348"
-                },
-              ))
-          .timeout(Duration(seconds: 10));
+      var response = await http.post(
+          Uri.parse(
+            ApiUrl.getOffersByCategory +
+                'PageNumber=$pageNumber&PageSize=$pageSize',
+          ),
+          headers: ApiUrl.getHeader(),
+          body: json.encode(
+            {
+              //"search": search,
+              "search": "276962eb-055f-467b-8323-04bce51ec348"
+            },
+          ));
+      // .timeout(Duration(seconds: 20));
 
       if (response.statusCode == 200) {
         //  _listCars = carModelFromJson(response.body);
@@ -87,7 +88,6 @@ class CarProvider with ChangeNotifier {
 
   Future<ApiResponse> getCars(
       int pageNumber, int pageSize, String search) async {
-    myLogs("getCars", getCars);
     try {
       loadingState = LoadingState.loading;
       var response = await http
@@ -98,9 +98,7 @@ class CarProvider with ChangeNotifier {
               ),
               headers: ApiUrl.getHeader(),
               body: json.encode(
-                {
-                  "search": search //mercedes benz
-                },
+                {"search": search},
               ))
           .timeout(Duration(seconds: 10));
 

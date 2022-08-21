@@ -21,7 +21,7 @@ class _BrandScreenState extends State<BrandScreen> {
     return SingleChildScrollView(
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).pop("text");
+          Navigator.of(context).pop();
         },
         child: Padding(
           padding: EdgeInsets.only(top: size.height * .032),

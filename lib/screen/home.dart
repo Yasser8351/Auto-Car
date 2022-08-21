@@ -12,6 +12,7 @@ import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../enum/all_enum.dart';
 import '../model/car_model.dart';
+import '../sharedpref/user_share_pref.dart';
 import '../widget/list_brand_widget.dart';
 import '../widget/list_cars_widget.dart';
 import '../widget/loading_widget.dart';
@@ -21,8 +22,10 @@ import '../widget/search_widget_with_logo.dart';
 import '../widget/text_faild_search_widget.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({Key? key, required this.userId}) : super(key: key);
   static const routeName = AppConfig.home;
+
+  final userId;
 
   @override
   State<Home> createState() => _HomeState();
@@ -41,6 +44,90 @@ class _HomeState extends State<Home> {
   int pageNumber = 1;
   String search = '';
   int expandedIndex = -1;
+
+  String userId = '';
+
+  _getUSerFromSharedPref() async {
+    var temp = await SharedPrefUser().getID();
+    setState(() {
+      userId = temp;
+    });
+    myLogs("userId Form Home Screen :", userId);
+  }
+
+  @override
+  void initState() {
+    _getUSerFromSharedPref();
+    FirebaseMessaging.instance.subscribeToTopic("test");
+    carProvider = Provider.of<CarProvider>(context, listen: false);
+    carProvider.getCars(1, 10, search).then((value) => {
+          setState(() {
+            listCars = value.dataCar;
+            totalRecords = value.totalRecords;
+          }),
+        });
+    brandProvider = Provider.of<BrandProvider>(context, listen: false);
+    brandProvider.getBrands().then((value) => {
+          setState(() {
+            listBrands = value.dataBrand;
+          }),
+        });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      //_showTopFlash(style: FlashBehavior.fixed);
+      myLogs("onMessageOpenedApp", message);
+      //toastMessage('onMessageOpenedApp');
+
+      // Navigator.of(context).pushNamed(More.routeName);
+      // Future.delayed(const Duration(seconds: 3));
+    });
+
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    ///forground work
+    FirebaseMessaging.onMessage.listen((message) {
+      if (message.notification != null) {
+        showTopSnackBar(
+          animationDuration: Duration(seconds: 7),
+          context,
+          Material(
+            child: Column(
+              children: [
+                Text(AppConfig.newNotifcation, style: AppConfig.textDetails),
+                SizedBox(height: 10),
+                CustomSnackBar.success(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  message:
+                      "${message.notification!.title} \n  ${message.notification!.body}",
+                ),
+                // Image.network(AppConfig.imageFromNetwork, height: 100)
+              ],
+            ),
+          ),
+        );
+
+        Navigator.of(context).pushNamed(message.notification!.body.toString());
+      }
+
+      //  LocalNotificationService.display(message);
+    });
+
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      if (message != null) {
+        myLogs("message", message.data.toString());
+        myLogs("message", message.from);
+        final routeFromMessage = message.data["route"];
+        myLogs("routeFromMessage", routeFromMessage);
+
+        // Navigator.of(context).pushNamed(message.data.b);
+      }
+    });
+  }
 
   SizedBox buildListBrand(Size size) {
     return SizedBox(
@@ -114,80 +201,6 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
-  }
-
-  @override
-  void initState() {
-    FirebaseMessaging.instance.subscribeToTopic("test");
-
-    carProvider = Provider.of<CarProvider>(context, listen: false);
-    carProvider.getCars(1, 10, search).then((value) => {
-          setState(() {
-            listCars = value.dataCar;
-            totalRecords = value.totalRecords;
-          }),
-        });
-    brandProvider = Provider.of<BrandProvider>(context, listen: false);
-    brandProvider.getBrands().then((value) => {
-          setState(() {
-            listBrands = value.dataBrand;
-          }),
-        });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      //_showTopFlash(style: FlashBehavior.fixed);
-      myLogs("onMessageOpenedApp", message);
-      //toastMessage('onMessageOpenedApp');
-
-      // Navigator.of(context).pushNamed(More.routeName);
-      // Future.delayed(const Duration(seconds: 3));
-    });
-
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    ///forground work
-    FirebaseMessaging.onMessage.listen((message) {
-      if (message.notification != null) {
-        showTopSnackBar(
-          animationDuration: Duration(seconds: 7),
-          context,
-          Material(
-            child: Column(
-              children: [
-                Text(AppConfig.newNotifcation, style: AppConfig.textDetails),
-                SizedBox(height: 10),
-                CustomSnackBar.success(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  message:
-                      "${message.notification!.title} \n  ${message.notification!.body}",
-                ),
-                // Image.network(AppConfig.imageFromNetwork, height: 100)
-              ],
-            ),
-          ),
-        );
-
-        Navigator.of(context).pushNamed(message.notification!.body.toString());
-      }
-
-      //  LocalNotificationService.display(message);
-    });
-
-    FirebaseMessaging.instance.getInitialMessage().then((message) {
-      if (message != null) {
-        myLogs("message", message.data.toString());
-        myLogs("message", message.from);
-        final routeFromMessage = message.data["route"];
-        myLogs("routeFromMessage", routeFromMessage);
-
-        // Navigator.of(context).pushNamed(message.data.b);
-      }
-    });
   }
 
   @override
