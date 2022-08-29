@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_car/config/app_config.dart';
 import 'package:auto_car/debugger/my_debuger.dart';
 import 'package:auto_car/model/brand_model.dart';
@@ -251,14 +253,13 @@ class _HomeState extends State<Home> {
                   //getDataCars();
                 }
                 setState(() => {});
-                // getDataCars();
                 carProvider
-                    .getCars(1, 10, textSearchController.text)
+                    .getCars(1, totalRecords, textSearchController.text)
                     .then((value) => {
                           setState(() {
-                            expandedIndex = -1;
+                            log(totalRecords.toString());
                             listCars = value.dataCar;
-                            totalRecords = value.totalRecords;
+                            expandedIndex = -1;
                           }),
                         });
               },
@@ -303,15 +304,16 @@ class _HomeState extends State<Home> {
                           ? NoDataFoundWidget(
                               title: AppConfig.noOfferFound,
                               onTap: () {
-                                setState(() {});
-                                carProvider.getCars(1, 10, '').then((value) => {
-                                      setState(() {
-                                        // carProvider.loadingState = LoadingState.loading;
-                                        expandedIndex = -1;
-                                        listCars = value.dataCar;
-                                        totalRecords = value.totalRecords;
-                                      }),
-                                    });
+                                setState(() => {});
+                                carProvider
+                                    .getCars(1, totalRecords, '')
+                                    .then((value) => {
+                                          setState(() {
+                                            log(totalRecords.toString());
+                                            listCars = value.dataCar;
+                                            expandedIndex = -1;
+                                          }),
+                                        });
                               },
                             )
                           : ListCarsWidget(

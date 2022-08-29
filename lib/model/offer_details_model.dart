@@ -363,20 +363,50 @@ class BrandModel {
   String id;
   String modelName;
   String modelNameAr;
-  String brand;
+  Brand brand;
 
   factory BrandModel.fromJson(Map<String, dynamic> json) => BrandModel(
         id: json["id"] ?? '',
         modelName: json["modelName"] ?? '',
         modelNameAr: json["modelNameAr"] ?? '',
-        brand: json["brand"] ?? '',
+        brand: Brand.fromJson(
+          json["brand"],
+        ),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "modelName": modelName,
         "modelNameAr": modelNameAr,
-        "brand": brand,
+        "brand": brand.toJson(),
+      };
+}
+
+class Brand {
+  Brand({
+    required this.id,
+    required this.name,
+    required this.nameAr,
+    required this.logoPath,
+  });
+
+  String id;
+  String name;
+  String nameAr;
+  String logoPath;
+
+  factory Brand.fromJson(Map<String, dynamic> json) => Brand(
+        id: json["id"] ?? '',
+        name: json["name"] ?? '',
+        nameAr: json["nameAr"] ?? '',
+        logoPath: json["logoPath"] ?? '',
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "nameAr": nameAr,
+        "logoPath": logoPath,
       };
 }
 

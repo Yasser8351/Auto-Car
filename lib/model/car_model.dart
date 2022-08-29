@@ -1,6 +1,7 @@
 // To parse this JSON data, do
 //
 //     final carModel = carModelFromJson(jsonString);
+/*
 
 import 'dart:convert';
 
@@ -151,20 +152,48 @@ class BrandModel {
   String id;
   String modelName;
   String modelNameAr;
-  String brand;
+  Brand brand;
 
   factory BrandModel.fromJson(Map<String, dynamic> json) => BrandModel(
         id: json["id"] ?? '',
         modelName: json["modelName"] ?? '',
         modelNameAr: json["modelNameAr"] ?? '',
-        brand: json["brand"] ?? '',
+        brand: Brand.fromJson(json["brand"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "modelName": modelName,
         "modelNameAr": modelNameAr,
-        "brand": brand,
+        "brand": brand.toJson(),
+      };
+}
+
+class Brand {
+  Brand({
+    required this.id,
+    required this.name,
+    required this.nameAr,
+    required this.logoPath,
+  });
+
+  String id;
+  String name;
+  String nameAr;
+  String logoPath;
+
+  factory Brand.fromJson(Map<String, dynamic> json) => Brand(
+        id: json["id"],
+        name: json["name"],
+        nameAr: json["nameAr"],
+        logoPath: json["logoPath"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "nameAr": nameAr,
+        "logoPath": logoPath,
       };
 }
 
@@ -212,8 +241,12 @@ class Year {
       };
 }
 
+*/
 
-/* 
+// To parse this JSON data, do
+//
+//     final carModel = carModelFromJson(jsonString);
+
 import 'dart:convert';
 
 CarModel carModelFromJson(String str) => CarModel.fromJson(json.decode(str));
@@ -241,7 +274,7 @@ class CarModel {
   int totalPages;
   int totalRecords;
   String nextPage;
-  dynamic previousPage;
+  String previousPage;
 
   factory CarModel.fromJson(Map<String, dynamic> json) => CarModel(
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
@@ -278,6 +311,7 @@ class Datum {
     required this.kilometer,
     required this.price,
     required this.currency,
+    required this.cartype,
     required this.isActive,
     required this.ytLink,
   });
@@ -290,8 +324,9 @@ class Datum {
   String kilometer;
   double price;
   Currency currency;
+  Cartype cartype;
   bool isActive;
-  dynamic ytLink;
+  String ytLink;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"] ?? '',
@@ -302,7 +337,8 @@ class Datum {
         kilometer: json["kilometer"] ?? '',
         price: json["price"] ?? 0.0,
         currency: Currency.fromJson(json["currency"]),
-        isActive: json["isActive"] ?? false,
+        cartype: Cartype.fromJson(json["cartype"]),
+        isActive: json["isActive"] ?? '',
         ytLink: json["ytLink"] ?? '',
       );
 
@@ -315,6 +351,7 @@ class Datum {
         "kilometer": kilometer,
         "price": price,
         "currency": currency.toJson(),
+        "cartype": cartype.toJson(),
         "isActive": isActive,
         "ytLink": ytLink,
       };
@@ -330,14 +367,16 @@ class BrandModel {
 
   String id;
   String modelName;
-  dynamic modelNameAr;
+  String modelNameAr;
   Brand brand;
 
   factory BrandModel.fromJson(Map<String, dynamic> json) => BrandModel(
         id: json["id"] ?? '',
         modelName: json["modelName"] ?? '',
         modelNameAr: json["modelNameAr"] ?? '',
-        brand: Brand.fromJson(json["brand"]),
+        brand: Brand.fromJson(
+          json["brand"],
+        ),
       );
 
   Map<String, dynamic> toJson() => {
@@ -376,6 +415,34 @@ class Brand {
       };
 }
 
+class Cartype {
+  Cartype({
+    required this.id,
+    required this.typeName,
+    required this.typeNameAr,
+    required this.imgPath,
+  });
+
+  String id;
+  String typeName;
+  String typeNameAr;
+  String imgPath;
+
+  factory Cartype.fromJson(Map<String, dynamic> json) => Cartype(
+        id: json["id"] ?? '',
+        typeName: json["typeName"] ?? '',
+        typeNameAr: json["typeNameAr"] ?? '',
+        imgPath: json["imgPath"] ?? '',
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "typeName": typeName,
+        "typeNameAr": typeNameAr,
+        "imgPath": imgPath,
+      };
+}
+
 class Currency {
   Currency({
     required this.id,
@@ -385,10 +452,10 @@ class Currency {
 
   String id;
   String currencyName;
-  dynamic currencyNameAr;
+  String currencyNameAr;
 
   factory Currency.fromJson(Map<String, dynamic> json) => Currency(
-        id: json["id"],
+        id: json["id"] ?? '',
         currencyName: json["currencyName"] ?? '',
         currencyNameAr: json["currencyNameAr"] ?? '',
       );
@@ -410,8 +477,8 @@ class Year {
   int yearName;
 
   factory Year.fromJson(Map<String, dynamic> json) => Year(
-        id: json["id"],
-        yearName: json["yearName"],
+        id: json["id"] ?? '',
+        yearName: json["yearName"] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {
@@ -419,4 +486,3 @@ class Year {
         "yearName": yearName,
       };
 }
-*/

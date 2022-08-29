@@ -175,7 +175,7 @@ class _OffersByCategoryState extends State<OffersByCategory> {
                         // :
                         ListCarsWidget(
                           listCars: listCars,
-                          totalRecords: totalRecords,
+                          totalRecords: 1,
                           isOffers: false,
                           listCarsById: _id,
                           onTap: () {

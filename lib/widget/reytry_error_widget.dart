@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import '../config/app_config.dart';
 
 class ReyTryErrorWidget extends StatelessWidget {
-  const ReyTryErrorWidget({Key? key, required this.title, required this.onTap})
+  const ReyTryErrorWidget(
+      {Key? key,
+      required this.title,
+      required this.onTap,
+      this.isClear = false})
       : super(key: key);
   final String title;
   final Function() onTap;
+  final bool isClear;
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +44,11 @@ class ReyTryErrorWidget extends StatelessWidget {
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         Icon(Icons.refresh, color: Colors.white),
                         SizedBox(width: 10),
                         Text(
-                          AppConfig.tryAgain,
+                          isClear ? AppConfig.viewAll : AppConfig.tryAgain,
                           style: TextStyle(color: Colors.white),
                         ),
                       ],

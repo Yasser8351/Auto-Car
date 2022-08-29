@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:auto_car/api/api_response.dart';
 import 'package:auto_car/config/app_config.dart';
-import 'package:auto_car/config/app_style.dart';
 import 'package:auto_car/debugger/my_debuger.dart';
 import 'package:auto_car/enum/all_enum.dart';
 import 'package:auto_car/model/category_model.dart';
@@ -89,11 +88,23 @@ class _CategoryScreenState extends State<CategoryScreen> {
       );
     } else {
       if (listCategory.isEmpty) {
-        return Center(
-            child: Text(
-          isSearch ? AppConfig.noDataFoundInThisResult : AppConfig.noDataFound,
-          style: AppStyle.textStyle2,
-        ));
+        return ReyTryErrorWidget(
+          isClear: true,
+          title: isSearch
+              ? AppConfig.noDataFoundInThisResult
+              : AppConfig.noDataFound,
+          onTap: () {
+            setState(() {
+              textSearchController.text = '';
+            });
+            getDataCategory();
+          },
+        );
+        // return Center(
+        //     child: Text(
+        //   isSearch ? AppConfig.noDataFoundInThisResult : AppConfig.noDataFound,
+        //   style: AppStyle.textStyle2,
+        // ));
       } else {
         return Scaffold(
           body: SingleChildScrollView(
@@ -117,9 +128,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
                           listCategory = listCategory
                               .where(
-                                (element) =>
-                                    element.typeName.toLowerCase() ==
-                                    textSearchController.text.toLowerCase(),
+                                (element) => element.typeName
+                                    .toLowerCase()
+                                    .contains(textSearchController.text
+                                        .toLowerCase()),
                               )
                               .toList();
                         },
