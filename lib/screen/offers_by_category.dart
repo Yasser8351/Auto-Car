@@ -18,8 +18,9 @@ import '../widget/search_widget_with_logo.dart';
 import '../widget/text_faild_search_widget.dart';
 
 class OffersByCategory extends StatefulWidget {
-  const OffersByCategory({Key? key}) : super(key: key);
+  const OffersByCategory({Key? key, required this.search}) : super(key: key);
   static const routeName = 'OffersByCategory';
+  final String search;
 
   @override
   State<OffersByCategory> createState() => _OffersByCategoryState();
@@ -36,7 +37,7 @@ class _OffersByCategoryState extends State<OffersByCategory> {
   TextEditingController textSearchController = TextEditingController();
   int totalRecords = 0;
   int pageNumber = 1;
-  String search = '';
+  //String search = '';
   int expandedIndex = -1;
 
   @override
@@ -44,7 +45,7 @@ class _OffersByCategoryState extends State<OffersByCategory> {
     FirebaseMessaging.instance.subscribeToTopic("test");
 
     carProvider = Provider.of<CarProvider>(context, listen: false);
-    carProvider.getCarsByCategory(1, 10, search).then((value) => {
+    carProvider.getCarsByCategory(1, 10, widget.search).then((value) => {
           setState(() {
             listCars = value.dataCar;
             totalRecords = value.totalRecords;
@@ -212,7 +213,7 @@ class _OffersByCategoryState extends State<OffersByCategory> {
   }
 
   void getDataCarsProvider(int pageNumber) {
-    carProvider.reloedListCarsByCategory(pageNumber, 10, search).then(
+    carProvider.reloedListCarsByCategory(pageNumber, 10, widget.search).then(
           (value) => {
             // listCars = value.dataCar,
             listCars.addAll(value.dataCar),

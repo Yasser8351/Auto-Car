@@ -161,10 +161,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
-                                  log("message");
+                                  log("on Tap category");
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          OffersByCategory()));
+                                      builder: (context) => OffersByCategory(
+                                          search: listCategory[index].id)));
                                 },
                                 child: ListCategoryWidget(
                                   listCategory: listCategory[index],
