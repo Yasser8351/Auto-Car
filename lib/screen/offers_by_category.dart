@@ -44,6 +44,8 @@ class _OffersByCategoryState extends State<OffersByCategory> {
   void initState() {
     FirebaseMessaging.instance.subscribeToTopic("test");
 
+    myLogs("key", widget.search);
+
     carProvider = Provider.of<CarProvider>(context, listen: false);
     carProvider.getCarsByCategory(1, 10, widget.search).then((value) => {
           setState(() {

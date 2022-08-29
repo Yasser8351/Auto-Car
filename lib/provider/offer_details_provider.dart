@@ -39,7 +39,7 @@ class OfferDetailsProvider with ChangeNotifier {
           .post(Uri.parse(ApiUrl.getOfferDetails + "?bid=$id"),
               headers: ApiUrl.getHeader(),
               body: json.encode({"updateSummary": true}))
-          .timeout(const Duration(seconds: 20));
+          .timeout(const Duration(seconds: 15));
 
       if (response.statusCode == 200) {
         var responseFromBody = offerDetailModelFromJson(response.body);
@@ -79,10 +79,10 @@ class OfferDetailsProvider with ChangeNotifier {
     } on FormatException {
       setApiResponseValue(
           AppConfig.serverError, false, _listImageGallary, LoadingState.error);
+    } catch (error) {
+      setApiResponseValue(
+          error.toString(), false, _listImageGallary, LoadingState.error);
     }
-    // } catch (e) {
-    //   myLogs("error", e.toString());
-    // }
 
     notifyListeners();
     return apiResponse;

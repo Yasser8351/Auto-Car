@@ -21,9 +21,9 @@ class CarProvider with ChangeNotifier {
   //This Constracter when execut Then Call Data from API
   //the aprothe to improve performancie when because the provider
 
-  CarProvider() {
-    getCars(1, 10, '');
-  }
+  // CarProvider() {
+  //   getCars(1, 10, '');
+  // }
 
   //This function call the data from the API
   //The Post type function takes the search value from the body
@@ -31,22 +31,22 @@ class CarProvider with ChangeNotifier {
 
   Future<ApiResponse> getCarsByCategory(
       int pageNumber, int pageSize, String search) async {
-    myLogs("getCarsByCategory", getCarsByCategory);
     try {
       loadingState = LoadingState.loading;
-      var response = await http.post(
-          Uri.parse(
-            ApiUrl.getOffersByCategory +
-                'PageNumber=$pageNumber&PageSize=$pageSize',
-          ),
-          headers: ApiUrl.getHeader(),
-          body: json.encode(
-            {
-              "search": search,
-              //"search": "276962eb-055f-467b-8323-04bce51ec348"
-            },
-          ));
-      // .timeout(Duration(seconds: 20));
+      var response = await http
+          .post(
+              Uri.parse(
+                ApiUrl.getOffersByCategory +
+                    'PageNumber=$pageNumber&PageSize=$pageSize',
+              ),
+              headers: ApiUrl.getHeader(),
+              body: json.encode(
+                {
+                  //"search": search,
+                  "search": "276962eb-055f-467b-8323-04bce51ec348"
+                },
+              ))
+          .timeout(Duration(seconds: 15));
 
       if (response.statusCode == 200) {
         //  _listCars = carModelFromJson(response.body);
@@ -68,19 +68,22 @@ class CarProvider with ChangeNotifier {
         setApiResponseValue(
             AppConfig.errorOoccurred, false, _listCars, LoadingState.error);
       }
-      // } on SocketException {
-      //   setApiResponseValue(
-      //       AppConfig.noInternet, false, _listCars, LoadingState.error);
-      // } on FormatException {
-      //   setApiResponseValue(
-      //       AppConfig.serverError, false, _listCars, LoadingState.error);
-      // }
-
+    } on SocketException {
+      setApiResponseValue(
+          AppConfig.noInternet, false, _listCars, LoadingState.error);
+    } on FormatException {
+      setApiResponseValue(
+          AppConfig.serverError, false, _listCars, LoadingState.error);
     } catch (error) {
       setApiResponseValue(
           error.toString(), false, _listCars, LoadingState.error);
-      myLog("getCarsByCategory", "catch error", error.toString());
+      myLogs("catch error", error.toString());
     }
+    // } catch (error) {
+    // setApiResponseValue(
+    //     error.toString(), false, _listCars, LoadingState.error);
+    //   myLog("getCarsByCategory", "catch error", error.toString());
+    // }
 
     notifyListeners();
     return apiResponse;

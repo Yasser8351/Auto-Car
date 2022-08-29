@@ -68,14 +68,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
   @override
   void initState() {
     detailsprovider = Provider.of<OfferDetailsProvider>(context, listen: false);
-    Provider.of<OfferDetailsProvider>(context, listen: false)
-        .geOffersDetails(widget.offerId)
-        .then((value) => {
-              _listImageGallary = detailsprovider.listImageGallary,
-              _listFeature = detailsprovider.listFeature,
-              _offerModel = detailsprovider.offerModel,
-              setState(() {})
-            });
+    detailsprovider.geOffersDetails(widget.offerId).then((value) => {
+          _listImageGallary = detailsprovider.listImageGallary,
+          _listFeature = detailsprovider.listFeature,
+          _offerModel = detailsprovider.offerModel,
+          setState(() {})
+        });
     super.initState();
   }
 
@@ -117,9 +115,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
       return ReyTryErrorWidget(
         title: detailsprovider.apiResponse.message,
         onTap: () {
-          setState(() {
-            detailsprovider.loadingState = LoadingState.loading;
-          });
+          setState(() {});
+          detailsprovider.geOffersDetails(widget.offerId).then((value) => {
+                _listImageGallary = detailsprovider.listImageGallary,
+                _listFeature = detailsprovider.listFeature,
+                _offerModel = detailsprovider.offerModel,
+                setState(() {})
+              });
           // getDataCategory();
         },
       );
@@ -127,9 +129,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
       return ReyTryErrorWidget(
         title: AppConfig.noDataFound,
         onTap: () {
-          setState(() {
-            detailsprovider.loadingState = LoadingState.loading;
-          });
           //  getDataCategory();
         },
       );

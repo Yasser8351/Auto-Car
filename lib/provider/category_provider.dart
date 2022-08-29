@@ -25,7 +25,7 @@ class CategoryProvider with ChangeNotifier {
       loadingState = LoadingState.loading;
       var response = await http
           .get(ApiUrl.getAllCateory, headers: ApiUrl.getHeader())
-          .timeout(const Duration(seconds: 20));
+          .timeout(const Duration(seconds: 15));
       if (response.statusCode == 200) {
         _listCategory = categoryModelFromJson(response.body);
         if (_listCategory.isEmpty) {
@@ -54,6 +54,9 @@ class CategoryProvider with ChangeNotifier {
     } on FormatException {
       setApiResponseValue(
           AppConfig.serverError, false, _listCategory, LoadingState.error);
+    } catch (error) {
+      setApiResponseValue(
+          error.toString(), false, _listCategory, LoadingState.error);
     }
 
     notifyListeners();
