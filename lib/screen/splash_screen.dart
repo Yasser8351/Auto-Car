@@ -48,7 +48,7 @@ class _SplahScreenState extends State<SplahScreen> {
   }
 
   _getUSerFromSharedPref() async {
-    var temp = await SharedPrefUser().getID();
+    var temp = await SharedPrefUser().getUid();
     setState(() {
       userId = temp;
       myLogs("uuid Fom methoed getUser()", userId);

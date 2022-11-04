@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'about_screen.dart';
-import 'send_notifaction_screen.dart';
 import 'terms_and_conditions_screen.dart';
 
 class More extends StatelessWidget {
@@ -88,13 +87,13 @@ class More extends StatelessWidget {
                       AppConfig.logoWithoutBackgroundSvg,
                       () => Navigator.of(context)
                           .pushNamed(VersionScreen.routeName)),
-                  buildDivider(),
-                  buildCardItem(
-                      context,
-                      AppConfig.snedNotifcation,
-                      Icons.send,
-                      () => Navigator.of(context)
-                          .pushNamed(SnedNotifcationScreen.routeName)),
+                  // buildDivider(),
+                  // buildCardItem(
+                  //     context,
+                  //     AppConfig.snedNotifcation,
+                  //     Icons.send,
+                  //     () => Navigator.of(context)
+                  //         .pushNamed(SnedNotifcationScreen.routeName)),
                   const SizedBox(height: 14),
                 ],
               ),

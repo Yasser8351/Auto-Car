@@ -313,6 +313,7 @@ class Datum {
     required this.currency,
     required this.cartype,
     required this.isActive,
+    required this.isFavorite,
     required this.ytLink,
   });
 
@@ -326,6 +327,7 @@ class Datum {
   Currency currency;
   Cartype cartype;
   bool isActive;
+  bool isFavorite;
   String ytLink;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -338,7 +340,8 @@ class Datum {
         price: json["price"] ?? 0.0,
         currency: Currency.fromJson(json["currency"]),
         cartype: Cartype.fromJson(json["cartype"]),
-        isActive: json["isActive"] ?? '',
+        isActive: json["isActive"] ?? false,
+        isFavorite: json["isFavorite"] ?? false,
         ytLink: json["ytLink"] ?? '',
       );
 

@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
   String userId = '';
 
   _getUSerFromSharedPref() async {
-    var temp = await SharedPrefUser().getID();
+    var temp = await SharedPrefUser().getUid();
     setState(() {
       userId = temp;
     });
@@ -96,6 +96,8 @@ class _HomeState extends State<Home> {
     ///forground work
     FirebaseMessaging.onMessage.listen((message) {
       if (message.notification != null) {
+        log("FirebaseMessaging :  " + message.data.toString());
+        // ScaffoldMessenger.of(context).showMaterialBanner(MatPa)
         showTopSnackBar(
           animationDuration: Duration(seconds: 7),
           context,
@@ -321,6 +323,7 @@ class _HomeState extends State<Home> {
                               totalRecords: totalRecords,
                               isOffers: false,
                               listCarsById: _id,
+                              carProvider: carProvider,
                               onTap: () {
                                 myLogs(listCars.length.toString(),
                                     "no data found  --------  loade more");

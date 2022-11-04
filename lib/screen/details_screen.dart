@@ -19,13 +19,14 @@ import '../widget/reytry_error_widget.dart';
 import 'invoice_screen.dart';
 
 class DetailsScreen extends StatefulWidget {
-  const DetailsScreen(
-      {Key? key,
-      required this.offerId,
-      required this.listImageSliderCar,
-      required this.title,
-      required this.price})
-      : super(key: key);
+  const DetailsScreen({
+    Key? key,
+    required this.offerId,
+    required this.listImageSliderCar,
+    required this.title,
+    required this.price,
+    required this.youtupeLink,
+  }) : super(key: key);
   static const routeName = "DetailsScreen";
 
   final List<ImageGallary> listImageSliderCar;
@@ -33,6 +34,7 @@ class DetailsScreen extends StatefulWidget {
   final title;
   final price;
   final String offerId;
+  final String youtupeLink;
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -98,9 +100,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
     final splittedKilometer = _offerModel.kilometer.split(' ');
 
-    void launchWatssap(String phone, String message) async {
-      //String urlLaunch = "whatsapp://send?phone=$phone";
-      String urlLaunch = "whatsapp://send?phone=$phone&text=$message";
+    void launchWatssap(String phone, String message, bool isYoutupe) async {
+      String urlLaunch = '';
+      if (isYoutupe) {
+        urlLaunch = "https://www.youtube.com/watch?v=PHO42wsqMbY";
+      } else {
+        urlLaunch = "whatsapp://send?phone=$phone&text=$message";
+      }
+      // String urlLaunch = "whatsapp://send?phone=$phone&text=$message";
       if (await canLaunchUrl(Uri.parse(urlLaunch))) {
         // ignore: deprecated_member_use
         launch((urlLaunch));
@@ -169,7 +176,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  launchWatssap(phone, text);
+                  launchWatssap(phone, text, false);
                 },
                 child: Padding(
                   padding:
@@ -319,20 +326,31 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       //padding: const EdgeInsets.symmetric(vertical: 90, horizontal: 15),
                       child: Column(
                         children: [
-                          CardWithImage(
-                            height: 40,
-                            width: 60,
-                            child: Icon(
-                              Icons.play_arrow_sharp,
-                              color: Theme.of(context).colorScheme.onSecondary,
-                              size: 40,
-                            ),
-                            colors: Theme.of(context).colorScheme.onPrimary,
-                            onTap: () async {
-                              //share this offers
-                              // await Share.share(AppConfig.shareOffers);
-                            },
-                          ),
+                          widget.youtupeLink.isEmpty
+                              ? SizedBox()
+                              : CardWithImage(
+                                  height: 40,
+                                  width: 60,
+                                  child: Icon(
+                                    Icons.play_arrow_sharp,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary,
+                                    size: 40,
+                                  ),
+                                  colors:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                  onTap: () async {
+                                    showAlertDialog(
+                                      context,
+                                      () => {launchWatssap(phone, text, true)},
+                                      () => Navigator.of(context).pop(),
+                                    );
+
+                                    //share this offers
+                                    // await Share.share(AppConfig.shareOffers);
+                                  },
+                                ),
                           const SizedBox(height: 10),
                           CardWithImage(
                             height: 45,
@@ -505,6 +523,36 @@ class _DetailsScreenState extends State<DetailsScreen> {
       );
     }
   }
+}
+
+showAlertDialog(BuildContext context, Function() yes, Function() no) {
+  // set up the buttons
+  Widget cancelButton = TextButton(
+    child: Text("مشاهدة", style: TextStyle(color: Colors.green)),
+    onPressed: yes,
+  );
+  Widget continueButton = TextButton(
+    child: Text("الغاء"),
+    onPressed: no,
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("مشاهدة الفيديو"),
+    content: Text("هل تريد الانتقال الي يوتيوب ومشاهدة فيديو للسيارة؟"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
 
 buildListDetailsSpecifications(BuildContext context, Size size,

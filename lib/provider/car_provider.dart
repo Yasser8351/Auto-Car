@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:auto_car/debugger/my_debuger.dart';
 import 'package:auto_car/model/car_model.dart';
+import 'package:auto_car/sharedpref/user_share_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,6 +18,7 @@ class CarProvider with ChangeNotifier {
   LoadingState loadingState = LoadingState.initial;
 
   List<Datum> get listCars => _listCars;
+  SharedPrefUser sharedPrefUser = SharedPrefUser();
 
   //This Constracter when execut Then Call Data from API
   //the aprothe to improve performancie when because the provider
@@ -91,6 +93,7 @@ class CarProvider with ChangeNotifier {
 
   Future<ApiResponse> getCars(
       int pageNumber, int pageSize, String search) async {
+    String uid = await sharedPrefUser.getUid();
     try {
       loadingState = LoadingState.loading;
       var response = await http
@@ -101,9 +104,13 @@ class CarProvider with ChangeNotifier {
               ),
               headers: ApiUrl.getHeader(),
               body: json.encode(
-                {"search": search},
+                {
+                  "search": search,
+                  "clientId": uid,
+                  // "e8aa0eb5-46c7-4e60-a32b-e96fd57f16252022-08-21 10:25:36.316499",
+                },
               ))
-          .timeout(Duration(seconds: 10));
+          .timeout(Duration(seconds: 20));
 
       if (response.statusCode == 200) {
         //  _listCars = carModelFromJson(response.body);
@@ -131,19 +138,52 @@ class CarProvider with ChangeNotifier {
     } on FormatException {
       setApiResponseValue(
           AppConfig.serverError, false, _listCars, LoadingState.error);
-    }
-
-    /* 
-    
     } catch (error) {
       setApiResponseValue(
           error.toString(), false, _listCars, LoadingState.error);
       myLog("getCars", "catch error", error.toString());
     }
-    */
 
     notifyListeners();
     return apiResponse;
+  }
+
+  Future<bool> updateFavorite(String offerId, bool isFavorite) async {
+    myLog("start methode", " updateFavorite", '');
+
+    // {
+//   "offerId": "380bf5eb-f0aa-4906-b9d3-4649a5ef77ff",
+//   "clientId": "e8aa0eb5-46c7-4e60-a32b-e96fd57f16252022-08-21 10:25:36.316499",
+//   "isFavorite": true
+// }
+    String uid = await sharedPrefUser.getUid();
+
+    try {
+      loadingState = LoadingState.loading;
+      var response = await http.post(
+          Uri.parse(
+            ApiUrl.updateFavorite,
+          ),
+          headers: ApiUrl.getHeader(),
+          body: json.encode(
+            {
+              "offerId": offerId,
+              "clientId": uid,
+              "isFavorite": isFavorite,
+            },
+          ));
+
+      myLogs('isFavorite', response.body);
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        setApiResponseValue(
+            AppConfig.errorOoccurred, false, _listCars, LoadingState.error);
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
   }
 
   //This methode call to Refresh Data in Screen,

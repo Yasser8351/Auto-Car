@@ -79,6 +79,7 @@ class _FavertState extends State<Favert> {
                       String title = listCars[index]['title'] ?? '';
                       String image = listCars[index]['imageUrl'] ?? '';
                       String price = listCars[index]['price'] ?? '';
+                      String youtupeLink = '';
 
                       myLogs("id", id);
                       return GestureDetector(
@@ -89,6 +90,7 @@ class _FavertState extends State<Favert> {
                                   title: title,
                                   price: price,
                                   offerId: id,
+                                  youtupeLink: youtupeLink,
                                 )),
                           ));
                         },

@@ -13,7 +13,7 @@ class SharedPrefUser {
     return _prefs.getBool('login') ?? false;
   }
 
-  Future<String> getID() async {
+  Future<String> getUid() async {
     _prefs = await SharedPreferences.getInstance();
     return (_prefs.getString('id') ?? '');
   }

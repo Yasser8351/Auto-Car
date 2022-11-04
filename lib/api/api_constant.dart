@@ -1,6 +1,5 @@
 ///contain getter for all api url and Header and parameters
 class ApiUrl {
-  //static const String _root = 'https://fakestoreapi.com/';
   static const String _root = 'http://207.180.223.113:8975/api/v1/';
 
   static const String token =
@@ -10,9 +9,8 @@ class ApiUrl {
   static String get getAllOffer =>
       'http://207.180.223.113:8975/api/v1/Offer/MGetAll?';
   static String get getOfferDetails => _root + 'Offer/MGetOfferDetails';
+  static String get updateFavorite => _root + 'Offer/UpdateFavorite';
   static String get getOffersByCategory => _root + 'Offer/MGetOffersByCarType?';
-
-//Offer/MGetOfferDetails?bid=380bf5eb-f0aa-4906-b9d3-4649a5ef77ff
 
   static Uri get getAllBrand => Uri.parse(_root + 'Brand/GetAll');
   static Uri get getAllCateory => Uri.parse(_root + 'Cartype/GetAll');

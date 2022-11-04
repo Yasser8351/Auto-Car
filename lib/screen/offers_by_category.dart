@@ -180,6 +180,7 @@ class _OffersByCategoryState extends State<OffersByCategory> {
                           listCars: listCars,
                           totalRecords: 1,
                           isOffers: false,
+                          carProvider: carProvider,
                           listCarsById: _id,
                           onTap: () {
                             myLogs(listCars.length.toString(),

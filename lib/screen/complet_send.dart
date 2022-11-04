@@ -14,7 +14,7 @@ class CompletSend extends StatefulWidget {
 class _CompletSendState extends State<CompletSend> {
   String userId = '';
   _getUSerFromSharedPref() async {
-    var temp = await SharedPrefUser().getID();
+    var temp = await SharedPrefUser().getUid();
     setState(() {
       userId = temp;
     });
