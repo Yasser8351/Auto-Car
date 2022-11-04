@@ -20,7 +20,7 @@ class NoDataFoundWidget extends StatelessWidget {
           SizedBox(height: size.height * .1),
           Text(
             title,
-            style: AppStyle.textBlack20,
+            style: AppStyle.textBlack18,
           ),
           SizedBox(height: size.height * .05),
           GestureDetector(

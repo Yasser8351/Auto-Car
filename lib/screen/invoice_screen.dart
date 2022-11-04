@@ -124,15 +124,21 @@ class _InvoiceScreenState extends State<InvoiceScreen>
       _isLoading = true;
     });
 
-    String username = "username@c-pinal.com";
-    String password = "password";
-    final smtpServer = new SmtpServer("domin.com",
-        username: username, password: password, port: 465, ssl: true);
+    // String username = "username@c-pinal.com";
+    // String password = "password";
+    String username = "sender@gulfsmo.net";
+    String password = "-zxu[vtQ.pU(";
+    final smtpServer = new SmtpServer("mail.gulfsmo.net",
+        // final smtpServer = new SmtpServer("domin.com",
+        username: username,
+        password: password,
+        port: 465,
+        ssl: true);
 
     final message = Message()
       ..from = Address(username, AppConfig.appName)
-      ..recipients.add('batagroup.info@gmail.com')
-      //..recipients.add('yasser8351@gmail.com')
+      //..recipients.add('batagroup.info@gmail.com')
+      ..recipients.add('yasser8351@gmail.com')
       ..subject = AppConfig.invoice
       ..attachments.add(FileAttachment(_storedImage!))
       ..text = data
@@ -320,9 +326,12 @@ class _InvoiceScreenState extends State<InvoiceScreen>
                                         height: 30.0,
                                       ),
                                       _isLoading
-                                          ? Center(
-                                              child:
-                                                  CircularProgressIndicator())
+                                          ? SizedBox(
+                                              height: 70,
+                                              child: Center(
+                                                  child:
+                                                      CircularProgressIndicator()),
+                                            )
                                           : BorderButtonCustom(
                                               title: AppConfig.sendInvoice,
                                               color: Colors.red,

@@ -38,7 +38,10 @@ class OfferDetailsProvider with ChangeNotifier {
       var response = await http
           .post(Uri.parse(ApiUrl.getOfferDetails + "?bid=$id"),
               headers: ApiUrl.getHeader(),
-              body: json.encode({"updateSummary": true}))
+              body: json.encode({
+                "updateSummary": true,
+                "clientId": "",
+              }))
           .timeout(const Duration(seconds: 15));
 
       if (response.statusCode == 200) {

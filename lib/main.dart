@@ -6,6 +6,7 @@ import 'package:auto_car/screen/category_screen.dart';
 import 'package:auto_car/screen/favert.dart';
 import 'package:auto_car/screen/home.dart';
 import 'package:auto_car/screen/more.dart';
+import 'package:auto_car/screen/splash_screen.dart';
 import 'package:auto_car/screen/tab_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -122,7 +123,8 @@ class MyApp extends StatelessWidget {
             ),
           ),
 
-          home: TabScreen(userId: ''),
+          home: SplahScreen(),
+          // home: TabScreen(userId: ''),
 
           // home: const HomeScreen(
           //     userId:

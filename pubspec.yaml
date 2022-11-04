@@ -81,7 +81,7 @@ dependencies:
   # send email from App using SMTP server
   mailer: ^5.2.0
 
-  # toast message
+  # toast message comming from the top screen
   top_snackbar_flutter: ^2.1.1
 
   #Generate random user id
