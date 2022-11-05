@@ -83,14 +83,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
   }
-  // List<ImageSliderCarModel> listImageSliderCar = [
-  //   ImageSliderCarModel(AppConfig.imageCar),
-  //   ImageSliderCarModel(AppConfig.imageCar2),
-  //   ImageSliderCarModel(AppConfig.imageCar3),
-  //   ImageSliderCarModel(AppConfig.imageCar4),
-  //   ImageSliderCarModel(AppConfig.imageCar5),
-  //   ImageSliderCarModel(AppConfig.imageCar6),
-  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -103,11 +95,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
     void launchWatssap(String phone, String message, bool isYoutupe) async {
       String urlLaunch = '';
       if (isYoutupe) {
-        urlLaunch = "https://www.youtube.com/watch?v=PHO42wsqMbY";
+        urlLaunch = widget.youtupeLink;
       } else {
         urlLaunch = "whatsapp://send?phone=$phone&text=$message";
       }
-      // String urlLaunch = "whatsapp://send?phone=$phone&text=$message";
       if (await canLaunchUrl(Uri.parse(urlLaunch))) {
         // ignore: deprecated_member_use
         launch((urlLaunch));

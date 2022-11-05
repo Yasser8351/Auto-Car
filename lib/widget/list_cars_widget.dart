@@ -68,7 +68,8 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
       },
       builder: (data, index) {
         var id = widget.listCars[index].id;
-        var image = widget.listCars[index].brandModel.brand.logoPath;
+        var image = widget.listCars[index].cartype.imgPath;
+        // var image = widget.listCars[index].brandModel.brand.logoPath;
         //var image = AppConfig.imageFromNetwork;
         var price = widget.listCars[index].price;
         var title = widget.listCars[index].brandModel.modelName;
