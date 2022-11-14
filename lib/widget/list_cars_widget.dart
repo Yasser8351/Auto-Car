@@ -68,8 +68,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
       },
       builder: (data, index) {
         var id = widget.listCars[index].id;
-        var image = widget.listCars[index].cartype.imgPath;
-        // var image = widget.listCars[index].brandModel.brand.logoPath;
+        var image = widget.listCars[index].imageUrl;
         //var image = AppConfig.imageFromNetwork;
         var price = widget.listCars[index].price;
         var title = widget.listCars[index].brandModel.modelName;
@@ -109,14 +108,14 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                     child: CachedNetworkImage(
                       width: double.infinity,
                       filterQuality: FilterQuality.low,
-                      height: 220,
+                      height: size.height * .26,
                       fit: BoxFit.fill,
                       imageUrl: image,
                       placeholder: (context, url) => FadeInImage(
                         placeholder: AssetImage(AppConfig.placeholder),
                         image: AssetImage(AppConfig.placeholder),
                         width: double.infinity,
-                        height: 120,
+                        height: size.height * .2,
                         fit: BoxFit.fill,
                       ),
                       errorWidget: (context, url, error) => Icon(Icons.error),

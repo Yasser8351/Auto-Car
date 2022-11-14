@@ -315,6 +315,7 @@ class Datum {
     required this.isActive,
     required this.isFavorite,
     required this.ytLink,
+    required this.imageUrl,
   });
 
   String id;
@@ -329,6 +330,7 @@ class Datum {
   bool isActive;
   bool isFavorite;
   String ytLink;
+  String imageUrl;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"] ?? '',
@@ -343,6 +345,7 @@ class Datum {
         isActive: json["isActive"] ?? false,
         isFavorite: json["isFavorite"] ?? false,
         ytLink: json["ytLink"] ?? '',
+        imageUrl: json["mainImg"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
