@@ -84,19 +84,20 @@ class _SplahScreenState extends State<SplahScreen> {
         });
       },
       child: Center(
-        child: Container(
-          width: size.width,
-          height: 250.0,
-          child: AnimatedAlign(
-            alignment: selected ? Alignment.centerRight : Alignment.centerLeft,
-            duration: const Duration(seconds: 3),
-            curve: Curves.fastOutSlowIn,
-            child: Image.asset(
-              AppConfig.iconApp2,
-              height: 150,
-              width: 150,
-            ),
-          ),
+        child: Image.asset(
+          AppConfig.iconApp2,
+          height: size.height * 1,
+          width: size.width * .7,
+          // child: AnimatedAlign(
+          //   alignment: selected ? Alignment.centerRight : Alignment.centerLeft,
+          //   duration: const Duration(seconds: 3),
+          //   curve: Curves.fastOutSlowIn,
+          //   child: Image.asset(
+          //     AppConfig.iconApp2,
+          //     height: 150,
+          //     width: 150,
+          //   ),
+          // ),
         ),
       ),
     );

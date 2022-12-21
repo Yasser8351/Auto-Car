@@ -215,8 +215,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               (e) => GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                      builder: ((context) =>
-                                          FullImage(e.filePath))));
+                                      builder: ((context) => FullImage(
+                                          listImageGallary: _listImageGallary,
+                                          url: e.filePath))));
                                 },
                                 child: Stack(
                                   children: [

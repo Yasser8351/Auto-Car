@@ -116,6 +116,7 @@ class AppConfig {
       "assets/images/logowithoutbackground.png";
   static const placeholder = "assets/images/logo.png";
   static const placeholder2 = "assets/images/placeholder.png";
+  static const imageCar1 = "assets/images/car.png";
   static const imageCar = "assets/images/cars.png";
   static const imageCar2 = "assets/images/car2.jpeg";
   static const imageCar3 = "assets/images/car3.jpeg";

@@ -139,6 +139,10 @@ class CarProvider with ChangeNotifier {
       setApiResponseValue(
           AppConfig.serverError, false, _listCars, LoadingState.error);
     } catch (error) {
+      if (error.toString().contains('TimeoutException ')) {
+        setApiResponseValue(
+            "اتصال الانترنت ضعيف", false, _listCars, LoadingState.error);
+      }
       setApiResponseValue(
           error.toString(), false, _listCars, LoadingState.error);
       myLog("getCars", "catch error", error.toString());

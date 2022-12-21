@@ -8,6 +8,7 @@ import 'package:auto_car/screen/home.dart';
 import 'package:auto_car/screen/more.dart';
 import 'package:auto_car/screen/splash_screen.dart';
 import 'package:auto_car/screen/tab_screen.dart';
+import 'package:auto_car/widget/full_image.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
