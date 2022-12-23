@@ -51,7 +51,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
       shrinkWrap: true,
       loadingIndicator: Padding(
         padding: EdgeInsets.symmetric(vertical: 20),
-        child: widget.totalRecords == widget.listCars.length
+        child: widget.totalRecords <= widget.listCars.length
             ? SizedBox()
             : Center(
                 child: CircularProgressIndicator(

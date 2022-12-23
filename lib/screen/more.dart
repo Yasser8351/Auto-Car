@@ -3,7 +3,9 @@ import 'package:auto_car/config/app_style.dart';
 import 'package:auto_car/screen/version_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'about_screen.dart';
 import 'terms_and_conditions_screen.dart';
@@ -15,6 +17,8 @@ class More extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    InAppReview inAppReview = InAppReview.instance;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -63,10 +67,19 @@ class More extends StatelessWidget {
                 children: [
                   const SizedBox(height: 14),
                   buildCardItem(
-                      context, AppConfig.rateApp, Icons.star, () => {}),
+                      context,
+                      AppConfig.rateApp,
+                      Icons.star,
+                      () => {
+                            inAppReview.openStoreListing(
+                                appStoreId:
+                                    'https://play.google.com/store/apps/details?id=com.app.autocar',
+                                microsoftStoreId:
+                                    'https://play.google.com/store/apps/details?id=com.app.autocar')
+                          }),
                   buildDivider(),
-                  buildCardItem(
-                      context, AppConfig.callUs, Icons.phone, () => {}),
+                  buildCardItem(context, AppConfig.callUs, Icons.phone,
+                      () => {launchUrl(Uri.parse('tel://+971544391743'))}),
                   buildDivider(),
                   buildCardItem(
                       context,

@@ -178,19 +178,19 @@ class _OffersByCategoryState extends State<OffersByCategory> {
                         // :
                         ListCarsWidget(
                           listCars: listCars,
-                          totalRecords: 1,
+                          totalRecords: 0,
                           isOffers: false,
                           carProvider: carProvider,
                           listCarsById: _id,
                           onTap: () {
-                            myLogs(listCars.length.toString(),
-                                "no data found  --------  loade more");
-                            if (listCars.length == totalRecords) {
-                            } else {
-                              myLogs(listCars.length.toString(),
-                                  "OffersByCategory  --------  loade more");
-                              getDataCarsProvider(pageNumber + 1);
-                            }
+                            // myLogs(listCars.length.toString(),
+                            //     "no data found  --------  loade more");
+                            // if (listCars.length == totalRecords) {
+                            // } else {
+                            //   myLogs(listCars.length.toString(),
+                            //       "OffersByCategory  --------  loade more");
+                            //   getDataCarsProvider(pageNumber + 1);
+                            // }
                           },
                         ),
                       ],

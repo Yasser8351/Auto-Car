@@ -40,6 +40,10 @@ dependencies:
   # image slider
   carousel_slider: ^4.0.0
 
+  in_app_review: ^2.0.4
+
+  url_launcher: ^6.1.6
+
   # share link
   share_plus: ^2.0.0
 
