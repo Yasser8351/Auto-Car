@@ -152,35 +152,38 @@ class _ListBrandWidgetState extends State<ListBrandWidget> {
         },
       );
     } else {
-      return Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                AppConfig.brands,
-                style: AppConfig.textTitle,
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          BrandScreen(listBrands: widget.listBrand),
-                    ),
-                  );
-                },
-                child: Text(
-                  AppConfig.viewAll,
-                  style: AppConfig.textViewAll,
+      return Directionality(
+        textDirection: TextDirection.ltr,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  AppConfig.brands,
+                  style: AppConfig.textTitle,
                 ),
-              ),
-            ],
-          ),
-          SizedBox(height: size.height * .028),
-          widget.widget,
-          // buildListBrand(size)
-        ],
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            BrandScreen(listBrands: widget.listBrand),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    AppConfig.viewAll,
+                    style: AppConfig.textViewAll,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: size.height * .028),
+            widget.widget,
+            // buildListBrand(size)
+          ],
+        ),
       );
     }
   }
