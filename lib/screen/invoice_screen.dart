@@ -201,183 +201,215 @@ class _InvoiceScreenState extends State<InvoiceScreen>
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 return SingleChildScrollView(
-                  child: Container(
-                      color: index.isOdd ? Colors.white : Colors.black12,
-                      //height: 100.0,
-                      child: Container(
-                          width: double.infinity,
-                          color: Colors.white,
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Theme(
-                              data: ThemeData(
-                                primaryColor: Colors.black,
-                                primaryColorDark: Colors.black,
-                                focusColor: Colors.black,
-                                colorScheme: const ColorScheme(
-                                  primary: Colors.black,
-                                  onPrimary: Colors.black,
-                                  secondary: Colors.black,
-                                  onSecondary: Colors.white,
-                                  brightness: Brightness.light,
-                                  background: Colors.black,
-                                  onBackground: Colors.black,
-                                  error: Colors.black,
-                                  onError: Colors.black,
-                                  surface: Colors.black,
-                                  onSurface: Colors.black,
-                                ),
-                              ),
-                              child: Column(children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 10),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      _buildTextfield(
-                                        label: AppConfig.name,
-                                        controller: _nameController,
-                                        obscure: false,
-                                        inputType: TextInputType.text,
-                                      ),
-                                      const SizedBox(
-                                        height: 16.0,
-                                      ),
-                                      _buildTextfield(
-                                        label: AppConfig.phone,
-                                        controller: _phoneController,
-                                        obscure: false,
-                                        inputType: TextInputType.number,
-                                      ),
-                                      const SizedBox(
-                                        height: 16.0,
-                                      ),
-                                      _buildTextfield(
-                                        label: AppConfig.email,
-                                        controller: _emailController,
-                                        obscure: false,
-                                        inputType: TextInputType.text,
-                                      ),
-                                      const SizedBox(
-                                        height: 16.0,
-                                      ),
-                                      _buildTextfield(
-                                        label: AppConfig.numberOfCar,
-                                        controller: _numerCarsController,
-                                        obscure: false,
-                                        inputType: TextInputType.number,
-                                      ),
-                                      const SizedBox(
-                                        height: 16.0,
-                                      ),
-                                      _buildTextfield(
-                                        label: AppConfig.carColor,
-                                        controller: _carColorController,
-                                        obscure: false,
-                                        inputType: TextInputType.text,
-                                      ),
-                                      const SizedBox(
-                                        height: 30.0,
-                                      ),
-                                      _buildRadioButton(),
-                                      const SizedBox(
-                                        height: 30.0,
-                                      ),
-                                      Text(
-                                        AppConfig.uploadId,
-                                        style: AppStyle.textBlack20,
-                                        textAlign: TextAlign.right,
-                                      ),
-                                      const SizedBox(
-                                        height: 10.0,
-                                      ),
-                                      GestureDetector(
-                                        onTap: () async {
-                                          await takeImageFromGallery();
-                                        },
-                                        child: _storedImage == null
-                                            ? Container(
-                                                width: size.width,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  border: Border.all(
-                                                      color: Colors.black),
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                child: Image.asset(
-                                                  AppConfig.placeholder2,
-                                                  width: size.width * .3,
-                                                  height: size.width * .4,
-                                                ),
-                                              )
-                                            : ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                child: Image.file(
-                                                  _storedImage!,
-                                                  width: 100,
-                                                  height: 100,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                      ),
-                                      const SizedBox(
-                                        height: 30.0,
-                                      ),
-                                      _isLoading
-                                          ? SizedBox(
-                                              height: 70,
-                                              child: Center(
-                                                  child:
-                                                      CircularProgressIndicator()),
-                                            )
-                                          : BorderButtonCustom(
-                                              title: AppConfig.sendInvoice,
-                                              color: Colors.red,
-                                              icon: Icons.send,
-                                              onTap: () {
-                                                if (_storedImage == null) {
-                                                  toast(AppConfig
-                                                      .selectTheImageId);
-                                                  return;
-                                                }
-                                                if (_nameController
-                                                        .text.isEmpty ||
-                                                    _phoneController
-                                                        .text.isEmpty ||
-                                                    _emailController
-                                                        .text.isEmpty ||
-                                                    _carColorController
-                                                        .text.isEmpty ||
-                                                    _numerCarsController
-                                                        .text.isEmpty) {
-                                                  toast(AppConfig
-                                                      .allFieldsrequired);
-                                                } else {
-                                                  // if (listUserData.length !=
-                                                  //     0)
-                                                  insertData(
-                                                    _nameController.text,
-                                                    _phoneController.text,
-                                                    _emailController.text,
-                                                    _numerCarsController.text,
-                                                    _carColorController.text,
-                                                    _localController.text,
-                                                    _zibCodeController.text,
-                                                  );
-
-                                                  sendEmail(
-                                                      title: AppConfig.appName,
-                                                      body: _numerCarsController
-                                                          .text);
-                                                }
-                                              },
-                                            ),
-                                    ],
+                  child: Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Container(
+                        color: index.isOdd ? Colors.white : Colors.black12,
+                        //height: 100.0,
+                        child: Container(
+                            width: double.infinity,
+                            color: Colors.white,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Theme(
+                                data: ThemeData(
+                                  primaryColor: Colors.black,
+                                  primaryColorDark: Colors.black,
+                                  focusColor: Colors.black,
+                                  colorScheme: const ColorScheme(
+                                    primary: Colors.black,
+                                    onPrimary: Colors.black,
+                                    secondary: Colors.black,
+                                    onSecondary: Colors.white,
+                                    brightness: Brightness.light,
+                                    background: Colors.black,
+                                    onBackground: Colors.black,
+                                    error: Colors.black,
+                                    onError: Colors.black,
+                                    surface: Colors.black,
+                                    onSurface: Colors.black,
                                   ),
-                                )
-                              ])))),
+                                ),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10.0, vertical: 10),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            _buildTextfield(
+                                              label: AppConfig.name,
+                                              controller: _nameController,
+                                              obscure: false,
+                                              inputType: TextInputType.text,
+                                            ),
+                                            const SizedBox(
+                                              height: 16.0,
+                                            ),
+                                            _buildTextfield(
+                                              label: AppConfig.phone,
+                                              controller: _phoneController,
+                                              obscure: false,
+                                              inputType: TextInputType.number,
+                                            ),
+                                            const SizedBox(
+                                              height: 16.0,
+                                            ),
+                                            _buildTextfield(
+                                              label: AppConfig.email,
+                                              controller: _emailController,
+                                              obscure: false,
+                                              inputType: TextInputType.text,
+                                            ),
+                                            const SizedBox(
+                                              height: 16.0,
+                                            ),
+                                            _buildTextfield(
+                                              label: AppConfig.numberOfCar,
+                                              controller: _numerCarsController,
+                                              obscure: false,
+                                              inputType: TextInputType.number,
+                                            ),
+                                            const SizedBox(
+                                              height: 16.0,
+                                            ),
+                                            _buildTextfield(
+                                              label: AppConfig.carColor,
+                                              controller: _carColorController,
+                                              obscure: false,
+                                              inputType: TextInputType.text,
+                                            ),
+                                            const SizedBox(
+                                              height: 30.0,
+                                            ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                AppConfig.chargeCar,
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            ),
+                                            _buildRadioButton(),
+                                            const SizedBox(
+                                              height: 30.0,
+                                            ),
+                                            Text(
+                                              AppConfig.uploadId,
+                                              style: AppStyle.textBlack20,
+                                              textAlign: TextAlign.right,
+                                            ),
+                                            const SizedBox(
+                                              height: 10.0,
+                                            ),
+                                            GestureDetector(
+                                              onTap: () async {
+                                                await takeImageFromGallery();
+                                              },
+                                              child: _storedImage == null
+                                                  ? Container(
+                                                      width: size.width,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        border: Border.all(
+                                                            color:
+                                                                Colors.black),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                      child: Image.asset(
+                                                        AppConfig.placeholder2,
+                                                        width: size.width * .3,
+                                                        height: size.width * .4,
+                                                      ),
+                                                    )
+                                                  : ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      child: Image.file(
+                                                        _storedImage!,
+                                                        width: 100,
+                                                        height: 100,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                            ),
+                                            const SizedBox(
+                                              height: 30.0,
+                                            ),
+                                            _isLoading
+                                                ? SizedBox(
+                                                    height: 70,
+                                                    child: Center(
+                                                        child:
+                                                            CircularProgressIndicator()),
+                                                  )
+                                                : BorderButtonCustom(
+                                                    title:
+                                                        AppConfig.sendInvoice,
+                                                    color: Colors.red,
+                                                    icon: Icons.send,
+                                                    onTap: () {
+                                                      if (_storedImage ==
+                                                          null) {
+                                                        toast(AppConfig
+                                                            .selectTheImageId);
+                                                        return;
+                                                      }
+                                                      if (_nameController
+                                                              .text.isEmpty ||
+                                                          _phoneController
+                                                              .text.isEmpty ||
+                                                          _emailController
+                                                              .text.isEmpty ||
+                                                          _carColorController
+                                                              .text.isEmpty ||
+                                                          _numerCarsController
+                                                              .text.isEmpty) {
+                                                        toast(AppConfig
+                                                            .allFieldsrequired);
+                                                      } else {
+                                                        // if (listUserData.length !=
+                                                        //     0)
+                                                        insertData(
+                                                          _nameController.text,
+                                                          _phoneController.text,
+                                                          _emailController.text,
+                                                          _numerCarsController
+                                                              .text,
+                                                          _carColorController
+                                                              .text,
+                                                          _localController.text,
+                                                          _zibCodeController
+                                                              .text,
+                                                        );
+
+                                                        sendEmail(
+                                                            title: AppConfig
+                                                                .appName,
+                                                            body:
+                                                                _numerCarsController
+                                                                    .text);
+                                                      }
+                                                    },
+                                                  ),
+                                          ],
+                                        ),
+                                      )
+                                    ])))),
+                  ),
                 );
               },
               childCount: 1,
@@ -439,7 +471,7 @@ class _InvoiceScreenState extends State<InvoiceScreen>
                     });
                   }),
               Text(
-                'لا',
+                'No',
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
             ],
@@ -455,19 +487,12 @@ class _InvoiceScreenState extends State<InvoiceScreen>
                     });
                   }),
               Text(
-                'نعم',
+                'Yes',
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
             ],
           )
         ]),
-        Text(
-          AppConfig.chargeCar,
-          style: TextStyle(
-              color: Theme.of(context).colorScheme.primary,
-              fontSize: 20,
-              fontWeight: FontWeight.w500),
-        ),
       ],
     );
   }

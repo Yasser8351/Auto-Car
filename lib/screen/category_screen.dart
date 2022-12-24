@@ -100,11 +100,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
             getDataCategory();
           },
         );
-        // return Center(
-        //     child: Text(
-        //   isSearch ? AppConfig.noDataFoundInThisResult : AppConfig.noDataFound,
-        //   style: AppStyle.textStyle2,
-        // ));
       } else {
         return Scaffold(
           body: SingleChildScrollView(

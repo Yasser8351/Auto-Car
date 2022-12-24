@@ -28,7 +28,7 @@ class More extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.centerLeft,
                 child: Text(
                   AppConfig.privacyApp,
                   style: AppStyle.textMoreScreenTitle,
@@ -133,13 +133,10 @@ buildCardItem(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(Icons.navigate_before, size: 27, color: Colors.grey.shade600),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(title, style: AppStyle.textMoreScreenScendry),
-              const SizedBox(width: 16),
               Container(
                   decoration: BoxDecoration(
                     color: const Color(0xffFD4C4C),
@@ -148,8 +145,11 @@ buildCardItem(
                   height: 30,
                   width: 30,
                   child: Icon(icons, size: 17, color: Colors.white)),
+              const SizedBox(width: 16),
+              Text(title, style: AppStyle.textMoreScreenScendry),
             ],
           ),
+          Icon(Icons.navigate_next, size: 27, color: Colors.grey.shade600),
         ],
       ),
     ),
@@ -165,30 +165,10 @@ buildCardAboutApp(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            " ${AppConfig.version} ",
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey.shade600,
-            ),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 17,
-                  color: Color.fromARGB(255, 29, 29, 29),
-                ),
-              ),
-              const SizedBox(width: 16),
-              // Image.asset(
-              //   AppConfig.logoWithoutBackgroundPng,
-              //   height: 30,
-              //   width: 30,
-              // ),
               Container(
                 decoration: BoxDecoration(
                   color: const Color(0xffFD4C4C),
@@ -207,7 +187,28 @@ buildCardAboutApp(
                   ),
                 ),
               ),
+              const SizedBox(width: 16),
+
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 17,
+                  color: Color.fromARGB(255, 29, 29, 29),
+                ),
+              ),
+              // Image.asset(
+              //   AppConfig.logoWithoutBackgroundPng,
+              //   height: 30,
+              //   width: 30,
+              // ),
             ],
+          ),
+          Text(
+            " ${AppConfig.version} ",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey.shade600,
+            ),
           ),
         ],
       ),

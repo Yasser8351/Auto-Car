@@ -157,6 +157,10 @@ class _ListBrandWidgetState extends State<ListBrandWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Text(
+                AppConfig.brands,
+                style: AppConfig.textTitle,
+              ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).push(
@@ -170,10 +174,6 @@ class _ListBrandWidgetState extends State<ListBrandWidget> {
                   AppConfig.viewAll,
                   style: AppConfig.textViewAll,
                 ),
-              ),
-              Text(
-                AppConfig.brands,
-                style: AppConfig.textTitle,
               ),
             ],
           ),

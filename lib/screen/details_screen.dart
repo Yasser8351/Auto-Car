@@ -480,7 +480,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               // ),
               const SizedBox(height: 25),
               const Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
@@ -495,7 +495,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Align(
-                  alignment: Alignment.centerRight,
+                  alignment: Alignment.centerLeft,
                   child: Text(
                     _offerModel.description,
                     // AppConfig.carDetails,
@@ -579,7 +579,7 @@ buildListDetailsSpecifications(BuildContext context, Size size,
               SizedBox(
                 width: 100,
                 child: Align(
-                  alignment: Alignment.centerRight,
+                  alignment: Alignment.centerLeft,
                   child: Text(
                     featureName,
                     overflow: TextOverflow.ellipsis,

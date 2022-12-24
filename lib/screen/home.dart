@@ -304,7 +304,7 @@ class _HomeState extends State<Home> {
                       ),
                       carProvider.loadingState == LoadingState.noDataFound
                           ? NoDataFoundWidget(
-                              title: search + '  ' + AppConfig.noOfferFound,
+                              title: AppConfig.noOfferFound + '  ' + search,
                               onTap: () {
                                 setState(() => {});
                                 carProvider

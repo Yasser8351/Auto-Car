@@ -47,7 +47,7 @@ class _OffersByCategoryState extends State<OffersByCategory> {
     myLogs("key", widget.search);
 
     carProvider = Provider.of<CarProvider>(context, listen: false);
-    carProvider.getCarsByCategory(1, 10, widget.search).then((value) => {
+    carProvider.getCarsByCategory(1, 20, widget.search).then((value) => {
           setState(() {
             listCars = value.dataCar;
             totalRecords = value.totalRecords;

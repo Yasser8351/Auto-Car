@@ -17,7 +17,7 @@ class TabScreen extends StatefulWidget {
 }
 
 class _TabScreenState extends State<TabScreen> {
-  int _selectIndex = 3;
+  int _selectIndex = 0;
   DateTime timeBackPressed = DateTime.now();
 
   void _navigateBottomBar(int index) {
@@ -27,10 +27,10 @@ class _TabScreenState extends State<TabScreen> {
   }
 
   final List<Widget> _pages = [
-    const More(),
-    const CategoryScreen(),
-    const Favert(),
     const Home(userId: false),
+    const Favert(),
+    const CategoryScreen(),
+    const More(),
   ];
 
   @override
@@ -79,20 +79,20 @@ class _TabScreenState extends State<TabScreen> {
                   onTap: _navigateBottomBar,
                   items: const [
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.more_horiz),
-                      label: AppConfig.more,
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.category),
-                      label: AppConfig.category,
+                      icon: Icon(Icons.home),
+                      label: AppConfig.home,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.favorite_border),
                       label: AppConfig.favert,
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      label: AppConfig.home,
+                      icon: Icon(Icons.category),
+                      label: AppConfig.category,
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.more_horiz),
+                      label: AppConfig.more,
                     ),
                   ],
                 ),

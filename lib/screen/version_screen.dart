@@ -50,7 +50,7 @@ class _VersionScreenState extends State<VersionScreen> {
               ),
               const SizedBox(height: 40),
               Text(
-                'الاصدار  $version ',
+                'Version  $version ',
                 style: const TextStyle(
                   fontFamily: 'Changa',
                   color: Colors.white,
