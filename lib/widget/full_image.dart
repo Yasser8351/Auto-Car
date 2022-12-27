@@ -33,33 +33,31 @@ class FullImage extends StatelessWidget {
                     children: [
                       Center(
                         child: CachedNetworkImage(
-                          width: size.width,
-                          fit: BoxFit.cover,
-                          height: 400,
+                          width: size.width * 2,
+                          fit: BoxFit.contain,
+                          height: size.width,
                           filterQuality: FilterQuality.low,
                           imageUrl: e.filePath.toString(),
-                          placeholder: (context, url) => Center(
-                            child: FadeInImage(
-                              placeholder: AssetImage(AppConfig.placeholder),
-                              image: AssetImage(AppConfig.placeholder),
-                              width: double.infinity,
-                              height: 120,
-                              fit: BoxFit.fill,
-                            ),
+                          placeholder: (context, url) => FadeInImage(
+                            placeholder: AssetImage(AppConfig.placeholder),
+                            image: AssetImage(AppConfig.placeholder),
+                            width: double.infinity,
+                            height: 120,
+                            fit: BoxFit.fill,
                           ),
                           errorWidget: (context, url, error) =>
                               Icon(Icons.error),
                         ),
                       ),
-                      Positioned(
-                        top: 170,
-                        left: 100,
-                        right: 100,
-                        child: Image.asset(
-                          AppConfig.logo,
-                          height: 20,
-                        ),
-                      ),
+                      // Positioned(
+                      //   top: 170,
+                      //   left: 100,
+                      //   right: 100,
+                      //   child: Image.asset(
+                      //     AppConfig.logo,
+                      //     height: 20,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

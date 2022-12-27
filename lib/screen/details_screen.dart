@@ -221,29 +221,37 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 },
                                 child: Stack(
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: const BorderRadius.only(
-                                        bottomLeft: Radius.circular(60),
-                                      ),
-                                      child: CachedNetworkImage(
-                                        width: size.width,
-                                        fit: BoxFit.cover,
-                                        height: 400,
-                                        filterQuality: FilterQuality.low,
-                                        imageUrl: e.filePath.toString(),
-                                        placeholder: (context, url) => Center(
-                                          child: FadeInImage(
-                                            placeholder: AssetImage(
-                                                AppConfig.placeholder),
-                                            image: AssetImage(
-                                                AppConfig.placeholder),
-                                            width: double.infinity,
-                                            height: 120,
-                                            fit: BoxFit.fill,
+                                    Container(
+                                      // color: Colors.red,
+                                      child: Positioned(
+                                        top: 0,
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.only(
+                                            bottomLeft: Radius.circular(0),
+                                          ),
+                                          child: CachedNetworkImage(
+                                            width: size.width,
+                                            fit: BoxFit.contain,
+                                            height: 450,
+                                            filterQuality: FilterQuality.low,
+                                            imageUrl: e.filePath.toString(),
+                                            placeholder: (context, url) =>
+                                                Center(
+                                              child: FadeInImage(
+                                                placeholder: AssetImage(
+                                                    AppConfig.placeholder),
+                                                image: AssetImage(
+                                                    AppConfig.placeholder),
+                                                width: double.infinity,
+                                                height: 120,
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error),
                                           ),
                                         ),
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
                                       ),
                                     ),
                                     Positioned(
@@ -417,7 +425,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.background,
                           borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(60),
+                            bottomLeft: Radius.circular(0),
                           ),
                         ),
                         width: size.width,
@@ -427,41 +435,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    //"\$ 60,000",
-                                    _offerModel.price.toString(),
-                                    // widget.price.toString(),
-                                    style: AppStyle.textStyle5,
-                                    textAlign: TextAlign.end,
-                                  ),
-                                  AnimatedSmoothIndicator(
-                                    effect: WormEffect(
-                                      dotHeight: 11,
-                                      dotWidth: 10,
-                                      activeDotColor: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary,
-                                      // dotColor: Theme.of(context)
-                                      //     .colorScheme
-                                      //     .onPrimary,
-                                      type: WormType.thin,
-                                      // strokeWidth: 5,
-                                    ),
-                                    activeIndex: activeIndex,
-                                    count: _listImageGallary.length,
-                                  ),
-                                  Text(
-                                    _offerModel.modelName,
-                                    //"فورد اكسبدشن",
-                                    // widget.title,
-                                    style: AppStyle.textStyle5,
-                                    textAlign: TextAlign.end,
-                                  ),
-                                ],
+                              AnimatedSmoothIndicator(
+                                effect: WormEffect(
+                                  dotHeight: 11,
+                                  dotWidth: 10,
+                                  activeDotColor:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                  // dotColor: Theme.of(context)
+                                  //     .colorScheme
+                                  //     .onPrimary,
+                                  type: WormType.thin,
+                                  // strokeWidth: 5,
+                                ),
+                                activeIndex: activeIndex,
+                                count: _listImageGallary.length,
                               ),
                             ],
                           ),
@@ -491,6 +478,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                 ),
               ),
+
               const SizedBox(height: 18),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
@@ -505,7 +493,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                 ),
               ),
+              const SizedBox(height: 18),
+              buildCarItem("Model", _offerModel.modelName),
+              buildCarItem("price", _offerModel.price.toString()),
+              buildCarItem("kilometer", _offerModel.kilometer),
+
               SizedBox(height: size.height * .05),
+
               buildListDetailsSpecifications(context, size, _listFeature, 0),
               //buildListDetailsSpecifications(context, size, _listFeature, 1),
               // buildListDetailsSpecifications(context, size, _listFeature, 2),
@@ -544,6 +538,27 @@ showAlertDialog(BuildContext context, Function() yes, Function() no) {
     builder: (BuildContext context) {
       return alert;
     },
+  );
+}
+
+buildCarItem(String key, String value) {
+  return Row(
+    // mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      Text(
+        key,
+        style: AppStyle.textBlack20,
+        textAlign: TextAlign.center,
+      ),
+      SizedBox(width: 50),
+      Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          value,
+          style: AppStyle.textBlack20,
+        ),
+      ),
+    ],
   );
 }
 
