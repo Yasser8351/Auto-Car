@@ -179,7 +179,7 @@ class _HomeState extends State<Home> {
                           width: size.width,
                           fit: BoxFit.contain,
                           height: size.height * .54,
-                          filterQuality: FilterQuality.low,
+                          filterQuality: FilterQuality.high,
                           imageUrl: logo,
                           //color: Colors.white,
                           placeholder: (context, url) => FadeInImage(

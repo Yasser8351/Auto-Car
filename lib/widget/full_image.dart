@@ -36,7 +36,7 @@ class FullImage extends StatelessWidget {
                           width: size.width * 2,
                           fit: BoxFit.contain,
                           height: size.width,
-                          filterQuality: FilterQuality.low,
+                          filterQuality: FilterQuality.high,
                           imageUrl: e.filePath.toString(),
                           placeholder: (context, url) => FadeInImage(
                             placeholder: AssetImage(AppConfig.placeholder),
@@ -86,7 +86,7 @@ class FullImage extends StatelessWidget {
         //     CachedNetworkImage(
         //       width: double.infinity,
         //       height: size.height / 2.5,
-        //       filterQuality: FilterQuality.low,
+        //       filterQuality: FilterQuality.high,
         //       imageUrl: url,
         //       fit: BoxFit.fill,
         //       placeholder: (context, url) => Center(

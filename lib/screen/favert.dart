@@ -110,7 +110,7 @@ class _FavertState extends State<Favert> {
                                 child: CachedNetworkImage(
                                   width: double.infinity,
                                   height: 120,
-                                  filterQuality: FilterQuality.low,
+                                  filterQuality: FilterQuality.high,
                                   imageUrl: image,
                                   fit: BoxFit.fill,
                                   placeholder: (context, url) => FadeInImage(

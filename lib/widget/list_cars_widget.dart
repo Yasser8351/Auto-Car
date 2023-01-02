@@ -107,7 +107,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                     ),
                     child: CachedNetworkImage(
                       width: double.infinity,
-                      filterQuality: FilterQuality.low,
+                      filterQuality: FilterQuality.high,
                       height: size.height * .26,
                       fit: BoxFit.fill,
                       imageUrl: image,

@@ -195,98 +195,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(151, 241, 241, 241),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(50),
-                  ),
-                ),
-                height: 400,
-                width: double.infinity,
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 0, vertical: 0),
-                      child: CarouselSlider(
-                        items: _listImageGallary
-                            .map(
-                              (e) => GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: ((context) => FullImage(
-                                          listImageGallary: _listImageGallary,
-                                          url: e.filePath))));
-                                },
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      // color: Colors.red,
-                                      child: Positioned(
-                                        top: 0,
-                                        child: ClipRRect(
-                                          borderRadius: const BorderRadius.only(
-                                            bottomLeft: Radius.circular(0),
-                                          ),
-                                          child: CachedNetworkImage(
-                                            width: size.width,
-                                            fit: BoxFit.contain,
-                                            height: 450,
-                                            filterQuality: FilterQuality.low,
-                                            imageUrl: e.filePath.toString(),
-                                            placeholder: (context, url) =>
-                                                Center(
-                                              child: FadeInImage(
-                                                placeholder: AssetImage(
-                                                    AppConfig.placeholder),
-                                                image: AssetImage(
-                                                    AppConfig.placeholder),
-                                                width: double.infinity,
-                                                height: 120,
-                                                fit: BoxFit.fill,
-                                              ),
-                                            ),
-                                            errorWidget:
-                                                (context, url, error) =>
-                                                    Icon(Icons.error),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 40,
-                                      left: 100,
-                                      right: 100,
-                                      child: Image.asset(
-                                        AppConfig.logo,
-                                        height: 20,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                            .toList(),
-                        options: CarouselOptions(
-                          onPageChanged: (index, reason) {
-                            setState(() {
-                              activeIndex = index;
-                            });
-                          },
-                          height: 400,
-                          aspectRatio: 16 / 9,
-                          viewportFraction: 1.01,
-                          autoPlay: true,
-                          autoPlayInterval: const Duration(seconds: 5),
-                          autoPlayAnimationDuration:
-                              const Duration(milliseconds: 800),
-                          scrollDirection: Axis.horizontal,
-                          disableCenter: true,
-                        ),
-                      ),
-                    ),
-                    Padding(
+              Stack(
+                children: [
+                  Positioned(
+                    top: 10,
+                    left: 0,
+                    bottom: 0,
+                    right: 0,
+                    child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 40, horizontal: 15),
                       child: Row(
@@ -320,143 +236,85 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         ],
                       ),
                     ),
-                    Positioned(
-                      top: 100,
-                      right: 10,
-                      //padding: const EdgeInsets.symmetric(vertical: 90, horizontal: 15),
-                      child: Column(
-                        children: [
-                          widget.youtupeLink.isEmpty
-                              ? SizedBox()
-                              : CardWithImage(
-                                  height: 40,
-                                  width: 60,
-                                  child: Icon(
-                                    Icons.play_arrow_sharp,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSecondary,
-                                    size: 40,
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(
+                      // color: Color.fromARGB(151, 241, 241, 241),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(50),
+                      ),
+                    ),
+                    height: 400,
+                    width: double.infinity,
+                    child: CarouselSlider(
+                      items: _listImageGallary
+                          .map(
+                            (e) => GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: ((context) => FullImage(
+                                        listImageGallary: _listImageGallary,
+                                        url: e.filePath))));
+                              },
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    // color: Colors.red,
+                                    child: CachedNetworkImage(
+                                      width: size.width,
+                                      fit: BoxFit.contain,
+                                      height: 450,
+                                      filterQuality: FilterQuality.high,
+                                      imageUrl: e.filePath.toString(),
+                                      placeholder: (context, url) => Center(
+                                        child: FadeInImage(
+                                          placeholder:
+                                              AssetImage(AppConfig.placeholder),
+                                          image:
+                                              AssetImage(AppConfig.placeholder),
+                                          width: double.infinity,
+                                          height: 120,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
+                                    ),
                                   ),
-                                  colors:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                  onTap: () async {
-                                    showAlertDialog(
-                                      context,
-                                      () => {launchWatssap(phone, text, true)},
-                                      () => Navigator.of(context).pop(),
-                                    );
 
-                                    //share this offers
-                                    // await Share.share(AppConfig.shareOffers);
-                                  },
-                                ),
-                          const SizedBox(height: 10),
-                          CardWithImage(
-                            height: 45,
-                            width: 60,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  splittedKilometer[0],
-                                  // _offerModel.kilometer,
-                                  // "230",
-                                  style: AppStyle.textStyle6,
-                                ),
-                                Text(
-                                  "KM/H",
-                                  style: AppStyle.textStyle4,
-                                ),
-                              ],
-                            ),
-                            colors: Theme.of(context).colorScheme.onSecondary,
-                            onTap: () async {
-                              //share this offers
-                              //  await Share.share(AppConfig.shareOffers);
-                            },
-                          ),
-                          const SizedBox(height: 10),
-                          CardWithImage(
-                            height: 40,
-                            width: 60,
-                            child: const Center(
-                                child: Text(
-                              "DISIEL",
-                              style: AppStyle.textStyle3,
-                            )),
-                            colors: Theme.of(context).colorScheme.onSecondary,
-                            onTap: () async {
-                              //share this offers
-                              //  await Share.share(AppConfig.shareOffers);
-                            },
-                          ),
-                          const SizedBox(height: 10),
-                          CardWithImage(
-                            height: 45,
-                            width: 60,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  "1.3L",
-                                  style: AppStyle.textStyle3,
-                                ),
-                                Text(
-                                  "ENGINE",
-                                  style: AppStyle.textStyle4,
-                                ),
-                              ],
-                            ),
-                            colors: Theme.of(context).colorScheme.onSecondary,
-                            onTap: () async {
-                              //share this offers
-                              //  await Share.share(AppConfig.shareOffers);
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      top: 320,
-                      bottom: 0,
-                      left: 0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.background,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(0),
-                          ),
-                        ),
-                        width: size.width,
-                        height: double.infinity,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              AnimatedSmoothIndicator(
-                                effect: WormEffect(
-                                  dotHeight: 11,
-                                  dotWidth: 10,
-                                  activeDotColor:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                  // dotColor: Theme.of(context)
-                                  //     .colorScheme
-                                  //     .onPrimary,
-                                  type: WormType.thin,
-                                  // strokeWidth: 5,
-                                ),
-                                activeIndex: activeIndex,
-                                count: _listImageGallary.length,
+                                  // Positioned(
+                                  //   top: 40,
+                                  //   left: 100,
+                                  //   right: 100,
+                                  //   child: Image.asset(
+                                  //     AppConfig.logo,
+                                  //     height: 20,
+                                  //   ),
+                                  // ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          )
+                          .toList(),
+                      options: CarouselOptions(
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            activeIndex = index;
+                          });
+                        },
+                        height: 400,
+                        aspectRatio: 16 / 9,
+                        viewportFraction: 1.01,
+                        autoPlay: true,
+                        autoPlayInterval: const Duration(seconds: 5),
+                        autoPlayAnimationDuration:
+                            const Duration(milliseconds: 800),
+                        scrollDirection: Axis.horizontal,
+                        disableCenter: true,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
 
               // buildImageSlider(
@@ -497,6 +355,153 @@ class _DetailsScreenState extends State<DetailsScreen> {
               buildCarItem("Model", _offerModel.modelName),
               buildCarItem("price", _offerModel.price.toString()),
               buildCarItem("kilometer", _offerModel.kilometer),
+              widget.youtupeLink.isEmpty
+                  ? SizedBox()
+                  : CardWithImage(
+                      height: 40,
+                      width: 60,
+                      child: Icon(
+                        Icons.play_arrow_sharp,
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        size: 40,
+                      ),
+                      colors: Theme.of(context).colorScheme.onPrimary,
+                      onTap: () async {
+                        showAlertDialog(
+                          context,
+                          () => {launchWatssap(phone, text, true)},
+                          () => Navigator.of(context).pop(),
+                        );
+
+                        //share this offers
+                        // await Share.share(AppConfig.shareOffers);
+                      },
+                    ),
+
+              // Column(
+              //   children: [
+              //     widget.youtupeLink.isEmpty
+              //         ? SizedBox()
+              //         : CardWithImage(
+              //             height: 40,
+              //             width: 60,
+              //             child: Icon(
+              //               Icons.play_arrow_sharp,
+              //               color: Theme.of(context).colorScheme.onSecondary,
+              //               size: 40,
+              //             ),
+              //             colors: Theme.of(context).colorScheme.onPrimary,
+              //             onTap: () async {
+              //               showAlertDialog(
+              //                 context,
+              //                 () => {launchWatssap(phone, text, true)},
+              //                 () => Navigator.of(context).pop(),
+              //               );
+
+              //               //share this offers
+              //               // await Share.share(AppConfig.shareOffers);
+              //             },
+              //           ),
+
+              //     const SizedBox(height: 10),
+              //     CardWithImage(
+              //       height: 45,
+              //       width: 60,
+              //       child: Column(
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         children: [
+              //           Text(
+              //             splittedKilometer[0],
+              //             // _offerModel.kilometer,
+              //             // "230",
+              //             style: AppStyle.textStyle6,
+              //           ),
+              //           Text(
+              //             "KM/H",
+              //             style: AppStyle.textStyle4,
+              //           ),
+              //         ],
+              //       ),
+              //       colors: Theme.of(context).colorScheme.onSecondary,
+              //       onTap: () async {
+              //         //share this offers
+              //         //  await Share.share(AppConfig.shareOffers);
+              //       },
+              //     ),
+              //     const SizedBox(height: 10),
+              //     CardWithImage(
+              //       height: 40,
+              //       width: 60,
+              //       child: const Center(
+              //           child: Text(
+              //         "DISIEL",
+              //         style: AppStyle.textStyle3,
+              //       )),
+              //       colors: Theme.of(context).colorScheme.onSecondary,
+              //       onTap: () async {
+              //         //share this offers
+              //         //  await Share.share(AppConfig.shareOffers);
+              //       },
+              //     ),
+              //     const SizedBox(height: 10),
+              //     CardWithImage(
+              //       height: 45,
+              //       width: 60,
+              //       child: Column(
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         children: const [
+              //           Text(
+              //             "1.3L",
+              //             style: AppStyle.textStyle3,
+              //           ),
+              //           Text(
+              //             "ENGINE",
+              //             style: AppStyle.textStyle4,
+              //           ),
+              //         ],
+              //       ),
+              //       colors: Theme.of(context).colorScheme.onSecondary,
+              //       onTap: () async {
+              //         //share this offers
+              //         //  await Share.share(AppConfig.shareOffers);
+              //       },
+              //     ),
+              //   ],
+              // ),
+
+              // Container(
+              //   decoration: BoxDecoration(
+              //     color: Theme.of(context).colorScheme.background,
+              //     borderRadius: BorderRadius.only(
+              //       bottomLeft: Radius.circular(0),
+              //     ),
+              //   ),
+              //   width: size.width,
+              //   height: double.infinity,
+              //   child: Padding(
+              //     padding: const EdgeInsets.symmetric(horizontal: 15),
+              //     child: Column(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         AnimatedSmoothIndicator(
+              //           effect: WormEffect(
+              //             dotHeight: 11,
+              //             dotWidth: 10,
+              //             activeDotColor:
+              //                 Theme.of(context).colorScheme.onPrimary,
+              //             // dotColor: Theme.of(context)
+              //             //     .colorScheme
+              //             //     .onPrimary,
+              //             type: WormType.thin,
+              //             // strokeWidth: 5,
+              //           ),
+              //           activeIndex: activeIndex,
+              //           count: _listImageGallary.length,
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
 
               SizedBox(height: size.height * .05),
 
