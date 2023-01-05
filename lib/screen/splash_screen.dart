@@ -77,27 +77,30 @@ class _SplahScreenState extends State<SplahScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selected = !selected;
-        });
-      },
-      child: Center(
-        child: Image.asset(
-          AppConfig.iconApp2,
-          height: size.height * 1,
-          width: size.width * .7,
-          // child: AnimatedAlign(
-          //   alignment: selected ? Alignment.centerRight : Alignment.centerLeft,
-          //   duration: const Duration(seconds: 3),
-          //   curve: Curves.fastOutSlowIn,
-          //   child: Image.asset(
-          //     AppConfig.iconApp2,
-          //     height: 150,
-          //     width: 150,
-          //   ),
-          // ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: GestureDetector(
+        onTap: () {
+          setState(() {
+            selected = !selected;
+          });
+        },
+        child: Center(
+          child: Image.asset(
+            AppConfig.logoSplash,
+            height: size.height * 1,
+            width: size.width * .7,
+            // child: AnimatedAlign(
+            //   alignment: selected ? Alignment.centerRight : Alignment.centerLeft,
+            //   duration: const Duration(seconds: 3),
+            //   curve: Curves.fastOutSlowIn,
+            //   child: Image.asset(
+            //     AppConfig.iconApp2,
+            //     height: 150,
+            //     width: 150,
+            //   ),
+            // ),
+          ),
         ),
       ),
     );

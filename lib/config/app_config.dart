@@ -244,6 +244,7 @@ class AppConfig {
   static const data = "assets/images/data.png";
   static const iconApp = "assets/images/icon.png";
   static const iconApp2 = "assets/images/icon2.png";
+  static const logoSplash = "assets/images/autocar_splash.png";
 
   // Brand image
   static const brand1 = "assets/images/1.png";

@@ -140,13 +140,12 @@ class _FavertState extends State<Favert> {
                               //   ),
                               // ),
                               const SizedBox(height: 15),
-                              const Padding(
+                              Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 7),
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    "Picanto",
-                                    // title,
+                                    "$title",
                                     overflow: TextOverflow.ellipsis,
                                     style: AppConfig.textTitleListCars,
                                     textAlign: TextAlign.start,

@@ -11,7 +11,7 @@ class MyFavoriteButton extends StatefulWidget {
     Key? key,
   })  : _iconSize = iconSize ?? 60.0,
         _iconColor = iconColor ?? Colors.red,
-        _iconDisabledColor = iconDisabledColor ?? Color.fromARGB(122, 0, 0, 0),
+        _iconDisabledColor = iconDisabledColor ?? Colors.white,
         _isFavorite = isFavorite ?? false,
         // _isFavoriteFromDB = isFavoriteFromDB ?? false,
         _valueChanged = valueChanged,
