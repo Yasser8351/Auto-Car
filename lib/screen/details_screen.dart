@@ -21,6 +21,7 @@ import 'invoice_screen.dart';
 class DetailsScreen extends StatefulWidget {
   const DetailsScreen({
     Key? key,
+    required this.currency,
     required this.offerId,
     required this.listImageSliderCar,
     required this.title,
@@ -34,6 +35,7 @@ class DetailsScreen extends StatefulWidget {
   final title;
   final price;
   final String offerId;
+  final String currency;
   final String youtupeLink;
 
   @override
@@ -53,19 +55,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
       price: 0.0,
       seats: 0,
       modelName: '');
-/*  List<SpecificationsModel> _listFeature = [
-    SpecificationsModel("تكييف"),
-    SpecificationsModel("جنوط المونيوم"),
-    SpecificationsModel("نظام الحماية"),
-    SpecificationsModel("نظام تثبيت السرعة"),
-    SpecificationsModel("حساسات"),
-    SpecificationsModel("بلوتوث"),
-    SpecificationsModel("دخول بدون مفتاح"),
-    SpecificationsModel("مرايات كهربائية"),
-    SpecificationsModel("سنترلوك"),
-    SpecificationsModel("راديو"),
-  ];
-  */
 
   @override
   void initState() {
@@ -193,322 +182,368 @@ class _DetailsScreenState extends State<DetailsScreen> {
           ),
         ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  Positioned(
-                    top: 10,
-                    left: 0,
-                    bottom: 0,
-                    right: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 40, horizontal: 15),
-                      child: Row(
+          child: Container(
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Positioned(
+                      top: 10,
+                      left: 0,
+                      bottom: 0,
+                      right: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 40, horizontal: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CardWithImage(
+                              height: 40,
+                              width: 45,
+                              child: Icon(
+                                Icons.arrow_back_rounded,
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
+                              ),
+                              colors: Theme.of(context).colorScheme.onSecondary,
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            CardWithImage(
+                              height: 40,
+                              width: 45,
+                              child: Icon(
+                                Icons.share_outlined,
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
+                              ),
+                              colors: Theme.of(context).colorScheme.onSecondary,
+                              onTap: () async {
+                                //share this offers
+                                await Share.share(AppConfig.shareOffers);
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      // decoration: const BoxDecoration(
+                      //   color: Colors.amber,
+                      //   borderRadius: BorderRadius.only(
+                      //     bottomLeft: Radius.circular(50),
+                      //   ),
+                      // ),
+                      height: size.height * .4,
+                      width: double.infinity,
+                      child: CarouselSlider(
+                        items: _listImageGallary
+                            .map(
+                              (e) => GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: ((context) => FullImage(
+                                          listImageGallary: _listImageGallary,
+                                          url: e.filePath))));
+                                },
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      // color: Colors.red,
+                                      child: CachedNetworkImage(
+                                        width: size.width,
+                                        fit: BoxFit.contain,
+                                        height: 450,
+                                        filterQuality: FilterQuality.high,
+                                        imageUrl: e.filePath.toString(),
+                                        placeholder: (context, url) => Center(
+                                          child: FadeInImage(
+                                            placeholder: AssetImage(
+                                                AppConfig.placeholder),
+                                            image: AssetImage(
+                                                AppConfig.placeholder),
+                                            width: double.infinity,
+                                            height: 120,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
+                                      ),
+                                    ),
+
+                                    // Positioned(
+                                    //   top: 40,
+                                    //   left: 100,
+                                    //   right: 100,
+                                    //   child: Image.asset(
+                                    //     AppConfig.logo,
+                                    //     height: 20,
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        options: CarouselOptions(
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              activeIndex = index;
+                            });
+                          },
+                          height: 400,
+                          aspectRatio: 16 / 9,
+                          viewportFraction: 1.01,
+                          autoPlay: true,
+                          autoPlayInterval: const Duration(seconds: 5),
+                          autoPlayAnimationDuration:
+                              const Duration(milliseconds: 800),
+                          scrollDirection: Axis.horizontal,
+                          disableCenter: true,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                    children: [
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CardWithImage(
-                            height: 40,
-                            width: 45,
-                            child: Icon(
-                              Icons.arrow_back_rounded,
-                              color: Theme.of(context).colorScheme.onBackground,
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "${widget.currency} ${widget.price}",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: size.width * .1,
+                                  fontWeight: FontWeight.w500),
                             ),
-                            colors: Theme.of(context).colorScheme.onSecondary,
-                            onTap: () {
-                              Navigator.of(context).pop();
-                            },
                           ),
-                          CardWithImage(
-                            height: 40,
-                            width: 45,
-                            child: Icon(
-                              Icons.share_outlined,
-                              color: Theme.of(context).colorScheme.onBackground,
-                            ),
-                            colors: Theme.of(context).colorScheme.onSecondary,
-                            onTap: () async {
-                              //share this offers
-                              await Share.share(AppConfig.shareOffers);
-                            },
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                                width: size.width * .21,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(0),
+                                  ),
+                                ),
+                                child: Card(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        activeIndex.toString(),
+                                        style: TextStyle(
+                                            fontSize: size.width * .08,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      Text(
+                                        '/',
+                                        style: TextStyle(
+                                            fontSize: size.width * .08,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      Text(
+                                        _listImageGallary.length.toString(),
+                                        style: TextStyle(
+                                            fontSize: size.width * .08,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
+                                  ),
+                                )),
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                  Container(
-                    decoration: const BoxDecoration(
-                      // color: Color.fromARGB(151, 241, 241, 241),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(50),
+                      const SizedBox(height: 18),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          _offerModel.description,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: size.width * .06,
+                              fontWeight: FontWeight.normal),
+                          textAlign: TextAlign.end,
+                          ////maxLines: 100,
+                        ),
                       ),
-                    ),
-                    height: 400,
-                    width: double.infinity,
-                    child: CarouselSlider(
-                      items: _listImageGallary
-                          .map(
-                            (e) => GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: ((context) => FullImage(
-                                        listImageGallary: _listImageGallary,
-                                        url: e.filePath))));
-                              },
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    // color: Colors.red,
-                                    child: CachedNetworkImage(
-                                      width: size.width,
-                                      fit: BoxFit.contain,
-                                      height: 450,
-                                      filterQuality: FilterQuality.high,
-                                      imageUrl: e.filePath.toString(),
-                                      placeholder: (context, url) => Center(
-                                        child: FadeInImage(
-                                          placeholder:
-                                              AssetImage(AppConfig.placeholder),
-                                          image:
-                                              AssetImage(AppConfig.placeholder),
-                                          width: double.infinity,
-                                          height: 120,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          Icon(Icons.error),
-                                    ),
-                                  ),
-
-                                  // Positioned(
-                                  //   top: 40,
-                                  //   left: 100,
-                                  //   right: 100,
-                                  //   child: Image.asset(
-                                  //     AppConfig.logo,
-                                  //     height: 20,
-                                  //   ),
-                                  // ),
-                                ],
+                      const SizedBox(height: 35),
+                      buildCarItem("Model", _offerModel.modelName, size),
+                      const SizedBox(height: 15),
+                      buildCarItem("Seats", _offerModel.seats.toString(), size),
+                      const SizedBox(height: 15),
+                      buildCarItem(
+                          "kilometer", _offerModel.kilometer + " km", size),
+                      widget.youtupeLink.isEmpty
+                          ? SizedBox()
+                          : CardWithImage(
+                              height: 40,
+                              width: 60,
+                              child: Icon(
+                                Icons.play_arrow_sharp,
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary,
+                                size: 40,
                               ),
+                              colors: Theme.of(context).colorScheme.onPrimary,
+                              onTap: () async {
+                                showAlertDialog(
+                                  context,
+                                  () => {launchWatssap(phone, text, true)},
+                                  () => Navigator.of(context).pop(),
+                                );
+
+                                //share this offers
+                                // await Share.share(AppConfig.shareOffers);
+                              },
                             ),
-                          )
-                          .toList(),
-                      options: CarouselOptions(
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            activeIndex = index;
-                          });
-                        },
-                        height: 400,
-                        aspectRatio: 16 / 9,
-                        viewportFraction: 1.01,
-                        autoPlay: true,
-                        autoPlayInterval: const Duration(seconds: 5),
-                        autoPlayAnimationDuration:
-                            const Duration(milliseconds: 800),
-                        scrollDirection: Axis.horizontal,
-                        disableCenter: true,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              // buildImageSlider(
-              //   context,
-              //   listImageSliderCar,
-              //   size,
-              //   () => setState,
-              // ),
-              const SizedBox(height: 25),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    AppConfig.specifications,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppConfig.textOverview,
-                    textAlign: TextAlign.center,
+                    ],
                   ),
                 ),
-              ),
+                //   children: [
+                //     widget.youtupeLink.isEmpty
+                //         ? SizedBox()
+                //         : CardWithImage(
+                //             height: 40,
+                //             width: 60,
+                //             child: Icon(
+                //               Icons.play_arrow_sharp,
+                //               color: Theme.of(context).colorScheme.onSecondary,
+                //               size: 40,
+                //             ),
+                //             colors: Theme.of(context).colorScheme.onPrimary,
+                //             onTap: () async {
+                //               showAlertDialog(
+                //                 context,
+                //                 () => {launchWatssap(phone, text, true)},
+                //                 () => Navigator.of(context).pop(),
+                //               );
 
-              const SizedBox(height: 18),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    _offerModel.description,
-                    // AppConfig.carDetails,
-                    style: AppConfig.textDetails,
-                    textAlign: TextAlign.end,
-                    ////maxLines: 100,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 18),
-              buildCarItem("Model", _offerModel.modelName),
-              buildCarItem("price", _offerModel.price.toString()),
-              buildCarItem("kilometer", _offerModel.kilometer),
-              widget.youtupeLink.isEmpty
-                  ? SizedBox()
-                  : CardWithImage(
-                      height: 40,
-                      width: 60,
-                      child: Icon(
-                        Icons.play_arrow_sharp,
-                        color: Theme.of(context).colorScheme.onSecondary,
-                        size: 40,
-                      ),
-                      colors: Theme.of(context).colorScheme.onPrimary,
-                      onTap: () async {
-                        showAlertDialog(
-                          context,
-                          () => {launchWatssap(phone, text, true)},
-                          () => Navigator.of(context).pop(),
-                        );
+                //               //share this offers
+                //               // await Share.share(AppConfig.shareOffers);
+                //             },
+                //           ),
 
-                        //share this offers
-                        // await Share.share(AppConfig.shareOffers);
-                      },
-                    ),
+                //     const SizedBox(height: 10),
+                //     CardWithImage(
+                //       height: 45,
+                //       width: 60,
+                //       child: Column(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: [
+                //           Text(
+                //             splittedKilometer[0],
+                //             // _offerModel.kilometer,
+                //             // "230",
+                //             style: AppStyle.textStyle6,
+                //           ),
+                //           Text(
+                //             "KM/H",
+                //             style: AppStyle.textStyle4,
+                //           ),
+                //         ],
+                //       ),
+                //       colors: Theme.of(context).colorScheme.onSecondary,
+                //       onTap: () async {
+                //         //share this offers
+                //         //  await Share.share(AppConfig.shareOffers);
+                //       },
+                //     ),
+                //     const SizedBox(height: 10),
+                //     CardWithImage(
+                //       height: 40,
+                //       width: 60,
+                //       child: const Center(
+                //           child: Text(
+                //         "DISIEL",
+                //         style: AppStyle.textStyle3,
+                //       )),
+                //       colors: Theme.of(context).colorScheme.onSecondary,
+                //       onTap: () async {
+                //         //share this offers
+                //         //  await Share.share(AppConfig.shareOffers);
+                //       },
+                //     ),
+                //     const SizedBox(height: 10),
+                //     CardWithImage(
+                //       height: 45,
+                //       width: 60,
+                //       child: Column(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: const [
+                //           Text(
+                //             "1.3L",
+                //             style: AppStyle.textStyle3,
+                //           ),
+                //           Text(
+                //             "ENGINE",
+                //             style: AppStyle.textStyle4,
+                //           ),
+                //         ],
+                //       ),
+                //       colors: Theme.of(context).colorScheme.onSecondary,
+                //       onTap: () async {
+                //         //share this offers
+                //         //  await Share.share(AppConfig.shareOffers);
+                //       },
+                //     ),
+                //   ],
+                // ),
 
-              // Column(
-              //   children: [
-              //     widget.youtupeLink.isEmpty
-              //         ? SizedBox()
-              //         : CardWithImage(
-              //             height: 40,
-              //             width: 60,
-              //             child: Icon(
-              //               Icons.play_arrow_sharp,
-              //               color: Theme.of(context).colorScheme.onSecondary,
-              //               size: 40,
-              //             ),
-              //             colors: Theme.of(context).colorScheme.onPrimary,
-              //             onTap: () async {
-              //               showAlertDialog(
-              //                 context,
-              //                 () => {launchWatssap(phone, text, true)},
-              //                 () => Navigator.of(context).pop(),
-              //               );
+                // Container(
+                //   decoration: BoxDecoration(
+                //     color: Theme.of(context).colorScheme.background,
+                //     borderRadius: BorderRadius.only(
+                //       bottomLeft: Radius.circular(0),
+                //     ),
+                //   ),
+                //   width: size.width,
+                //   height: double.infinity,
+                //   child: Padding(
+                //     padding: const EdgeInsets.symmetric(horizontal: 15),
+                //     child: Column(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         AnimatedSmoothIndicator(
+                //           effect: WormEffect(
+                //             dotHeight: 11,
+                //             dotWidth: 10,
+                //             activeDotColor:
+                //                 Theme.of(context).colorScheme.onPrimary,
+                //             // dotColor: Theme.of(context)
+                //             //     .colorScheme
+                //             //     .onPrimary,
+                //             type: WormType.thin,
+                //             // strokeWidth: 5,
+                //           ),
+                //           activeIndex: activeIndex,
+                //           count: _listImageGallary.length,
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
 
-              //               //share this offers
-              //               // await Share.share(AppConfig.shareOffers);
-              //             },
-              //           ),
+                SizedBox(height: size.height * .05),
 
-              //     const SizedBox(height: 10),
-              //     CardWithImage(
-              //       height: 45,
-              //       width: 60,
-              //       child: Column(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: [
-              //           Text(
-              //             splittedKilometer[0],
-              //             // _offerModel.kilometer,
-              //             // "230",
-              //             style: AppStyle.textStyle6,
-              //           ),
-              //           Text(
-              //             "KM/H",
-              //             style: AppStyle.textStyle4,
-              //           ),
-              //         ],
-              //       ),
-              //       colors: Theme.of(context).colorScheme.onSecondary,
-              //       onTap: () async {
-              //         //share this offers
-              //         //  await Share.share(AppConfig.shareOffers);
-              //       },
-              //     ),
-              //     const SizedBox(height: 10),
-              //     CardWithImage(
-              //       height: 40,
-              //       width: 60,
-              //       child: const Center(
-              //           child: Text(
-              //         "DISIEL",
-              //         style: AppStyle.textStyle3,
-              //       )),
-              //       colors: Theme.of(context).colorScheme.onSecondary,
-              //       onTap: () async {
-              //         //share this offers
-              //         //  await Share.share(AppConfig.shareOffers);
-              //       },
-              //     ),
-              //     const SizedBox(height: 10),
-              //     CardWithImage(
-              //       height: 45,
-              //       width: 60,
-              //       child: Column(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: const [
-              //           Text(
-              //             "1.3L",
-              //             style: AppStyle.textStyle3,
-              //           ),
-              //           Text(
-              //             "ENGINE",
-              //             style: AppStyle.textStyle4,
-              //           ),
-              //         ],
-              //       ),
-              //       colors: Theme.of(context).colorScheme.onSecondary,
-              //       onTap: () async {
-              //         //share this offers
-              //         //  await Share.share(AppConfig.shareOffers);
-              //       },
-              //     ),
-              //   ],
-              // ),
-
-              // Container(
-              //   decoration: BoxDecoration(
-              //     color: Theme.of(context).colorScheme.background,
-              //     borderRadius: BorderRadius.only(
-              //       bottomLeft: Radius.circular(0),
-              //     ),
-              //   ),
-              //   width: size.width,
-              //   height: double.infinity,
-              //   child: Padding(
-              //     padding: const EdgeInsets.symmetric(horizontal: 15),
-              //     child: Column(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         AnimatedSmoothIndicator(
-              //           effect: WormEffect(
-              //             dotHeight: 11,
-              //             dotWidth: 10,
-              //             activeDotColor:
-              //                 Theme.of(context).colorScheme.onPrimary,
-              //             // dotColor: Theme.of(context)
-              //             //     .colorScheme
-              //             //     .onPrimary,
-              //             type: WormType.thin,
-              //             // strokeWidth: 5,
-              //           ),
-              //           activeIndex: activeIndex,
-              //           count: _listImageGallary.length,
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-
-              SizedBox(height: size.height * .05),
-
-              buildListDetailsSpecifications(context, size, _listFeature, 0),
-              //buildListDetailsSpecifications(context, size, _listFeature, 1),
-              // buildListDetailsSpecifications(context, size, _listFeature, 2),
-            ],
+                buildListDetailsSpecifications(context, size, _listFeature, 0),
+                //buildListDetailsSpecifications(context, size, _listFeature, 1),
+                // buildListDetailsSpecifications(context, size, _listFeature, 2),
+              ],
+            ),
           ),
         ),
       );
@@ -546,21 +581,37 @@ showAlertDialog(BuildContext context, Function() yes, Function() no) {
   );
 }
 
-buildCarItem(String key, String value) {
+buildCarItem(String key, String value, Size size) {
   return Row(
-    // mainAxisAlignment: MainAxisAlignment.start,
+    // mainAxisAlignment: MainAxisAlignment.end,
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(
-        key,
-        style: AppStyle.textBlack20,
-        textAlign: TextAlign.center,
-      ),
-      SizedBox(width: 50),
-      Align(
-        alignment: Alignment.centerLeft,
+      Container(
+        // color: Colors.red,
+        width: size.width * .2,
         child: Text(
-          value,
-          style: AppStyle.textBlack20,
+          key,
+          style: TextStyle(
+              color: Colors.black,
+              fontSize: size.width * .06,
+              fontWeight: FontWeight.normal),
+          // textAlign: TextAlign.start,
+        ),
+      ),
+      SizedBox(width: 10),
+      Container(
+        width: size.width * .65,
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            value,
+            overflow: TextOverflow.clip,
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: size.width * .06,
+                fontWeight: FontWeight.normal),
+            //size.width * .65
+          ),
         ),
       ),
     ],

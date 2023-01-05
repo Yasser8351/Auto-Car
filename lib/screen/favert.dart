@@ -88,6 +88,7 @@ class _FavertState extends State<Favert> {
                             builder: ((context) => DetailsScreen(
                                   listImageSliderCar: [],
                                   title: title,
+                                  currency: '',
                                   price: price,
                                   offerId: id,
                                   youtupeLink: youtupeLink,

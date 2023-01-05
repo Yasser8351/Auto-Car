@@ -383,6 +383,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                     listImageSliderCar: [],
                     title: title,
                     price: price,
+                    currency: currency.currencyName,
                     offerId: id,
                     youtupeLink: youtupeLink,
                   )),
@@ -471,7 +472,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           child: Text(
-                            "\$$price ${currency.currencyName}",
+                            "${currency.currencyName} $price",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 color: Colors.white,
