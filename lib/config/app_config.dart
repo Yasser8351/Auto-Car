@@ -27,7 +27,8 @@ class AppConfig {
   static const bayNow = "Bay Now";
   static const contactUs = "Contact Us";
   static const unAutaristion = "un Autaristion";
-  static const shareOffers = "Get a car offer now";
+  static const shareOffers =
+      "AutoCars.uae \n أحصل علي أفضل عروض السيارات من تطبيق \nحمل التطبيق الان \n https://play.google.com/store/apps/details?id=com.app.autocar";
   static const shareDiscreption =
       "Download the Autocars application and get the best car offers";
   static const specifications = "specifications";
@@ -286,7 +287,7 @@ class AppConfig {
       fontWeight: FontWeight.normal);
   static const textSpecifications = TextStyle(
     color: Color.fromARGB(255, 139, 139, 145),
-    fontSize: 16,
+    fontSize: 17,
   );
 
   static const textStyle1 =

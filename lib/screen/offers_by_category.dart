@@ -177,6 +177,7 @@ class _OffersByCategoryState extends State<OffersByCategory> {
                         // )
                         // :
                         ListCarsWidget(
+                          isSearch: isSearch,
                           listCars: listCars,
                           totalRecords: 0,
                           isOffers: false,

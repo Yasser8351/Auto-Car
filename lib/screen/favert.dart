@@ -84,16 +84,17 @@ class _FavertState extends State<Favert> {
                       myLogs("id", id);
                       return GestureDetector(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: ((context) => DetailsScreen(
-                                  listImageSliderCar: [],
-                                  title: title,
-                                  currency: '',
-                                  price: price,
-                                  offerId: id,
-                                  youtupeLink: youtupeLink,
-                                )),
-                          ));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //   builder: ((context) => DetailsScreen(
+                          //     carModel: ,
+                          //         listImageSliderCar: [],
+                          //         title: title,
+                          //         currency: '',
+                          //         price: price,
+                          //         offerId: id,
+                          //         youtupeLink: youtupeLink,
+                          //       )),
+                          // ));
                         },
                         child: Container(
                           decoration: const BoxDecoration(

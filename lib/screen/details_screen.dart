@@ -1,4 +1,5 @@
 import 'package:auto_car/config/app_style.dart';
+import 'package:auto_car/model/car_model.dart';
 import 'package:auto_car/provider/offer_details_provider.dart';
 import 'package:auto_car/widget/full_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -27,6 +28,7 @@ class DetailsScreen extends StatefulWidget {
     required this.title,
     required this.price,
     required this.youtupeLink,
+    required this.carModel,
   }) : super(key: key);
   static const routeName = "DetailsScreen";
 
@@ -37,6 +39,7 @@ class DetailsScreen extends StatefulWidget {
   final String offerId;
   final String currency;
   final String youtupeLink;
+  final Datum carModel;
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -48,6 +51,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   late OfferDetailsProvider detailsprovider;
   List<ImageGallary> _listImageGallary = [];
   List<FeaturesType> _listFeature = [];
+
   OfferModel _offerModel = OfferModel(
       id: "",
       description: "",
@@ -86,7 +90,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
       if (isYoutupe) {
         urlLaunch = widget.youtupeLink;
       } else {
-        urlLaunch = "whatsapp://send?phone=$phone&text=$message";
+        urlLaunch =
+            "whatsapp://send?phone=$phone&text=$message \n ${widget.carModel.imageUrl}";
       }
       if (await canLaunchUrl(Uri.parse(urlLaunch))) {
         // ignore: deprecated_member_use
@@ -121,6 +126,34 @@ class _DetailsScreenState extends State<DetailsScreen> {
       );
     } else {
       return Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () async {
+                //share this offers
+                await Share.share(
+                    widget.carModel.imageUrl + "\n" + AppConfig.shareOffers
+                    // : AppConfig.shareOffers,
+                    // AppConfig.shareOffers,
+                    );
+              },
+              icon: Icon(
+                Icons.share_outlined,
+              ),
+              color: Colors.white,
+            ),
+          ],
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(
+              Icons.arrow_back_rounded,
+            ),
+            color: Colors.white,
+          ),
+          // colors: Theme.of(context).colorScheme.onSecondary,
+        ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0),
           child: Row(
@@ -187,56 +220,56 @@ class _DetailsScreenState extends State<DetailsScreen> {
               children: [
                 Stack(
                   children: [
-                    Positioned(
-                      top: 10,
-                      left: 0,
-                      bottom: 0,
-                      right: 0,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 40, horizontal: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CardWithImage(
-                              height: 40,
-                              width: 45,
-                              child: Icon(
-                                Icons.arrow_back_rounded,
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
-                              ),
-                              colors: Theme.of(context).colorScheme.onSecondary,
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            CardWithImage(
-                              height: 40,
-                              width: 45,
-                              child: Icon(
-                                Icons.share_outlined,
-                                color:
-                                    Theme.of(context).colorScheme.onBackground,
-                              ),
-                              colors: Theme.of(context).colorScheme.onSecondary,
-                              onTap: () async {
-                                //share this offers
-                                await Share.share(AppConfig.shareOffers);
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // Positioned(
+                    //   top: 20,
+                    //   left: 100,
+                    //   right: 100,
+                    //   child: Padding(
+                    //     padding:
+                    //         const EdgeInsets.only(left: 15, right: 15, top: 30),
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //       children: [
+                    //         CardWithImage(
+                    //           height: 30,
+                    //           width: 45,
+                    //           child: Icon(
+                    //             Icons.arrow_back_rounded,
+                    //             color:
+                    //                 Theme.of(context).colorScheme.onBackground,
+                    //           ),
+                    //           colors: Theme.of(context).colorScheme.onSecondary,
+                    //           onTap: () {
+                    //             Navigator.of(context).pop();
+                    //           },
+                    //         ),
+                    //         CardWithImage(
+                    //           height: 30,
+                    //           width: 45,
+                    //           child: Icon(
+                    //             Icons.share_outlined,
+                    //             color:
+                    //                 Theme.of(context).colorScheme.onBackground,
+                    //           ),
+                    //           colors: Theme.of(context).colorScheme.onSecondary,
+                    //           onTap: () async {
+                    //             //share this offers
+                    //             await Share.share(AppConfig.shareOffers);
+                    //           },
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+
                     Container(
                       // decoration: const BoxDecoration(
-                      //   color: Colors.amber,
+                      // color: Colors.amber,
                       //   borderRadius: BorderRadius.only(
                       //     bottomLeft: Radius.circular(50),
                       //   ),
                       // ),
-                      height: size.height * .4,
+                      height: size.height * .36,
                       width: double.infinity,
                       child: CarouselSlider(
                         items: _listImageGallary
@@ -254,35 +287,25 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                       // color: Colors.red,
                                       child: CachedNetworkImage(
                                         width: size.width,
-                                        fit: BoxFit.contain,
-                                        height: 450,
+                                        fit: BoxFit.cover,
+                                        height: size.height * .5,
                                         filterQuality: FilterQuality.high,
                                         imageUrl: e.filePath.toString(),
                                         placeholder: (context, url) => Center(
                                           child: FadeInImage(
                                             placeholder: AssetImage(
-                                                AppConfig.placeholder),
+                                                AppConfig.autoCarLogo),
                                             image: AssetImage(
-                                                AppConfig.placeholder),
+                                                AppConfig.autoCarLogo),
                                             width: double.infinity,
-                                            height: 120,
-                                            fit: BoxFit.fill,
+                                            height: 100,
+                                            fit: BoxFit.contain,
                                           ),
                                         ),
                                         errorWidget: (context, url, error) =>
                                             Icon(Icons.error),
                                       ),
                                     ),
-
-                                    // Positioned(
-                                    //   top: 40,
-                                    //   left: 100,
-                                    //   right: 100,
-                                    //   child: Image.asset(
-                                    //     AppConfig.logo,
-                                    //     height: 20,
-                                    //   ),
-                                    // ),
                                   ],
                                 ),
                               ),
@@ -294,7 +317,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                               activeIndex = index;
                             });
                           },
-                          height: 400,
+                          height: size.height * .06,
                           aspectRatio: 16 / 9,
                           viewportFraction: 1.01,
                           autoPlay: true,
@@ -308,6 +331,60 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     ),
                   ],
                 ),
+
+                // Stack(
+                //   children: [
+                //     Positioned(
+                //       top: 20,
+                //       left: 100,
+                //       right: 100,
+                //       child: Padding(
+                //         padding:
+                //             const EdgeInsets.only(left: 15, right: 15, top: 30),
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             CardWithImage(
+                //               height: 30,
+                //               width: 45,
+                //               child: Icon(
+                //                 Icons.arrow_back_rounded,
+                //                 color:
+                //                     Theme.of(context).colorScheme.onBackground,
+                //               ),
+                //               colors: Theme.of(context).colorScheme.onSecondary,
+                //               onTap: () {
+                //                 Navigator.of(context).pop();
+                //               },
+                //             ),
+                //             CardWithImage(
+                //               height: 30,
+                //               width: 45,
+                //               child: Icon(
+                //                 Icons.share_outlined,
+                //                 color:
+                //                     Theme.of(context).colorScheme.onBackground,
+                //               ),
+                //               colors: Theme.of(context).colorScheme.onSecondary,
+                //               onTap: () async {
+                //                 //share this offers
+                //                 await Share.share(AppConfig.shareOffers);
+                //               },
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //     // Positioned(
+                //     //   top: 20,
+                //     //   child: Container(
+                //     //     color: Colors.amber,
+                //     //     height: size.height * .4,
+                //     //     width: double.infinity,
+                //     //   ),
+                //     // ),
+                //   ],
+                // ),
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -371,6 +448,18 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
+                          "Description",
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: size.width * .06,
+                              fontWeight: FontWeight.normal),
+                          textAlign: TextAlign.end,
+                          ////maxLines: 100,
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
                           _offerModel.description,
                           style: TextStyle(
                               color: Colors.black,
@@ -382,6 +471,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       ),
                       const SizedBox(height: 35),
                       buildCarItem("Model", _offerModel.modelName, size),
+                      const SizedBox(height: 15),
+                      buildCarItem("Year",
+                          widget.carModel.year.yearName.toString(), size),
                       const SizedBox(height: 15),
                       buildCarItem("Seats", _offerModel.seats.toString(), size),
                       const SizedBox(height: 15),
@@ -413,131 +505,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     ],
                   ),
                 ),
-                //   children: [
-                //     widget.youtupeLink.isEmpty
-                //         ? SizedBox()
-                //         : CardWithImage(
-                //             height: 40,
-                //             width: 60,
-                //             child: Icon(
-                //               Icons.play_arrow_sharp,
-                //               color: Theme.of(context).colorScheme.onSecondary,
-                //               size: 40,
-                //             ),
-                //             colors: Theme.of(context).colorScheme.onPrimary,
-                //             onTap: () async {
-                //               showAlertDialog(
-                //                 context,
-                //                 () => {launchWatssap(phone, text, true)},
-                //                 () => Navigator.of(context).pop(),
-                //               );
 
-                //               //share this offers
-                //               // await Share.share(AppConfig.shareOffers);
-                //             },
-                //           ),
-
-                //     const SizedBox(height: 10),
-                //     CardWithImage(
-                //       height: 45,
-                //       width: 60,
-                //       child: Column(
-                //         mainAxisAlignment: MainAxisAlignment.center,
-                //         children: [
-                //           Text(
-                //             splittedKilometer[0],
-                //             // _offerModel.kilometer,
-                //             // "230",
-                //             style: AppStyle.textStyle6,
-                //           ),
-                //           Text(
-                //             "KM/H",
-                //             style: AppStyle.textStyle4,
-                //           ),
-                //         ],
-                //       ),
-                //       colors: Theme.of(context).colorScheme.onSecondary,
-                //       onTap: () async {
-                //         //share this offers
-                //         //  await Share.share(AppConfig.shareOffers);
-                //       },
-                //     ),
-                //     const SizedBox(height: 10),
-                //     CardWithImage(
-                //       height: 40,
-                //       width: 60,
-                //       child: const Center(
-                //           child: Text(
-                //         "DISIEL",
-                //         style: AppStyle.textStyle3,
-                //       )),
-                //       colors: Theme.of(context).colorScheme.onSecondary,
-                //       onTap: () async {
-                //         //share this offers
-                //         //  await Share.share(AppConfig.shareOffers);
-                //       },
-                //     ),
-                //     const SizedBox(height: 10),
-                //     CardWithImage(
-                //       height: 45,
-                //       width: 60,
-                //       child: Column(
-                //         mainAxisAlignment: MainAxisAlignment.center,
-                //         children: const [
-                //           Text(
-                //             "1.3L",
-                //             style: AppStyle.textStyle3,
-                //           ),
-                //           Text(
-                //             "ENGINE",
-                //             style: AppStyle.textStyle4,
-                //           ),
-                //         ],
-                //       ),
-                //       colors: Theme.of(context).colorScheme.onSecondary,
-                //       onTap: () async {
-                //         //share this offers
-                //         //  await Share.share(AppConfig.shareOffers);
-                //       },
-                //     ),
-                //   ],
-                // ),
-
-                // Container(
-                //   decoration: BoxDecoration(
-                //     color: Theme.of(context).colorScheme.background,
-                //     borderRadius: BorderRadius.only(
-                //       bottomLeft: Radius.circular(0),
-                //     ),
-                //   ),
-                //   width: size.width,
-                //   height: double.infinity,
-                //   child: Padding(
-                //     padding: const EdgeInsets.symmetric(horizontal: 15),
-                //     child: Column(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         AnimatedSmoothIndicator(
-                //           effect: WormEffect(
-                //             dotHeight: 11,
-                //             dotWidth: 10,
-                //             activeDotColor:
-                //                 Theme.of(context).colorScheme.onPrimary,
-                //             // dotColor: Theme.of(context)
-                //             //     .colorScheme
-                //             //     .onPrimary,
-                //             type: WormType.thin,
-                //             // strokeWidth: 5,
-                //           ),
-                //           activeIndex: activeIndex,
-                //           count: _listImageGallary.length,
-                //         ),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-
-                SizedBox(height: size.height * .05),
+                SizedBox(height: size.height * .03),
 
                 buildListDetailsSpecifications(context, size, _listFeature, 0),
                 //buildListDetailsSpecifications(context, size, _listFeature, 1),
@@ -626,7 +595,7 @@ buildListDetailsSpecifications(BuildContext context, Size size,
     padding: const EdgeInsets.all(10.0),
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 2.9,
+        childAspectRatio: 1.9,
         mainAxisSpacing: 10,
         crossAxisSpacing: 10),
     itemCount: _listFeature.length,
@@ -641,14 +610,14 @@ buildListDetailsSpecifications(BuildContext context, Size size,
             alignment: Alignment.centerLeft,
             child: Text(
               featuretype,
-              style: AppStyle.textStyle6,
+              style: AppStyle.textBlack18,
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                width: 100,
+                width: size.width * .32,
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(

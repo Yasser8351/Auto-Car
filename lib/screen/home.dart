@@ -166,7 +166,7 @@ class _HomeState extends State<Home> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      height: size.height * .07,
+                      height: size.height * .06,
                       width: size.width * .144,
                       decoration: BoxDecoration(
                         border: Border.all(
@@ -347,6 +347,7 @@ class _HomeState extends State<Home> {
                                 },
                               )
                             : ListCarsWidget(
+                                isSearch: isSearch,
                                 listCars: listCars,
                                 totalRecords: totalRecords,
                                 isOffers: false,

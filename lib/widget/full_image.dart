@@ -39,8 +39,8 @@ class FullImage extends StatelessWidget {
                           filterQuality: FilterQuality.high,
                           imageUrl: e.filePath.toString(),
                           placeholder: (context, url) => FadeInImage(
-                            placeholder: AssetImage(AppConfig.placeholder),
-                            image: AssetImage(AppConfig.placeholder),
+                            placeholder: AssetImage(AppConfig.placeholder2),
+                            image: AssetImage(AppConfig.placeholder2),
                             width: double.infinity,
                             height: 120,
                             fit: BoxFit.fill,
@@ -73,6 +73,7 @@ class FullImage extends StatelessWidget {
             aspectRatio: 16 / 9,
             viewportFraction: 1.01,
             autoPlay: true,
+            enableInfiniteScroll: false,
             autoPlayInterval: const Duration(seconds: 5),
             autoPlayAnimationDuration: const Duration(milliseconds: 800),
             scrollDirection: Axis.horizontal,

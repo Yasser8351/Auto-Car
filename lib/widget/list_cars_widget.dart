@@ -312,13 +312,13 @@ import 'package:flutter/material.dart';
 import 'package:paginated_list/paginated_list.dart';
 
 import '../screen/details_screen.dart';
-import 'card_with_image.dart';
 import 'my_favorite_button.dart';
 
 // ignore: must_be_immutable
 class ListCarsWidget extends StatefulWidget {
   ListCarsWidget(
       {Key? key,
+      required this.isSearch,
       required this.isOffers,
       required this.listCars,
       required this.listCarsById,
@@ -332,6 +332,7 @@ class ListCarsWidget extends StatefulWidget {
   final CarProvider carProvider;
 
   final bool isOffers;
+  final bool isSearch;
   final Function() onTap;
 
   @override
@@ -348,18 +349,21 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
     final size = MediaQuery.of(context).size;
 
     return PaginatedList(
+      // padding: EdgeInsets.only(top: 10),
       shrinkWrap: true,
       loadingIndicator: Padding(
         padding: EdgeInsets.symmetric(vertical: 20),
-        child: widget.totalRecords <= widget.listCars.length
+        child: widget.isSearch
             ? SizedBox()
-            : Center(
-                child: CircularProgressIndicator(
-                    color: Theme.of(context).colorScheme.background),
-              ),
+            : widget.totalRecords <= widget.listCars.length
+                ? SizedBox()
+                : Center(
+                    child: CircularProgressIndicator(
+                        color: Theme.of(context).colorScheme.background),
+                  ),
       ),
       physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+      padding: const EdgeInsets.only(top: 0, left: 10, right: 10),
       items: widget.listCars,
       isRecentSearch: false,
       isLastPage: false,
@@ -380,6 +384,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
               builder: ((context) => DetailsScreen(
+                    carModel: widget.listCars[index],
                     listImageSliderCar: [],
                     title: title,
                     price: price,
@@ -412,7 +417,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                       width: double.infinity,
                       filterQuality: FilterQuality.high,
                       height: size.height * .26,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                       imageUrl: image,
                       placeholder: (context, url) => FadeInImage(
                         placeholder: AssetImage(AppConfig.placeholder),
@@ -444,7 +449,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                             insertData(id, title, price.toString(), image);
                           },
                           child: MyFavoriteButton(
-                            iconSize: size.height * .05,
+                            iconSize: size.height * .04,
                             isFavorite: widget.listCars[index].isFavorite,
                             valueChanged: (_isFavorite) async {
                               if (_isFavorite) {
@@ -469,17 +474,17 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                         //   insertData(id, title, price.toString(), image);
                         // },
 
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Text(
-                            "${currency.currencyName} $price",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: size.width * .065,
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 15),
+                        //   child: Text(
+                        //     "${currency.currencyName} $price",
+                        //     textAlign: TextAlign.left,
+                        //     style: TextStyle(
+                        //         color: Colors.white,
+                        //         fontSize: size.width * .065,
+                        //         fontWeight: FontWeight.normal),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

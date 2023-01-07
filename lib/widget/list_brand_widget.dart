@@ -3,6 +3,7 @@ import 'package:auto_car/model/brand_model.dart';
 import 'package:auto_car/provider/brand_provider.dart';
 import 'package:auto_car/screen/brand_screen.dart';
 import 'package:auto_car/widget/reytry_error_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../enum/all_enum.dart';
@@ -31,101 +32,6 @@ class _ListBrandWidgetState extends State<ListBrandWidget> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-/*
-    List<BrandsModel> listBrandLocal = [
-      BrandsModel(
-          id: "1", name: "Rover", nameAr: "Mercedes", logo: AppConfig.brand9),
-      BrandsModel(id: "2", name: "BMW", nameAr: "Audi", logo: AppConfig.brand1),
-      BrandsModel(
-          id: "3", name: "Tesla", nameAr: "tesla", logo: AppConfig.brand2),
-      BrandsModel(
-          id: "4", name: "Ferrari", nameAr: "Nissan", logo: AppConfig.brand3),
-      BrandsModel(
-          id: "5", name: "Bugatti", nameAr: "Ferrari", logo: AppConfig.brand4),
-      BrandsModel(
-          id: "6",
-          name: "Mercedes",
-          nameAr: "Mercedes",
-          logo: AppConfig.brand6),
-      BrandsModel(
-          id: "7", name: "Audi", nameAr: "Audi", logo: AppConfig.brand7),
-      BrandsModel(
-          id: "8", name: "tesla", nameAr: "tesla", logo: AppConfig.brand88),
-      BrandsModel(
-          id: "9", name: "Nissan", nameAr: "Nissan", logo: AppConfig.brand222),
-      BrandsModel(
-          id: "10",
-          name: "Ferrari",
-          nameAr: "Ferrari",
-          logo: AppConfig.brand101),
-      BrandsModel(
-          id: "11",
-          name: "Mercedes",
-          nameAr: "Mercedes",
-          logo: AppConfig.brand11),
-      BrandsModel(
-          id: "12", name: "Audi", nameAr: "Audi", logo: AppConfig.brand12),
-      BrandsModel(
-          id: "13", name: "tesla", nameAr: "tesla", logo: AppConfig.brand13),
-      BrandsModel(
-          id: "14", name: "Nissan", nameAr: "Nissan", logo: AppConfig.brand55),
-      BrandsModel(
-          id: "15",
-          name: "Ferrari",
-          nameAr: "Ferrari",
-          logo: AppConfig.brand12),
-      BrandsModel(
-          id: "16",
-          name: "Mercedes",
-          nameAr: "Mercedes",
-          logo: AppConfig.brand101),
-      BrandsModel(
-          id: "17", name: "Audi", nameAr: "Audi", logo: AppConfig.brand9),
-      BrandsModel(
-          id: "18", name: "tesla", nameAr: "tesla", logo: AppConfig.brand101),
-      BrandsModel(
-          id: "19", name: "Nissan", nameAr: "Nissan", logo: AppConfig.brand222),
-      BrandsModel(
-          id: "20", name: "Ferrari", nameAr: "Ferrari", logo: AppConfig.brand2),
-      BrandsModel(
-          id: "21",
-          name: "Mercedes",
-          nameAr: "Mercedes",
-          logo: AppConfig.brand6),
-      BrandsModel(id: "22", name: "Audi", nameAr: "Audi", logo: AppConfig.audi),
-      BrandsModel(
-          id: "23", name: "tesla", nameAr: "tesla", logo: AppConfig.brand4),
-      BrandsModel(
-          id: "24", name: "Nissan", nameAr: "Nissan", logo: AppConfig.brand55),
-      BrandsModel(
-          id: "25", name: "Ferrari", nameAr: "Ferrari", logo: AppConfig.brand3),
-      BrandsModel(
-          id: "26",
-          name: "Mercedes",
-          nameAr: "Mercedes",
-          logo: AppConfig.brand2),
-      BrandsModel(
-          id: "27", name: "Audi", nameAr: "Audi", logo: AppConfig.brand3),
-      BrandsModel(
-          id: "28", name: "tesla", nameAr: "tesla", logo: AppConfig.brand222),
-      BrandsModel(
-          id: "27", name: "Audi", nameAr: "Audi", logo: AppConfig.brand1),
-      BrandsModel(
-          id: "28", name: "tesla", nameAr: "tesla", logo: AppConfig.brand7),
-      BrandsModel(
-          id: "27", name: "Audi", nameAr: "Audi", logo: AppConfig.brand101),
-      BrandsModel(
-          id: "28", name: "tesla", nameAr: "tesla", logo: AppConfig.tesla),
-      BrandsModel(
-          id: "27", name: "Audi", nameAr: "Audi", logo: AppConfig.brand4),
-      BrandsModel(
-          id: "283", name: "tesla", nameAr: "tesla", logo: AppConfig.brand6),
-      BrandsModel(
-          id: "27", name: "Audi", nameAr: "Audi", logo: AppConfig.brand88),
-      BrandsModel(
-          id: "282", name: "tesla", nameAr: "tesla", logo: AppConfig.brand55),
-    ];
-*/
     if (widget.brandProvider.loadingState == LoadingState.initial ||
         widget.brandProvider.loadingState == LoadingState.loading) {
       return LoadingWidget(
@@ -159,9 +65,16 @@ class _ListBrandWidgetState extends State<ListBrandWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  AppConfig.brands,
-                  style: AppConfig.textTitle,
+                Row(
+                  children: [
+                    Icon(CupertinoIcons.car_detailed),
+                    // Icon(Icons.bar_chart_rounded),
+                    SizedBox(width: size.width * .05),
+                    Text(
+                      AppConfig.brands,
+                      style: AppConfig.textTitle,
+                    ),
+                  ],
                 ),
                 TextButton(
                   onPressed: () {
