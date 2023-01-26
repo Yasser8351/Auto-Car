@@ -5,9 +5,7 @@ import 'package:auto_car/debugger/my_debuger.dart';
 import 'package:auto_car/model/brand_model.dart';
 import 'package:auto_car/provider/brand_provider.dart';
 import 'package:auto_car/provider/car_provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -138,8 +136,9 @@ class _HomeState extends State<Home> {
   }
 
   SizedBox buildListBrand(Size size) {
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return SizedBox(
-      height: size.height * .11,
+      height: size.height * .05,
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: ListView.builder(
@@ -165,41 +164,65 @@ class _HomeState extends State<Home> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    // Container(
+                    //   height: size.height * .06,
+                    //   width: size.width * .144,
+                    //   decoration: BoxDecoration(
+                    //     border: Border.all(
+                    //         color: expandedIndex == index
+                    //             ? Colors.black
+                    //             : Colors.white),
+                    //     color: Colors.white,
+                    //     borderRadius: BorderRadius.circular(10),
+                    //   ),
+                    //   // child: Center(
+                    //   //   child: CachedNetworkImage(
+                    //   //     width: size.width,
+                    //   //     fit: BoxFit.contain,
+                    //   //     height: size.height * .54,
+                    //   //     filterQuality: FilterQuality.high,
+                    //   //     imageUrl: logo,
+                    //   //     //color: Colors.white,
+                    //   //     placeholder: (context, url) => FadeInImage(
+                    //   //       placeholder: AssetImage(AppConfig.placeholder),
+                    //   //       image: AssetImage(AppConfig.placeholder),
+                    //   //       width: double.infinity,
+                    //   //       height: size.height * .163,
+                    //   //       fit: BoxFit.cover,
+                    //   //     ),
+                    //   //     errorWidget: (context, url, error) =>
+                    //   //         Icon(Icons.error),
+                    //   //   ),
+                    //   // ),
+
+                    // ),
+
+                    // const SizedBox(height: 10),
                     Container(
-                      height: size.height * .06,
-                      width: size.width * .144,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color: expandedIndex == index
-                                ? Colors.black
-                                : Colors.white),
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                      height: size.height * .034,
+                      width: size.width * .2,
                       child: Center(
-                        child: CachedNetworkImage(
-                          width: size.width,
-                          fit: BoxFit.contain,
-                          height: size.height * .54,
-                          filterQuality: FilterQuality.high,
-                          imageUrl: logo,
-                          //color: Colors.white,
-                          placeholder: (context, url) => FadeInImage(
-                            placeholder: AssetImage(AppConfig.placeholder),
-                            image: AssetImage(AppConfig.placeholder),
-                            width: double.infinity,
-                            height: size.height * .163,
-                            fit: BoxFit.cover,
+                        child: Text(
+                          title,
+                          style: TextStyle(
+                            color: expandedIndex == index
+                                ? Colors.white
+                                : colorScheme.onPrimary,
+                            fontSize: 17,
                           ),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      title,
-                      style: AppConfig.textSpecifications,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: colorScheme.onPrimary),
+                        color: expandedIndex == index
+                            ? colorScheme.onPrimary
+                            : null,
+                        // borderRadius: BorderRadius.circular(Radius.circular(radius)),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                        ),
+                      ),
                     )
                   ],
                 ),
@@ -254,18 +277,19 @@ class _HomeState extends State<Home> {
       );
     } else {
       return Scaffold(
-        floatingActionButton: CircleAvatar(
-            radius: 25,
-            backgroundColor: Colors.black,
-            child: IconButton(
-                onPressed: () {
-                  launchWatssap();
-                },
-                icon: Icon(
-                  CupertinoIcons.phone,
-                  color: Colors.white,
-                  size: 30,
-                ))),
+        // floatingActionButton: CircleAvatar(
+        //     radius: 25,
+        //     backgroundColor: Colors.black,
+        //     child: IconButton(
+        //         onPressed: () {
+        //           launchWatssap();
+        //         },
+        //         icon: Icon(
+        //           CupertinoIcons.phone,
+        //           color: Colors.white,
+        //           size: 30,
+        //         ))),
+
         body: Builder(
           builder: (context) {
             if (isSearch) {
@@ -308,9 +332,9 @@ class _HomeState extends State<Home> {
                             });
                           },
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 20),
                         SizedBox(
-                          height: size.height * .22,
+                          height: size.height * .08,
                           child: ListBrandWidget(
                             brandProvider: brandProvider,
                             listBrand: listBrands,
@@ -331,20 +355,24 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         carProvider.loadingState == LoadingState.noDataFound
-                            ? NoDataFoundWidget(
-                                title: AppConfig.noOfferFound + '  ' + search,
-                                onTap: () {
-                                  setState(() => {});
-                                  carProvider
-                                      .getCars(1, totalRecords, '')
-                                      .then((value) => {
-                                            setState(() {
-                                              log(totalRecords.toString());
-                                              listCars = value.dataCar;
-                                              expandedIndex = -1;
-                                            }),
-                                          });
-                                },
+                            ? Padding(
+                                padding:
+                                    EdgeInsets.only(top: size.height * .08),
+                                child: NoDataFoundWidget(
+                                  title: AppConfig.noOfferFound + '  ' + search,
+                                  onTap: () {
+                                    setState(() => {});
+                                    carProvider
+                                        .getCars(1, totalRecords, '')
+                                        .then((value) => {
+                                              setState(() {
+                                                log(totalRecords.toString());
+                                                listCars = value.dataCar;
+                                                expandedIndex = -1;
+                                              }),
+                                            });
+                                  },
+                                ),
                               )
                             : ListCarsWidget(
                                 isSearch: isSearch,

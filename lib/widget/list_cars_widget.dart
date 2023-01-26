@@ -301,8 +301,6 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
 */
 //This comment is Contents List Cars With Painated using flutter 3.0.2 SDK
 
-import 'dart:developer';
-
 import 'package:auto_car/config/app_config.dart';
 import 'package:auto_car/database/sqldb.dart';
 import 'package:auto_car/model/car_model.dart';
@@ -347,6 +345,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return PaginatedList(
       // padding: EdgeInsets.only(top: 10),
@@ -377,6 +376,8 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
         var currency = widget.listCars[index].currency;
         var price = widget.listCars[index].price;
         var title = widget.listCars[index].brandModel.modelName;
+        var brand = widget.listCars[index].brandModel.brand.name;
+        var logoBrand = widget.listCars[index].brandModel.brand.logoPath;
         var year = widget.listCars[index].year.yearName;
         var youtupeLink = widget.listCars[index].ytLink;
 
@@ -395,7 +396,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
             ));
           },
           child: Padding(
-            padding: const EdgeInsets.only(top: 25),
+            padding: const EdgeInsets.only(bottom: 25),
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.black,
@@ -429,78 +430,228 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                       errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
                   ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Container(
+                    color: Colors.white,
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        // CardWithImage(
-                        //   height: size.height * .035,
-                        //   width: size.width * .09,
-                        //   child:
-                        GestureDetector(
-                          onTap: () async {
-                            // updateFavorite
-                            log("GestureDetector");
-                            widget.carProvider.updateFavorite(
-                                widget.listCars[index].id,
-                                !widget.listCars[index].isFavorite);
-                            insertData(id, title, price.toString(), image);
-                          },
-                          child: MyFavoriteButton(
-                            iconSize: size.height * .04,
-                            isFavorite: widget.listCars[index].isFavorite,
-                            valueChanged: (_isFavorite) async {
-                              if (_isFavorite) {
-                                insertData(id, title, price.toString(), image);
-                                widget.carProvider.updateFavorite(
-                                    widget.listCars[index].id, true);
-                              } else {
-                                deleteData(id);
-                                widget.carProvider.updateFavorite(
-                                    widget.listCars[index].id, false);
-                              }
-                            },
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // brand logo and brand name
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Row(
+                                children: [
+                                  CachedNetworkImage(
+                                    width: size.width * .07,
+                                    filterQuality: FilterQuality.high,
+                                    height: size.height * .06,
+                                    fit: BoxFit.contain,
+                                    imageUrl: logoBrand,
+                                    placeholder: (context, url) => FadeInImage(
+                                      placeholder:
+                                          AssetImage(AppConfig.placeholder),
+                                      image: AssetImage(AppConfig.placeholder),
+                                      width: size.width * .06,
+                                      height: size.height * .06,
+                                      fit: BoxFit.fill,
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 0),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "$brand",
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                            color: Colors.black87,
+                                            fontSize: size.width * .065,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            // SizedBox(width: size.width * .44),
+                            // Favart Icons
+                            Padding(
+                              padding:
+                                  const EdgeInsetsDirectional.only(start: 5),
+                              child: GestureDetector(
+                                onTap: () async {
+                                  // updateFavorite
+                                  widget.carProvider.updateFavorite(
+                                      widget.listCars[index].id,
+                                      !widget.listCars[index].isFavorite);
+                                  insertData(
+                                      id, title, price.toString(), image);
+                                },
+                                child: MyFavoriteButton(
+                                  iconSize: size.height * .04,
+                                  isFavorite: widget.listCars[index].isFavorite,
+                                  valueChanged: (_isFavorite) async {
+                                    if (_isFavorite) {
+                                      insertData(
+                                          id, title, price.toString(), image);
+                                      widget.carProvider.updateFavorite(
+                                          widget.listCars[index].id, true);
+                                    } else {
+                                      deleteData(id);
+                                      widget.carProvider.updateFavorite(
+                                          widget.listCars[index].id, false);
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        // colors: Theme.of(context).colorScheme.onSecondary,
-                        // onTap: () async {
-                        //   // updateFavorite
-                        //   log("GestureDetector");
-                        //   widget.carProvider.updateFavorite(
-                        //       widget.listCars[index].id,
-                        //       !widget.listCars[index].isFavorite);
-                        //   insertData(id, title, price.toString(), image);
-                        // },
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: size.width * .12),
+                              child: Text(
+                                "$year",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: size.width * .065,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ),
+                            // SizedBox(width: size.width * .44),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
+                              child: Text(
+                                "${currency.currencyName} $price",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    color: colorScheme.onPrimary,
+                                    fontSize: size.width * .065,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ),
+                          ],
+                        )
 
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(horizontal: 15),
-                        //   child: Text(
-                        //     "${currency.currencyName} $price",
-                        //     textAlign: TextAlign.left,
-                        //     style: TextStyle(
-                        //         color: Colors.white,
-                        //         fontSize: size.width * .065,
-                        //         fontWeight: FontWeight.normal),
-                        //   ),
+                        // Column(
+                        //   children: [
+                        //     Padding(
+                        //       padding:
+                        //           const EdgeInsets.symmetric(horizontal: 10),
+                        //       child: Row(
+                        //         children: [
+                        //           CachedNetworkImage(
+                        //             width: size.width * .07,
+                        //             filterQuality: FilterQuality.high,
+                        //             height: size.height * .06,
+                        //             fit: BoxFit.contain,
+                        //             imageUrl: logoBrand,
+                        //             placeholder: (context, url) => FadeInImage(
+                        //               placeholder:
+                        //                   AssetImage(AppConfig.placeholder),
+                        //               image: AssetImage(AppConfig.placeholder),
+                        //               width: size.width * .06,
+                        //               height: size.height * .06,
+                        //               fit: BoxFit.fill,
+                        //             ),
+                        //             errorWidget: (context, url, error) =>
+                        //                 Icon(Icons.error),
+                        //           ),
+                        //           Padding(
+                        //             padding: const EdgeInsets.symmetric(
+                        //                 horizontal: 10, vertical: 0),
+                        //             child: Align(
+                        //               alignment: Alignment.center,
+                        //               child: Text(
+                        //                 "$brand",
+                        //                 textAlign: TextAlign.start,
+                        //                 style: TextStyle(
+                        //                     color: Colors.black87,
+                        //                     fontSize: size.width * .065,
+                        //                     fontWeight: FontWeight.normal),
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //     Padding(
+                        //       padding: const EdgeInsets.symmetric(
+                        //           horizontal: 35, vertical: 0),
+                        //       child: Align(
+                        //         alignment: Alignment.centerRight,
+                        //         child: Text(
+                        //           "$year",
+                        //           textAlign: TextAlign.end,
+                        //           style: TextStyle(
+                        //               color: Colors.grey,
+                        //               fontSize: size.width * .065,
+                        //               fontWeight: FontWeight.normal),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // Column(
+                        //   children: [
+                        //     SizedBox(height: 7),
+                        //     GestureDetector(
+                        //       onTap: () async {
+                        //         // updateFavorite
+                        //         log("GestureDetector");
+                        //         widget.carProvider.updateFavorite(
+                        //             widget.listCars[index].id,
+                        //             !widget.listCars[index].isFavorite);
+                        //         insertData(id, title, price.toString(), image);
+                        //       },
+                        //       child: MyFavoriteButton(
+                        //         iconSize: size.height * .04,
+                        //         isFavorite: widget.listCars[index].isFavorite,
+                        //         valueChanged: (_isFavorite) async {
+                        //           if (_isFavorite) {
+                        //             insertData(
+                        //                 id, title, price.toString(), image);
+                        //             widget.carProvider.updateFavorite(
+                        //                 widget.listCars[index].id, true);
+                        //           } else {
+                        //             deleteData(id);
+                        //             widget.carProvider.updateFavorite(
+                        //                 widget.listCars[index].id, false);
+                        //           }
+                        //         },
+                        //       ),
+                        //     ),
+
+                        //     SizedBox(height: 10),
+
+                        //     Padding(
+                        //       padding:
+                        //           const EdgeInsets.symmetric(horizontal: 15),
+                        //       child: Text(
+                        //         "${currency.currencyName} $price",
+                        //         textAlign: TextAlign.left,
+                        //         style: TextStyle(
+                        //             color: colorScheme.onPrimary,
+                        //             fontSize: size.width * .065,
+                        //             fontWeight: FontWeight.normal),
+                        //       ),
+                        //     ),
+                        //     SizedBox(height: 20),
+                        //   ],
                         // ),
                       ],
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "$title",
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: size.width * .065,
-                            fontWeight: FontWeight.normal),
-                      ),
                     ),
                   ),
                 ],

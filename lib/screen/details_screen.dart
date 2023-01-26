@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../config/app_config.dart';
@@ -46,7 +45,7 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  int activeIndex = 0;
+  int activeIndex = 1;
 
   late OfferDetailsProvider detailsprovider;
   List<ImageGallary> _listImageGallary = [];
@@ -159,55 +158,57 @@ class _DetailsScreenState extends State<DetailsScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => InvoiceScreen(
-                            carName: _offerModel.modelName,
-                            carPrice: _offerModel.price,
-                          )));
-                },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        AppConfig.invoice,
-                        style: AppStyle.textWhitenormal20,
-                      ),
-                      const SizedBox(width: 20),
-                      Icon(
-                        Icons.insert_page_break_outlined,
-                        color: Theme.of(context).colorScheme.onSecondary,
-                        size: 20,
-                      )
-                    ],
+              Container(
+                width: size.width * .44,
+                child: ElevatedButton(
+                  //
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                  ),
+                  onPressed: () {
+                    launchWatssap(phone, text, false);
+                  },
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          AppConfig.whatsapp,
+                          height: 20,
+                          width: 20,
+                        ),
+                        const SizedBox(width: 20),
+                        const Text(
+                          AppConfig.orderNow,
+                          style: AppStyle.textWhitenormal20,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  launchWatssap(phone, text, false);
-                },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        AppConfig.contactUs,
-                        style: AppStyle.textWhitenormal20,
-                      ),
-                      const SizedBox(width: 20),
-                      SvgPicture.asset(
-                        AppConfig.whatsapp,
-                        height: 20,
-                        width: 20,
-                      ),
-                    ],
+              Container(
+                width: size.width * .44,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => InvoiceScreen(
+                              carName: _offerModel.modelName,
+                              carPrice: _offerModel.price,
+                            )));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 10),
+                    child: Text(
+                      "${widget.currency} ${widget.price}",
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontSize: 22,
+                          fontWeight: FontWeight.normal),
+                    ),
                   ),
                 ),
               ),
@@ -393,17 +394,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "${widget.currency} ${widget.price}",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: size.width * .1,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
+                          // Align(
+                          //   alignment: Alignment.centerLeft,
+                          //   child: Text(
+                          //     "${widget.currency} ${widget.price}",
+                          //     textAlign: TextAlign.left,
+                          //     style: TextStyle(
+                          //         color: Colors.red,
+                          //         fontSize: size.width * .1,
+                          //         fontWeight: FontWeight.w500),
+                          //   ),
+                          // ),
                           Align(
                             alignment: Alignment.centerRight,
                             child: Container(
@@ -600,7 +601,7 @@ buildListDetailsSpecifications(BuildContext context, Size size,
         crossAxisSpacing: 10),
     itemCount: _listFeature.length,
     itemBuilder: (ctx, index) {
-      String featureName = _listFeature[index].features[index].featureName;
+      String featureName = _listFeature[index].features[0].featureName;
       String featuretype = _listFeature[index].typeName;
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,

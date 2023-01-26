@@ -6,14 +6,12 @@ class MyFavoriteButton extends StatefulWidget {
     Color? iconColor,
     Color? iconDisabledColor,
     required bool? isFavorite,
-    // required bool? isFavoriteFromDB,
     required Function valueChanged,
     Key? key,
   })  : _iconSize = iconSize ?? 60.0,
         _iconColor = iconColor ?? Colors.red,
-        _iconDisabledColor = iconDisabledColor ?? Colors.white,
+        _iconDisabledColor = iconDisabledColor ?? Colors.black,
         _isFavorite = isFavorite ?? false,
-        // _isFavoriteFromDB = isFavoriteFromDB ?? false,
         _valueChanged = valueChanged,
         super(key: key);
 
@@ -130,7 +128,7 @@ class _MyFavoriteButtonState extends State<MyFavoriteButton>
             });
           },
           child: Icon(
-            (Icons.favorite),
+            (widget._isFavorite ? Icons.favorite : Icons.favorite_border),
             color: _colorAnimation.value,
             size: _sizeAnimation.value,
           ),

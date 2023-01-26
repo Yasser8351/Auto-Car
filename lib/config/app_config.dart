@@ -4,6 +4,7 @@ class AppConfig {
   // Text config for All the App
   static const appName = "Autocar.uae";
   static const home = "Home";
+  static const orderNow = "ORDER NOW";
   static const category = "Categorys";
   static const favert = "Favorite";
   static const faverts = "Favourites";
