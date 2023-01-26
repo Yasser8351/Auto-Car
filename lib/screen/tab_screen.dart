@@ -77,21 +77,29 @@ class _TabScreenState extends State<TabScreen> {
                   type: BottomNavigationBarType.fixed,
                   currentIndex: _selectIndex,
                   onTap: _navigateBottomBar,
-                  items: const [
+                  items: [
                     BottomNavigationBarItem(
                       icon: Icon(Icons.home),
                       label: AppConfig.home,
+                      activeIcon: Icon(Icons.home,
+                          color: Theme.of(context).colorScheme.onPrimary),
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.favorite_border),
                       label: AppConfig.favert,
+                      activeIcon: Icon(Icons.favorite_border,
+                          color: Theme.of(context).colorScheme.onPrimary),
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.category),
-                      label: AppConfig.category,
+                      icon: Icon(Icons.search),
+                      label: 'Search',
+                      activeIcon: Icon(Icons.search,
+                          color: Theme.of(context).colorScheme.onPrimary),
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.more_horiz),
+                      icon: Icon(Icons.person_outline_sharp),
+                      activeIcon: Icon(Icons.person_outline_sharp,
+                          color: Theme.of(context).colorScheme.onPrimary),
                       label: AppConfig.more,
                     ),
                   ],

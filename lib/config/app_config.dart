@@ -6,6 +6,7 @@ class AppConfig {
   static const home = "Home";
   static const category = "Categorys";
   static const favert = "Favorite";
+  static const faverts = "Favourites";
   static const favertScreen = "dsds";
   static const offers = "Offers";
   static const tabScreen = "tabScreen";
@@ -246,6 +247,9 @@ class AppConfig {
   static const iconApp = "assets/images/icon.png";
   static const iconApp2 = "assets/images/icon2.png";
   static const logoSplash = "assets/images/autocar_splash.png";
+  static const onboarding1 = "assets/images/onboarding1.png";
+  static const onboarding2 = "assets/images/onboarding2.png";
+  static const onboarding3 = "assets/images/onboarding3.png";
 
   // Brand image
   static const brand1 = "assets/images/1.png";
@@ -279,6 +283,8 @@ class AppConfig {
   );
   static const textTitleListCars = TextStyle(
       color: Colors.black, fontSize: 22, fontWeight: FontWeight.normal);
+  static const textTitleListCars2 = TextStyle(
+      color: Colors.black, fontSize: 30, fontWeight: FontWeight.normal);
   static const textOverview = TextStyle(
       color: Color(0xff262635), fontSize: 20, fontWeight: FontWeight.bold);
   static const textDetails = TextStyle(

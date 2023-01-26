@@ -1,6 +1,7 @@
 import 'package:auto_car/config/app_config.dart';
 import 'package:auto_car/config/app_style.dart';
 import 'package:auto_car/screen/version_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -8,6 +9,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'about_screen.dart';
+import 'contact_us.dart';
 import 'terms_and_conditions_screen.dart';
 
 class More extends StatelessWidget {
@@ -24,30 +26,23 @@ class More extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 60),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  AppConfig.privacyApp,
-                  style: AppStyle.textMoreScreenTitle,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
             Card(
               elevation: 1,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 20),
+                  Image.asset(
+                    AppConfig.logoSplash,
+                    height: MediaQuery.of(context).size.height * .2,
+                    width: MediaQuery.of(context).size.width * .7,
+                  ),
                   buildCardItem(
                       context,
-                      AppConfig.privacyPolicy,
-                      Icons.verified_user,
+                      AppConfig.contactUs,
+                      CupertinoIcons.chat_bubble_2,
                       () => Navigator.of(context)
-                          .pushNamed(TermsAndConditions.routeName)),
+                          .pushNamed(ContectUsScreen.routeName)),
                   buildDivider(),
                   buildCardItem(
                       context,
@@ -55,17 +50,7 @@ class More extends StatelessWidget {
                       Icons.front_hand,
                       () => Navigator.of(context)
                           .pushNamed(TermsAndConditions.routeName)),
-                  const SizedBox(height: 14),
-                ],
-              ),
-            ),
-            const SizedBox(height: 30),
-            Card(
-              elevation: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 14),
+                  buildDivider(),
                   buildCardItem(
                       context,
                       AppConfig.rateApp,
@@ -100,13 +85,16 @@ class More extends StatelessWidget {
                       AppConfig.logoWithoutBackgroundSvg,
                       () => Navigator.of(context)
                           .pushNamed(VersionScreen.routeName)),
-                  // buildDivider(),
-                  // buildCardItem(
-                  //     context,
-                  //     AppConfig.snedNotifcation,
-                  //     Icons.send,
-                  //     () => Navigator.of(context)
-                  //         .pushNamed(SnedNotifcationScreen.routeName)),
+                  const SizedBox(height: 14),
+                ],
+              ),
+            ),
+            // const SizedBox(height: 30),
+            Card(
+              elevation: 1,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                   const SizedBox(height: 14),
                 ],
               ),

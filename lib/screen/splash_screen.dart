@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_car/config/app_config.dart';
+import 'package:auto_car/screen/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:is_first_run/is_first_run.dart';
 import 'package:uuid/uuid.dart';
@@ -20,6 +21,7 @@ class _SplahScreenState extends State<SplahScreen> {
   bool selected = false;
   bool userStatus = false;
   final uuid = Uuid();
+  bool firstRun = false;
   String userId = '';
 
   // getUserStatus() async {
@@ -34,8 +36,8 @@ class _SplahScreenState extends State<SplahScreen> {
   // }
 
   //This methode it returns true if the app is launched for the first time.
-  firstRun() async {
-    bool firstRun = await IsFirstRun.isFirstRun();
+  firstRunApp() async {
+    firstRun = await IsFirstRun.isFirstRun();
     myLogs("firstRun", firstRun);
 
     if (firstRun) {
@@ -58,7 +60,7 @@ class _SplahScreenState extends State<SplahScreen> {
   @override
   void initState() {
     super.initState();
-    firstRun();
+    firstRunApp();
     Timer(
         Duration(seconds: 1),
         () => setState(() {
@@ -66,12 +68,34 @@ class _SplahScreenState extends State<SplahScreen> {
             }));
     Timer(
         Duration(seconds: 2),
-        () => Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TabScreen(userId: userId),
-              ),
-            ));
+        () => {
+              if (firstRun)
+                {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Onboardingscreen(),
+                    ),
+                  )
+                }
+              else
+                {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TabScreen(userId: userId),
+                    ),
+                  )
+                }
+            }
+
+        //  Navigator.pushReplacement(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => TabScreen(userId: userId),
+        //   ),
+        // ),
+        );
   }
 
   @override
@@ -90,16 +114,6 @@ class _SplahScreenState extends State<SplahScreen> {
             AppConfig.logoSplash,
             height: size.height * 1,
             width: size.width * .7,
-            // child: AnimatedAlign(
-            //   alignment: selected ? Alignment.centerRight : Alignment.centerLeft,
-            //   duration: const Duration(seconds: 3),
-            //   curve: Curves.fastOutSlowIn,
-            //   child: Image.asset(
-            //     AppConfig.iconApp2,
-            //     height: 150,
-            //     width: 150,
-            //   ),
-            // ),
           ),
         ),
       ),
