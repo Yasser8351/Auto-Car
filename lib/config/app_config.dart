@@ -33,7 +33,7 @@ class AppConfig {
       "AutoCars.uae \n أحصل علي أفضل عروض السيارات من تطبيق \nحمل التطبيق الان \n https://play.google.com/store/apps/details?id=com.app.autocar";
   static const shareDiscreption =
       "Download the Autocars application and get the best car offers";
-  static const specifications = "specifications";
+  static const specifications = "Specifications";
   static const aboutAppTitle = "What is the Autocars app?";
   static const howContactusTitle = "How can I buy cars?";
   static const howContactus =
@@ -58,6 +58,7 @@ class AppConfig {
   static const somthingWrong = "an error occurred";
 
   static const leesPrice = "lowest price";
+  static const timeout = "Your internet connection seems to be weak.";
 
   static const topPrice = "most expensive";
   static const oldeOffer = "latest offer";
@@ -221,7 +222,7 @@ class AppConfig {
       "assets/images/logowithoutbackground.svg";
   static const logoWithoutBackgroundPng =
       "assets/images/logowithoutbackground.png";
-  static const placeholder = "assets/images/logo.png";
+  static const placeholder = "assets/images/autocar_splash.png";
   static const placeholder2 = "assets/images/placeholder.png";
   static const imageCar1 = "assets/images/car.png";
   static const imageCar = "assets/images/cars.png";

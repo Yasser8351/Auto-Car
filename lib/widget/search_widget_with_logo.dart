@@ -15,11 +15,16 @@ class SearchWidgetWithLogo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         // crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Image.asset(
-            AppConfig.autoCarLogo,
-            height: size.height * .07,
-            width: size.width * .5,
+          Padding(
+            padding: EdgeInsetsDirectional.only(start: size.width * .18),
+            child: Image.asset(
+              AppConfig.logoSplash,
+              // AppConfig.autoCarLogo,
+              height: size.height * .1,
+              width: size.width * .5,
+            ),
           ),
+
           GestureDetector(
             onTap: onTap,
             child: Image.asset(

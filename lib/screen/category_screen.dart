@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_car/api/api_response.dart';
 import 'package:auto_car/config/app_config.dart';
 import 'package:auto_car/debugger/my_debuger.dart';
@@ -31,6 +29,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
   late ApiResponse apiResponse;
 
   TextEditingController textSearchController = TextEditingController();
+
+  List<ServicesModel> listServices = [
+    ServicesModel(title: "Shipping\nServices", image: AppConfig.logoSplash),
+    ServicesModel(title: "Custom\nClearance", image: AppConfig.logoSplash),
+    ServicesModel(title: "1 monthe\ndelivery", image: AppConfig.logoSplash),
+    ServicesModel(title: "Full\nOwnership", image: AppConfig.logoSplash),
+  ];
 
   bool isSearch = false;
 
@@ -136,7 +141,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 : SizedBox(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 20),
+                          horizontal: 0, vertical: 10),
                       child: Column(
                         children: [
                           const SizedBox(height: 25),
@@ -147,16 +152,70 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               });
                             },
                           ),
-                          ListView.separated(
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 20),
+                          SizedBox(
+                            height: size.height * .155,
+                            child: ListView.separated(
+                              separatorBuilder: (context, index) =>
+                                  SizedBox(width: 10),
+                              // shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: listServices.length,
+                              itemBuilder: (context, index) {
+                                String logo = listServices[index].image;
+                                String title = listServices[index].title;
+                                return Padding(
+                                  //
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                        radius: 30,
+                                        child: Image.asset(logo),
+                                      ),
+                                      // Container(
+                                      //   height: size.height * .034,
+                                      //   width: size.width * .2,
+                                      //   child: Center(
+                                      SizedBox(height: 10),
+                                      Text(
+                                        title,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                        ),
+                                      ),
+                                      //   ),
+                                      //   decoration: BoxDecoration(
+                                      //     // border: Border.all(
+                                      //     //     color: colorScheme.onPrimary),
+                                      //     color: null,
+                                      //     borderRadius: BorderRadius.only(
+                                      //       bottomLeft: Radius.circular(15),
+                                      //       topRight: Radius.circular(15),
+                                      //     ),
+                                      //   ),
+                                      // )
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          ListView.builder(
+                            padding: EdgeInsets.zero,
                             itemCount: listCategory.length,
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
-                                  log("on Tap category");
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) => OffersByCategory(
                                           search: listCategory[index].id)));
@@ -178,7 +237,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     }
   }
 
-  void getDataCategory() {
+  getDataCategory() {
     categoryProvider.reloedListCategory().then(
           (value) => {
             listCategory = value.dataCategory,
@@ -186,4 +245,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
           },
         );
   }
+}
+
+class ServicesModel {
+  final String title;
+  final String image;
+
+  ServicesModel({required this.title, required this.image});
 }

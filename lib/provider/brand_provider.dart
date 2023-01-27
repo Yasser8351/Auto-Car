@@ -55,12 +55,15 @@ class BrandProvider with ChangeNotifier {
     } on FormatException {
       setApiResponseValue(
           AppConfig.serverError, false, _listBrands, LoadingState.error);
+    } catch (error) {
+      setApiResponseValue(
+          error.toString().contains('TimeoutException')
+              ? AppConfig.timeout
+              : AppConfig.somthingWrong,
+          false,
+          _listBrands,
+          LoadingState.error);
     }
-    // } catch (error) {
-    //   setApiResponseValue(
-    //       error.toString(), false, _listBrands, LoadingState.error);
-    //   myLog("getBrands", "catch error", error.toString());
-    // }
     notifyListeners();
     return apiResponse;
   }

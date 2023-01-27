@@ -332,7 +332,7 @@ class _HomeState extends State<Home> {
                             });
                           },
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 0),
                         SizedBox(
                           height: size.height * .08,
                           child: ListBrandWidget(

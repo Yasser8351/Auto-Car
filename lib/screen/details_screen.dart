@@ -7,7 +7,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../config/app_config.dart';
@@ -15,6 +15,7 @@ import '../enum/all_enum.dart';
 import '../model/offer_details_model.dart';
 import '../widget/card_with_image.dart';
 import '../widget/loading_widget.dart';
+import '../widget/my_favorite_button.dart';
 import '../widget/reytry_error_widget.dart';
 import 'invoice_screen.dart';
 
@@ -90,7 +91,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
         urlLaunch = widget.youtupeLink;
       } else {
         urlLaunch =
-            "whatsapp://send?phone=$phone&text=$message \n ${widget.carModel.imageUrl}";
+            "whatsapp://send?phone=$phone&text=$message \n $text \n ${widget.carModel.imageUrl}";
       }
       if (await canLaunchUrl(Uri.parse(urlLaunch))) {
         // ignore: deprecated_member_use
@@ -125,34 +126,43 @@ class _DetailsScreenState extends State<DetailsScreen> {
       );
     } else {
       return Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              onPressed: () async {
-                //share this offers
-                await Share.share(
-                    widget.carModel.imageUrl + "\n" + AppConfig.shareOffers
-                    // : AppConfig.shareOffers,
-                    // AppConfig.shareOffers,
-                    );
-              },
-              icon: Icon(
-                Icons.share_outlined,
-              ),
-              color: Colors.white,
-            ),
-          ],
-          leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: Icon(
-              Icons.arrow_back_rounded,
-            ),
-            color: Colors.white,
-          ),
-          // colors: Theme.of(context).colorScheme.onSecondary,
-        ),
+        // appBar: AppBar(
+        //   actions: [
+        //     IconButton(
+        //       onPressed: () {
+        //         Navigator.of(context).pop();
+        //       },
+        //       icon: Icon(Icons.arrow_forward_outlined),
+        //       color: Colors.white,
+        //     ),
+        //     // IconButton(
+        //     //   onPressed: () async {
+        //     //     //share this offers
+        //     //     await Share.share(
+        //     //         widget.carModel.imageUrl + "\n" + AppConfig.shareOffers
+        //     //         // : AppConfig.shareOffers,
+        //     //         // AppConfig.shareOffers,
+        //     //         );
+        //     //   },
+        //     //   icon: Icon(
+        //     //     Icons.share_outlined,
+        //     //   ),
+        //     //   color: Colors.white,
+        //     // ),
+        //   ],
+        //   automaticallyImplyLeading: false,
+        //   // leading: IconButton(
+        //   //   onPressed: () {
+        //   //     Navigator.of(context).pop();
+        //   //   },
+        //   //   icon: Icon(
+        //   //     Icons.arrow_back_rounded,
+        //   //   ),
+        //   //   color: Colors.white,
+        //   // ),
+        //   // colors: Theme.of(context).colorScheme.onSecondary,
+        // ),
+
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 0),
           child: Row(
@@ -219,118 +229,267 @@ class _DetailsScreenState extends State<DetailsScreen> {
           child: Container(
             child: Column(
               children: [
-                Stack(
-                  children: [
-                    // Positioned(
-                    //   top: 20,
-                    //   left: 100,
-                    //   right: 100,
-                    //   child: Padding(
-                    //     padding:
-                    //         const EdgeInsets.only(left: 15, right: 15, top: 30),
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //       children: [
-                    //         CardWithImage(
-                    //           height: 30,
-                    //           width: 45,
-                    //           child: Icon(
-                    //             Icons.arrow_back_rounded,
-                    //             color:
-                    //                 Theme.of(context).colorScheme.onBackground,
-                    //           ),
-                    //           colors: Theme.of(context).colorScheme.onSecondary,
-                    //           onTap: () {
-                    //             Navigator.of(context).pop();
-                    //           },
-                    //         ),
-                    //         CardWithImage(
-                    //           height: 30,
-                    //           width: 45,
-                    //           child: Icon(
-                    //             Icons.share_outlined,
-                    //             color:
-                    //                 Theme.of(context).colorScheme.onBackground,
-                    //           ),
-                    //           colors: Theme.of(context).colorScheme.onSecondary,
-                    //           onTap: () async {
-                    //             //share this offers
-                    //             await Share.share(AppConfig.shareOffers);
-                    //           },
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
+                SizedBox(height: size.height * .04),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: Icon(Icons.arrow_forward_outlined),
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(height: size.height * .01),
 
-                    Container(
-                      // decoration: const BoxDecoration(
-                      // color: Colors.amber,
-                      //   borderRadius: BorderRadius.only(
-                      //     bottomLeft: Radius.circular(50),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Stack(
+                    children: [
+                      // Positioned(
+                      //   top: 20,
+                      //   left: 100,
+                      //   right: 100,
+                      //   child: Padding(
+                      //     padding:
+                      //         const EdgeInsets.only(left: 15, right: 15, top: 30),
+                      //     child: Row(
+                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //       children: [
+                      //         CardWithImage(
+                      //           height: 30,
+                      //           width: 45,
+                      //           child: Icon(
+                      //             Icons.arrow_back_rounded,
+                      //             color:
+                      //                 Theme.of(context).colorScheme.onBackground,
+                      //           ),
+                      //           colors: Theme.of(context).colorScheme.onSecondary,
+                      //           onTap: () {
+                      //             Navigator.of(context).pop();
+                      //           },
+                      //         ),
+                      //         CardWithImage(
+                      //           height: 30,
+                      //           width: 45,
+                      //           child: Icon(
+                      //             Icons.share_outlined,
+                      //             color:
+                      //                 Theme.of(context).colorScheme.onBackground,
+                      //           ),
+                      //           colors: Theme.of(context).colorScheme.onSecondary,
+                      //           onTap: () async {
+                      //             //share this offers
+                      //             await Share.share(AppConfig.shareOffers);
+                      //           },
+                      //         ),
+                      //       ],
+                      //     ),
                       //   ),
                       // ),
-                      height: size.height * .36,
-                      width: double.infinity,
-                      child: CarouselSlider(
-                        items: _listImageGallary
-                            .map(
-                              (e) => GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: ((context) => FullImage(
-                                          listImageGallary: _listImageGallary,
-                                          url: e.filePath))));
-                                },
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                      // color: Colors.red,
-                                      child: CachedNetworkImage(
-                                        width: size.width,
-                                        fit: BoxFit.cover,
-                                        height: size.height * .5,
-                                        filterQuality: FilterQuality.high,
-                                        imageUrl: e.filePath.toString(),
-                                        placeholder: (context, url) => Center(
-                                          child: FadeInImage(
-                                            placeholder: AssetImage(
-                                                AppConfig.autoCarLogo),
-                                            image: AssetImage(
-                                                AppConfig.autoCarLogo),
-                                            width: double.infinity,
-                                            height: 100,
-                                            fit: BoxFit.contain,
+
+                      ClipRRect(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15),
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
+                        ),
+                        child: Container(
+                          height: size.height * .36,
+                          width: double.infinity,
+                          child: CarouselSlider(
+                            items: _listImageGallary
+                                .map(
+                                  (e) => GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: ((context) => FullImage(
+                                                  listImageGallary:
+                                                      _listImageGallary,
+                                                  url: e.filePath))));
+                                    },
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                          // color: Colors.red,
+                                          child: CachedNetworkImage(
+                                            width: size.width,
+                                            fit: BoxFit.cover,
+                                            height: size.height * .5,
+                                            filterQuality: FilterQuality.high,
+                                            imageUrl: e.filePath.toString(),
+                                            placeholder: (context, url) =>
+                                                Center(
+                                              child: FadeInImage(
+                                                placeholder: AssetImage(
+                                                    AppConfig.autoCarLogo),
+                                                image: AssetImage(
+                                                    AppConfig.autoCarLogo),
+                                                width: double.infinity,
+                                                height: 100,
+                                                fit: BoxFit.contain,
+                                              ),
+                                            ),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    Icon(Icons.error),
                                           ),
                                         ),
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
-                                      ),
+                                        Positioned(
+                                          top: size.height * .05,
+                                          left: 0,
+                                          right: 0,
+                                          child: Image.asset(
+                                            AppConfig.logoSplash,
+                                            width: 70,
+                                            height: 70,
+                                          ),
+                                        ),
+                                        Positioned(
+                                          top: size.height * .32,
+                                          left: 0,
+                                          right: 0,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 5),
+                                            child: AnimatedSmoothIndicator(
+                                              effect: WormEffect(
+                                                dotHeight: 9,
+                                                dotWidth: 8,
+                                                activeDotColor:
+                                                    Theme.of(context)
+                                                        .colorScheme
+                                                        .onPrimary,
+                                                type: WormType.thin,
+                                              ),
+                                              activeIndex: activeIndex,
+                                              count: _listImageGallary.length,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                            )
-                            .toList(),
-                        options: CarouselOptions(
-                          onPageChanged: (index, reason) {
-                            setState(() {
-                              activeIndex = index;
-                            });
-                          },
-                          height: size.height * .06,
-                          aspectRatio: 16 / 9,
-                          viewportFraction: 1.01,
-                          autoPlay: true,
-                          autoPlayInterval: const Duration(seconds: 5),
-                          autoPlayAnimationDuration:
-                              const Duration(milliseconds: 800),
-                          scrollDirection: Axis.horizontal,
-                          disableCenter: true,
+                                  ),
+                                )
+                                .toList(),
+                            options: CarouselOptions(
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  activeIndex = index;
+                                });
+                              },
+                              height: size.height * .06,
+                              aspectRatio: 16 / 9,
+                              viewportFraction: 1.01,
+                              autoPlay: true,
+                              autoPlayInterval: const Duration(seconds: 5),
+                              autoPlayAnimationDuration:
+                                  const Duration(milliseconds: 800),
+                              scrollDirection: Axis.horizontal,
+                              disableCenter: true,
+                            ),
+                          ),
                         ),
                       ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(height: 10),
+
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * .05),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // brand logo and brand name
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          children: [
+                            CachedNetworkImage(
+                              width: size.width * .07,
+                              filterQuality: FilterQuality.high,
+                              height: size.height * .03,
+                              fit: BoxFit.contain,
+                              imageUrl:
+                                  widget.carModel.brandModel.brand.logoPath,
+                              placeholder: (context, url) => FadeInImage(
+                                placeholder: AssetImage(AppConfig.placeholder),
+                                image: AssetImage(AppConfig.placeholder),
+                                width: size.width * .06,
+                                height: size.height * .03,
+                                fit: BoxFit.fill,
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 0),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  widget.carModel.brandModel.brand.name,
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: size.width * .065,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // SizedBox(width: size.width * .44),
+                      // Favart Icons
+                      Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 5),
+                        child: GestureDetector(
+                          onTap: () async {
+                            // updateFavorite
+                            // carProvider.updateFavorite(widget.listCars[index].id,
+                            //     !widget.listCars[index].isFavorite);
+                            // insertData(id, headline6, price.toString(), image);
+                          },
+                          child: MyFavoriteButton(
+                            iconSize: size.height * .04,
+                            isFavorite: false,
+                            // isFavorite: widget.listCars[index].isFavorite,
+                            valueChanged: (_isFavorite) async {
+                              // if (_isFavorite) {
+                              //   insertData(
+                              //       id, headline6, price.toString(), image);
+                              //   widget.carProvider.updateFavorite(
+                              //       widget.listCars[index].id, true);
+                              // } else {
+                              //   deleteData(id);
+                              //   widget.carProvider.updateFavorite(
+                              //       widget.listCars[index].id, false);
+                              // }
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: size.width * .17),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      widget.carModel.year.yearName.toString(),
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: size.width * .065,
+                          fontWeight: FontWeight.normal),
                     ),
-                  ],
+                  ),
                 ),
 
                 // Stack(
@@ -394,62 +553,110 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // Align(
-                          //   alignment: Alignment.centerLeft,
-                          //   child: Text(
-                          //     "${widget.currency} ${widget.price}",
-                          //     textAlign: TextAlign.left,
-                          //     style: TextStyle(
-                          //         color: Colors.red,
-                          //         fontSize: size.width * .1,
-                          //         fontWeight: FontWeight.w500),
-                          //   ),
-                          // ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                                width: size.width * .21,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(0),
-                                  ),
-                                ),
-                                child: Card(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        activeIndex.toString(),
-                                        style: TextStyle(
-                                            fontSize: size.width * .08,
-                                            fontWeight: FontWeight.w500),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                    width: size.width * .5,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(12),
                                       ),
-                                      Text(
-                                        '/',
-                                        style: TextStyle(
-                                            fontSize: size.width * .08,
-                                            fontWeight: FontWeight.w500),
+                                    ),
+                                    child: Card(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "JEARBOX",
+                                            style: TextStyle(
+                                                color: Colors.black54,
+                                                fontSize: size.width * .08,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          Text(
+                                            'M',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: size.width * .08,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        _listImageGallary.length.toString(),
-                                        style: TextStyle(
-                                            fontSize: size.width * .08,
-                                            fontWeight: FontWeight.w500),
+                                    )),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                    width: size.width * .5,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(12),
                                       ),
-                                    ],
-                                  ),
-                                )),
+                                    ),
+                                    child: Card(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Color",
+                                            style: TextStyle(
+                                                color: Colors.black54,
+                                                fontSize: size.width * .08,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          Text(
+                                            'Black',
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: size.width * .08,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                       const SizedBox(height: 18),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Description",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: size.width * .07,
+                                fontWeight: FontWeight.normal),
+                            textAlign: TextAlign.end,
+                            ////maxLines: 100,
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.arrow_downward))
+                        ],
+                      ),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "Description",
+                          _offerModel.description,
                           style: TextStyle(
                               color: Colors.black54,
                               fontSize: size.width * .06,
@@ -458,19 +665,25 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           ////maxLines: 100,
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          _offerModel.description,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: size.width * .06,
-                              fontWeight: FontWeight.normal),
-                          textAlign: TextAlign.end,
-                          ////maxLines: 100,
-                        ),
-                      ),
                       const SizedBox(height: 35),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            AppConfig.specifications,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: size.width * .07,
+                                fontWeight: FontWeight.normal),
+                            textAlign: TextAlign.end,
+                            ////maxLines: 100,
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.arrow_downward))
+                        ],
+                      ),
+                      const SizedBox(height: 10),
                       buildCarItem("Model", _offerModel.modelName, size),
                       const SizedBox(height: 15),
                       buildCarItem("Year",
@@ -503,11 +716,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 // await Share.share(AppConfig.shareOffers);
                               },
                             ),
+                      const SizedBox(height: 15),
                     ],
                   ),
                 ),
-
-                SizedBox(height: size.height * .03),
 
                 buildListDetailsSpecifications(context, size, _listFeature, 0),
                 //buildListDetailsSpecifications(context, size, _listFeature, 1),
@@ -572,12 +784,12 @@ buildCarItem(String key, String value, Size size) {
       Container(
         width: size.width * .65,
         child: Align(
-          alignment: Alignment.centerLeft,
+          alignment: Alignment.centerRight,
           child: Text(
             value,
             overflow: TextOverflow.clip,
             style: TextStyle(
-                color: Colors.black,
+                color: Colors.black54,
                 fontSize: size.width * .06,
                 fontWeight: FontWeight.normal),
             //size.width * .65
@@ -590,48 +802,48 @@ buildCarItem(String key, String value, Size size) {
 
 buildListDetailsSpecifications(BuildContext context, Size size,
     List<FeaturesType> _listFeature, int index) {
-  return GridView.builder(
+  return ListView.separated(
+    separatorBuilder: (context, index) => const SizedBox(height: 15),
+
+    padding: EdgeInsets.zero,
     shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
-    padding: const EdgeInsets.all(10.0),
-    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 1.9,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10),
+    // physics: const NeverScrollableScrollPhysics(),
+    // padding: const EdgeInsets.only(right: 10, left: 10, bottom: 10),
+    // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    //     crossAxisCount: 2,
+    //     childAspectRatio: 1.9,
+    //     mainAxisSpacing: 10,
+    //     crossAxisSpacing: 10),
     itemCount: _listFeature.length,
     itemBuilder: (ctx, index) {
       String featureName = _listFeature[index].features[0].featureName;
       String featuretype = _listFeature[index].typeName;
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          //this is feature type : Security or
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              featuretype,
-              style: AppStyle.textBlack18,
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: size.width * .32,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    featureName,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppConfig.textSpecifications,
-                    textAlign: TextAlign.end,
-                    maxLines: 10,
+
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              // width: size.width * .32,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  featureName,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
                   ),
+                  textAlign: TextAlign.end,
+                  maxLines: 10,
                 ),
               ),
-              const SizedBox(width: 10),
-              Container(
+            ),
+            // const SizedBox(width: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Container(
                 height: 35,
                 width: 35,
                 child: Icon(
@@ -645,10 +857,50 @@ buildListDetailsSpecifications(BuildContext context, Size size,
                   ),
                 ),
               ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       );
+      // return Column(
+      //   // mainAxisAlignment: MainAxisAlignment.center,
+      //   children: [
+      //     //this is feature type : Security or
+
+      //     Row(
+      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //       children: [
+      //         SizedBox(
+      //           width: size.width * .32,
+      //           child: Align(
+      //             alignment: Alignment.centerLeft,
+      //             child: Text(
+      //               featureName,
+      //               overflow: TextOverflow.ellipsis,
+      //               style: AppConfig.textSpecifications,
+      //               textAlign: TextAlign.end,
+      //               maxLines: 10,
+      //             ),
+      //           ),
+      //         ),
+      //         // const SizedBox(width: 10),
+      //         Container(
+      //           height: 35,
+      //           width: 35,
+      //           child: Icon(
+      //             Icons.check,
+      //             color: Theme.of(context).colorScheme.onSecondary,
+      //           ),
+      //           decoration: BoxDecoration(
+      //             color: Theme.of(context).colorScheme.onPrimary,
+      //             borderRadius: const BorderRadius.all(
+      //               Radius.circular(100),
+      //             ),
+      //           ),
+      //         ),
+      //       ],
+      //     ),
+      //   ],
+      // );
     },
   );
 }

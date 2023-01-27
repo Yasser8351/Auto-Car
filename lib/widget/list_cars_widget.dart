@@ -414,20 +414,35 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10),
                     ),
-                    child: CachedNetworkImage(
-                      width: double.infinity,
-                      filterQuality: FilterQuality.high,
-                      height: size.height * .26,
-                      fit: BoxFit.cover,
-                      imageUrl: image,
-                      placeholder: (context, url) => FadeInImage(
-                        placeholder: AssetImage(AppConfig.placeholder),
-                        image: AssetImage(AppConfig.placeholder),
-                        width: double.infinity,
-                        height: size.height * .2,
-                        fit: BoxFit.fill,
-                      ),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    child: Stack(
+                      children: [
+                        CachedNetworkImage(
+                          width: double.infinity,
+                          filterQuality: FilterQuality.high,
+                          height: size.height * .26,
+                          fit: BoxFit.cover,
+                          imageUrl: image,
+                          placeholder: (context, url) => FadeInImage(
+                            placeholder: AssetImage(AppConfig.placeholder),
+                            image: AssetImage(AppConfig.placeholder),
+                            width: double.infinity,
+                            height: size.height * .2,
+                            fit: BoxFit.fill,
+                          ),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
+                        Positioned(
+                          top: 40,
+                          left: 0,
+                          right: 0,
+                          child: Image.asset(
+                            AppConfig.logoSplash,
+                            width: 50,
+                            height: 50,
+                          ),
+                        )
+                      ],
                     ),
                   ),
                   Container(
@@ -514,6 +529,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                             ),
                           ],
                         ),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

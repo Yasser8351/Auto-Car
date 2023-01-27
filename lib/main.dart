@@ -7,8 +7,6 @@ import 'package:auto_car/screen/favert.dart';
 import 'package:auto_car/screen/home.dart';
 import 'package:auto_car/screen/more.dart';
 import 'package:auto_car/screen/splash_screen.dart';
-import 'package:auto_car/screen/tab_screen.dart';
-import 'package:auto_car/widget/full_image.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -123,18 +121,8 @@ class MyApp extends StatelessWidget {
               brightness: Brightness.light,
             ),
           ),
-
           home: SplahScreen(),
-          // home: TabScreen(userId: ''),
-
-          // home: const HomeScreen(
-          //     userId:
-          //         'e8aa0eb5-46c7-4e60-a32b-e96fd57f16252022-08-21 10:25:36.316499'),
-          // home: const SplahScreen(),
-          //      routes: {
-          //   "red": (_) => More(),
-          //   "green": (_) => CategoryScreen(),
-          // },
+          // home: Onboardingscreen(),
           routes: {
             Home.routeName: (ctx) => const Home(userId: ''),
             CategoryScreen.routeName: (ctx) => const CategoryScreen(),

@@ -56,7 +56,12 @@ class CategoryProvider with ChangeNotifier {
           AppConfig.serverError, false, _listCategory, LoadingState.error);
     } catch (error) {
       setApiResponseValue(
-          error.toString(), false, _listCategory, LoadingState.error);
+          error.toString().contains('TimeoutException')
+              ? AppConfig.timeout
+              : AppConfig.somthingWrong,
+          false,
+          _listCategory,
+          LoadingState.error);
     }
 
     notifyListeners();
