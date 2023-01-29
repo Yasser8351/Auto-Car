@@ -250,9 +250,24 @@ class AppConfig {
   static const iconApp2 = "assets/images/icon2.png";
   static const logoSplash = "assets/images/autocar_splash.png";
   static const onboarding1 = "assets/images/onboarding1.png";
-  static const onboarding2 = "assets/images/onboarding2.png";
+  static const onboarding2 = "assets/images/onboarding2.PNG";
+  static const l1 = "assets/images/l1.png";
+  static const l2 = "assets/images/l2.png";
   static const onboarding3 = "assets/images/onboarding3.png";
+  static const sliders_1 = "assets/images/slider_1.png";
+  static const sliders_2 = "assets/images/slider_2.png";
+  static const sliders_3 = "assets/images/slider_3.png";
 
+  static const slider_111 = "assets/images/slider_111.svg";
+  static const slider_11 = "assets/images/slider_11.svg";
+  static const slider_1 = "assets/images/slider_1.svg";
+  static const f = "assets/images/final.svg";
+  static const o1 = "assets/images/o1.svg";
+  static const on_1 = "assets/images/on_1.svg";
+  static const t = "assets/images/t.svg";
+  static const onboarding1svg = "assets/images/onboarding1.svg";
+  static const onboarding2svg = "assets/images/onboarding2.svg";
+  static const onboarding3svg = "assets/images/onboarding3.svg";
   // Brand image
   static const brand1 = "assets/images/1.png";
   static const brand2 = "assets/images/2.png";

@@ -458,7 +458,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           child: MyFavoriteButton(
                             iconSize: size.height * .04,
                             isFavorite: false,
-                            // isFavorite: widget.listCars[index].isFavorite,
                             valueChanged: (_isFavorite) async {
                               // if (_isFavorite) {
                               //   insertData(
@@ -547,26 +546,28 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 // ),
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
-                                    width: size.width * .5,
+                                    width: size.width * .45,
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      border: Border.all(color: Colors.black),
+                                      // color: Colors.white,
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(12),
                                       ),
                                     ),
-                                    child: Card(
+                                    child: Container(
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
@@ -577,14 +578,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                             "JEARBOX",
                                             style: TextStyle(
                                                 color: Colors.black54,
-                                                fontSize: size.width * .08,
+                                                fontSize: size.width * .065,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                           Text(
                                             'M',
                                             style: TextStyle(
                                                 color: Colors.black,
-                                                fontSize: size.width * .08,
+                                                fontSize: size.width * .065,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                         ],
@@ -594,19 +595,20 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             ],
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
-                                    width: size.width * .5,
+                                    width: size.width * .45,
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      border: Border.all(color: Colors.black),
+                                      // color: Colors.white,
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(12),
                                       ),
                                     ),
-                                    child: Card(
+                                    child: Container(
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
@@ -617,14 +619,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                             "Color",
                                             style: TextStyle(
                                                 color: Colors.black54,
-                                                fontSize: size.width * .08,
+                                                fontSize: size.width * .065,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                           Text(
                                             'Black',
                                             style: TextStyle(
                                                 color: Colors.black,
-                                                fontSize: size.width * .08,
+                                                fontSize: size.width * .065,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                         ],

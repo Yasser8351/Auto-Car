@@ -305,12 +305,12 @@ import 'package:auto_car/config/app_config.dart';
 import 'package:auto_car/database/sqldb.dart';
 import 'package:auto_car/model/car_model.dart';
 import 'package:auto_car/provider/car_provider.dart';
+import 'package:auto_car/widget/my_favorite_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:paginated_list/paginated_list.dart';
 
 import '../screen/details_screen.dart';
-import 'my_favorite_button.dart';
 
 // ignore: must_be_immutable
 class ListCarsWidget extends StatefulWidget {
@@ -399,7 +399,7 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
             padding: const EdgeInsets.only(bottom: 25),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.black,
+                color: Colors.white,
                 // color: Theme.of(context).colorScheme.onSecondary,
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),
@@ -445,231 +445,337 @@ class _ListCarsWidgetState extends State<ListCarsWidget> {
                       ],
                     ),
                   ),
-                  Container(
-                    color: Colors.white,
-                    child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      // crossAxisAlignment: CrossAxisAlignment.end,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // brand logo and brand name
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: Row(
-                                children: [
-                                  CachedNetworkImage(
-                                    width: size.width * .07,
-                                    filterQuality: FilterQuality.high,
+                            Row(
+                              children: [
+                                //      Align(
+                                //   alignment: Alignment.bottomLeft,
+                                //   child: Text(
+                                //     brand,
+                                //     style: TextStyle(
+                                //       fontSize: 22,
+                                //       color: Colors.black54,
+                                //     ),
+                                //   ),
+                                // ),
+                                CachedNetworkImage(
+                                  width: size.width * .07,
+                                  filterQuality: FilterQuality.high,
+                                  height: size.height * .06,
+                                  fit: BoxFit.contain,
+                                  imageUrl: logoBrand,
+                                  placeholder: (context, url) => FadeInImage(
+                                    placeholder:
+                                        AssetImage(AppConfig.placeholder),
+                                    image: AssetImage(AppConfig.placeholder),
+                                    width: size.width * .06,
                                     height: size.height * .06,
-                                    fit: BoxFit.contain,
-                                    imageUrl: logoBrand,
-                                    placeholder: (context, url) => FadeInImage(
-                                      placeholder:
-                                          AssetImage(AppConfig.placeholder),
-                                      image: AssetImage(AppConfig.placeholder),
-                                      width: size.width * .06,
-                                      height: size.height * .06,
-                                      fit: BoxFit.fill,
-                                    ),
-                                    errorWidget: (context, url, error) =>
-                                        Icon(Icons.error),
+                                    fit: BoxFit.fill,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 0),
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        "$brand",
-                                        textAlign: TextAlign.start,
-                                        style: TextStyle(
-                                            color: Colors.black87,
-                                            fontSize: size.width * .065,
-                                            fontWeight: FontWeight.normal),
-                                      ),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
+                                ),
+                                SizedBox(width: 10),
+                                Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Text(
+                                    brand,
+                                    style: TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.black54,
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            // SizedBox(width: size.width * .44),
-                            // Favart Icons
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.only(start: 5),
-                              child: GestureDetector(
-                                onTap: () async {
-                                  // updateFavorite
-                                  widget.carProvider.updateFavorite(
-                                      widget.listCars[index].id,
-                                      !widget.listCars[index].isFavorite);
-                                  insertData(
-                                      id, title, price.toString(), image);
-                                },
-                                child: MyFavoriteButton(
-                                  iconSize: size.height * .04,
-                                  isFavorite: widget.listCars[index].isFavorite,
-                                  valueChanged: (_isFavorite) async {
-                                    if (_isFavorite) {
-                                      insertData(
-                                          id, title, price.toString(), image);
-                                      widget.carProvider.updateFavorite(
-                                          widget.listCars[index].id, true);
-                                    } else {
-                                      deleteData(id);
-                                      widget.carProvider.updateFavorite(
-                                          widget.listCars[index].id, false);
-                                    }
-                                  },
+                            Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Text(
+                                year.toString(),
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                  fontSize: 22,
+                                  color: Theme.of(context).colorScheme.error,
                                 ),
                               ),
                             ),
                           ],
                         ),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        Column(
                           children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: size.width * .12),
-                              child: Text(
-                                "$year",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: size.width * .065,
-                                    fontWeight: FontWeight.normal),
+                            GestureDetector(
+                              onTap: () async {
+                                // updateFavorite
+                                widget.carProvider.updateFavorite(
+                                    widget.listCars[index].id,
+                                    !widget.listCars[index].isFavorite);
+                                insertData(id, title, price.toString(), image);
+                              },
+                              child: MyFavoriteButton(
+                                iconSize: size.height * .04,
+                                isFavorite: widget.listCars[index].isFavorite,
+                                valueChanged: (_isFavorite) async {
+                                  if (_isFavorite) {
+                                    insertData(
+                                        id,
+                                        brand,
+                                        "${currency.currencyName} ${price.toString()}",
+                                        image);
+                                    widget.carProvider.updateFavorite(
+                                        widget.listCars[index].id, true);
+                                  } else {
+                                    deleteData(id);
+                                    widget.carProvider.updateFavorite(
+                                        widget.listCars[index].id, false);
+                                  }
+                                },
                               ),
                             ),
-                            // SizedBox(width: size.width * .44),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
+                            Align(
+                              alignment: Alignment.bottomLeft,
                               child: Text(
                                 "${currency.currencyName} $price",
-                                textAlign: TextAlign.left,
                                 style: TextStyle(
-                                    color: colorScheme.onPrimary,
-                                    fontSize: size.width * .065,
-                                    fontWeight: FontWeight.normal),
+                                  fontSize: 22,
+                                  color:
+                                      Theme.of(context).colorScheme.onPrimary,
+                                ),
                               ),
                             ),
                           ],
                         )
-
-                        // Column(
-                        //   children: [
-                        //     Padding(
-                        //       padding:
-                        //           const EdgeInsets.symmetric(horizontal: 10),
-                        //       child: Row(
-                        //         children: [
-                        //           CachedNetworkImage(
-                        //             width: size.width * .07,
-                        //             filterQuality: FilterQuality.high,
-                        //             height: size.height * .06,
-                        //             fit: BoxFit.contain,
-                        //             imageUrl: logoBrand,
-                        //             placeholder: (context, url) => FadeInImage(
-                        //               placeholder:
-                        //                   AssetImage(AppConfig.placeholder),
-                        //               image: AssetImage(AppConfig.placeholder),
-                        //               width: size.width * .06,
-                        //               height: size.height * .06,
-                        //               fit: BoxFit.fill,
-                        //             ),
-                        //             errorWidget: (context, url, error) =>
-                        //                 Icon(Icons.error),
-                        //           ),
-                        //           Padding(
-                        //             padding: const EdgeInsets.symmetric(
-                        //                 horizontal: 10, vertical: 0),
-                        //             child: Align(
-                        //               alignment: Alignment.center,
-                        //               child: Text(
-                        //                 "$brand",
-                        //                 textAlign: TextAlign.start,
-                        //                 style: TextStyle(
-                        //                     color: Colors.black87,
-                        //                     fontSize: size.width * .065,
-                        //                     fontWeight: FontWeight.normal),
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //     Padding(
-                        //       padding: const EdgeInsets.symmetric(
-                        //           horizontal: 35, vertical: 0),
-                        //       child: Align(
-                        //         alignment: Alignment.centerRight,
-                        //         child: Text(
-                        //           "$year",
-                        //           textAlign: TextAlign.end,
-                        //           style: TextStyle(
-                        //               color: Colors.grey,
-                        //               fontSize: size.width * .065,
-                        //               fontWeight: FontWeight.normal),
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-                        // Column(
-                        //   children: [
-                        //     SizedBox(height: 7),
-                        //     GestureDetector(
-                        //       onTap: () async {
-                        //         // updateFavorite
-                        //         log("GestureDetector");
-                        //         widget.carProvider.updateFavorite(
-                        //             widget.listCars[index].id,
-                        //             !widget.listCars[index].isFavorite);
-                        //         insertData(id, title, price.toString(), image);
-                        //       },
-                        //       child: MyFavoriteButton(
-                        //         iconSize: size.height * .04,
-                        //         isFavorite: widget.listCars[index].isFavorite,
-                        //         valueChanged: (_isFavorite) async {
-                        //           if (_isFavorite) {
-                        //             insertData(
-                        //                 id, title, price.toString(), image);
-                        //             widget.carProvider.updateFavorite(
-                        //                 widget.listCars[index].id, true);
-                        //           } else {
-                        //             deleteData(id);
-                        //             widget.carProvider.updateFavorite(
-                        //                 widget.listCars[index].id, false);
-                        //           }
-                        //         },
-                        //       ),
-                        //     ),
-
-                        //     SizedBox(height: 10),
-
-                        //     Padding(
-                        //       padding:
-                        //           const EdgeInsets.symmetric(horizontal: 15),
-                        //       child: Text(
-                        //         "${currency.currencyName} $price",
-                        //         textAlign: TextAlign.left,
-                        //         style: TextStyle(
-                        //             color: colorScheme.onPrimary,
-                        //             fontSize: size.width * .065,
-                        //             fontWeight: FontWeight.normal),
-                        //       ),
-                        //     ),
-                        //     SizedBox(height: 20),
-                        //   ],
-                        // ),
                       ],
                     ),
                   ),
+
+                  // Container(
+                  //   color: Colors.white,
+                  //   child: Column(
+                  //     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     // crossAxisAlignment: CrossAxisAlignment.end,
+                  //     children: [
+                  //       Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //         children: [
+                  //           // brand logo and brand name
+                  //           Padding(
+                  //             padding:
+                  //                 const EdgeInsets.symmetric(horizontal: 10),
+                  //             child: Row(
+                  //               children: [
+                  //                 CachedNetworkImage(
+                  //                   width: size.width * .07,
+                  //                   filterQuality: FilterQuality.high,
+                  //                   height: size.height * .06,
+                  //                   fit: BoxFit.contain,
+                  //                   imageUrl: logoBrand,
+                  //                   placeholder: (context, url) => FadeInImage(
+                  //                     placeholder:
+                  //                         AssetImage(AppConfig.placeholder),
+                  //                     image: AssetImage(AppConfig.placeholder),
+                  //                     width: size.width * .06,
+                  //                     height: size.height * .06,
+                  //                     fit: BoxFit.fill,
+                  //                   ),
+                  //                   errorWidget: (context, url, error) =>
+                  //                       Icon(Icons.error),
+                  //                 ),
+                  //                 Padding(
+                  //                   padding: const EdgeInsets.symmetric(
+                  //                       horizontal: 10, vertical: 0),
+                  //                   child: Align(
+                  //                     alignment: Alignment.center,
+                  //                     child: Text(
+                  //                       "$brand",
+                  //                       textAlign: TextAlign.start,
+                  //                       style: TextStyle(
+                  //                           color: Colors.black87,
+                  //                           fontSize: size.width * .065,
+                  //                           fontWeight: FontWeight.normal),
+                  //                     ),
+                  //                   ),
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //           // SizedBox(width: size.width * .44),
+                  //           // Favart Icons
+                  //           GestureDetector(
+                  //             onTap: () async {
+                  //               // updateFavorite
+                  //               widget.carProvider.updateFavorite(
+                  //                   widget.listCars[index].id,
+                  //                   !widget.listCars[index].isFavorite);
+                  //               insertData(id, title, price.toString(), image);
+                  //             },
+                  //             child: MyFavoriteButton(
+                  //               iconSize: size.height * .04,
+                  //               isFavorite: widget.listCars[index].isFavorite,
+                  //               valueChanged: (_isFavorite) async {
+                  //                 if (_isFavorite) {
+                  //                   insertData(
+                  //                       id, title, price.toString(), image);
+                  //                   widget.carProvider.updateFavorite(
+                  //                       widget.listCars[index].id, true);
+                  //                 } else {
+                  //                   deleteData(id);
+                  //                   widget.carProvider.updateFavorite(
+                  //                       widget.listCars[index].id, false);
+                  //                 }
+                  //               },
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+
+                  //       Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //         children: [
+                  //           Padding(
+                  //             padding: EdgeInsets.symmetric(
+                  //                 horizontal: size.width * .12),
+                  //             child: Text(
+                  //               "$year",
+                  //               textAlign: TextAlign.left,
+                  //               style: TextStyle(
+                  //                   color: Colors.grey,
+                  //                   fontSize: size.width * .065,
+                  //                   fontWeight: FontWeight.normal),
+                  //             ),
+                  //           ),
+                  //           // SizedBox(width: size.width * .44),
+                  //           Padding(
+                  //             padding:
+                  //                 const EdgeInsets.symmetric(horizontal: 15),
+                  //             child: Text(
+                  //               "${currency.currencyName} $price",
+                  //               textAlign: TextAlign.left,
+                  //               style: TextStyle(
+                  //                   color: colorScheme.onPrimary,
+                  //                   fontSize: size.width * .065,
+                  //                   fontWeight: FontWeight.normal),
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       )
+
+                  //       // Column(
+                  //       //   children: [
+                  //       //     Padding(
+                  //       //       padding:
+                  //       //           const EdgeInsets.symmetric(horizontal: 10),
+                  //       //       child: Row(
+                  //       //         children: [
+                  //       //           CachedNetworkImage(
+                  //       //             width: size.width * .07,
+                  //       //             filterQuality: FilterQuality.high,
+                  //       //             height: size.height * .06,
+                  //       //             fit: BoxFit.contain,
+                  //       //             imageUrl: logoBrand,
+                  //       //             placeholder: (context, url) => FadeInImage(
+                  //       //               placeholder:
+                  //       //                   AssetImage(AppConfig.placeholder),
+                  //       //               image: AssetImage(AppConfig.placeholder),
+                  //       //               width: size.width * .06,
+                  //       //               height: size.height * .06,
+                  //       //               fit: BoxFit.fill,
+                  //       //             ),
+                  //       //             errorWidget: (context, url, error) =>
+                  //       //                 Icon(Icons.error),
+                  //       //           ),
+                  //       //           Padding(
+                  //       //             padding: const EdgeInsets.symmetric(
+                  //       //                 horizontal: 10, vertical: 0),
+                  //       //             child: Align(
+                  //       //               alignment: Alignment.center,
+                  //       //               child: Text(
+                  //       //                 "$brand",
+                  //       //                 textAlign: TextAlign.start,
+                  //       //                 style: TextStyle(
+                  //       //                     color: Colors.black87,
+                  //       //                     fontSize: size.width * .065,
+                  //       //                     fontWeight: FontWeight.normal),
+                  //       //               ),
+                  //       //             ),
+                  //       //           ),
+                  //       //         ],
+                  //       //       ),
+                  //       //     ),
+                  //       //     Padding(
+                  //       //       padding: const EdgeInsets.symmetric(
+                  //       //           horizontal: 35, vertical: 0),
+                  //       //       child: Align(
+                  //       //         alignment: Alignment.centerRight,
+                  //       //         child: Text(
+                  //       //           "$year",
+                  //       //           textAlign: TextAlign.end,
+                  //       //           style: TextStyle(
+                  //       //               color: Colors.grey,
+                  //       //               fontSize: size.width * .065,
+                  //       //               fontWeight: FontWeight.normal),
+                  //       //         ),
+                  //       //       ),
+                  //       //     ),
+                  //       //   ],
+                  //       // ),
+                  //       // Column(
+                  //       //   children: [
+                  //       //     SizedBox(height: 7),
+                  //       //     GestureDetector(
+                  //       //       onTap: () async {
+                  //       //         // updateFavorite
+                  //       //         log("GestureDetector");
+                  //       //         widget.carProvider.updateFavorite(
+                  //       //             widget.listCars[index].id,
+                  //       //             !widget.listCars[index].isFavorite);
+                  //       //         insertData(id, title, price.toString(), image);
+                  //       //       },
+                  //       //       child: MyFavoriteButton(
+                  //       //         iconSize: size.height * .04,
+                  //       //         isFavorite: widget.listCars[index].isFavorite,
+                  //       //         valueChanged: (_isFavorite) async {
+                  //       //           if (_isFavorite) {
+                  //       //             insertData(
+                  //       //                 id, title, price.toString(), image);
+                  //       //             widget.carProvider.updateFavorite(
+                  //       //                 widget.listCars[index].id, true);
+                  //       //           } else {
+                  //       //             deleteData(id);
+                  //       //             widget.carProvider.updateFavorite(
+                  //       //                 widget.listCars[index].id, false);
+                  //       //           }
+                  //       //         },
+                  //       //       ),
+                  //       //     ),
+
+                  //       //     SizedBox(height: 10),
+
+                  //       //     Padding(
+                  //       //       padding:
+                  //       //           const EdgeInsets.symmetric(horizontal: 15),
+                  //       //       child: Text(
+                  //       //         "${currency.currencyName} $price",
+                  //       //         textAlign: TextAlign.left,
+                  //       //         style: TextStyle(
+                  //       //             color: colorScheme.onPrimary,
+                  //       //             fontSize: size.width * .065,
+                  //       //             fontWeight: FontWeight.normal),
+                  //       //       ),
+                  //       //     ),
+                  //       //     SizedBox(height: 20),
+                  //       //   ],
+                  //       // ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),
