@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:auto_car/debugger/my_debuger.dart';
@@ -111,6 +112,9 @@ class CarProvider with ChangeNotifier {
                 },
               ))
           .timeout(Duration(seconds: 20));
+
+      log(response.statusCode.toString());
+      log(response.body);
 
       if (response.statusCode == 200) {
         //  _listCars = carModelFromJson(response.body);

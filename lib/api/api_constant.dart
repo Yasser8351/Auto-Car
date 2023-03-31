@@ -1,13 +1,15 @@
 ///contain getter for all api url and Header and parameters
 class ApiUrl {
-  static const String _root = 'http://207.180.223.113:8975/api/v1/';
+  static const String _root = 'http://194.195.87.30:83/api/v1/';
+  // static const String _root = 'http://207.180.223.113:8975/api/v1/';
 
   static const String token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImUxZGFjMDE4LWQ5YjUtNDI1NC1hZjdhLTRiNGFhMzg0MWY4YSIsIm5hbWVpZCI6ImUxZGFjMDE4LWQ5YjUtNDI1NC1hZjdhLTRiNGFhMzg0MWY4YSIsInN1YiI6Inlhc3NlcjgzNTFAZ21haWwuY29tIiwiZW1haWwiOiJ5YXNzZXI4MzUxQGdtYWlsLmNvbSIsImp0aSI6ImZmNThkYjkwLTk4NWEtNDM3Ni1iMzcxLTg2NTA2NjljNjVjZCIsIm5iZiI6MTY2MDgwNjU0NSwiZXhwIjoxNjYwODA3MTQ1LCJpYXQiOjE2NjA4MDY1NDV9.mad3vnwdgVl8D8DdzTdS9H2kf-8w_0e1rp-4OCGplXE";
 
   /// production parameters
   static String get getAllOffer =>
-      'http://207.180.223.113:8975/api/v1/Offer/MGetAll?';
+      'http://194.195.87.30:83/api/v1/Offer/MGetAll?';
+  //_root + 'Offer/MGetAll?';
   static String get getOfferDetails => _root + 'Offer/MGetOfferDetails';
   static String get updateFavorite => _root + 'Offer/UpdateFavorite';
   static String get getOffersByCategory => _root + 'Offer/MGetOffersByCarType?';
