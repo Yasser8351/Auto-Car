@@ -225,7 +225,7 @@ class _HomeState extends State<Home> {
         title: carProvider.apiResponse.message,
         onTap: () {
           setState(() => {});
-          carProvider.getCars(1, 10, '').then((value) => {
+          carProvider.getCars(1, 30, '').then((value) => {
                 setState(() {
                   // carProvider.loadingState = LoadingState.loading;
                   listCars = value.dataCar;
@@ -319,6 +319,7 @@ class _HomeState extends State<Home> {
                               },
                             )
                           : ListCarsWidget(
+                              isSearch: expandedIndex != -1 ? true : false,
                               listCars: listCars,
                               totalRecords: totalRecords,
                               isOffers: false,

@@ -218,7 +218,9 @@ class AppConfig {
       "assets/images/logowithoutbackground.svg";
   static const logoWithoutBackgroundPng =
       "assets/images/logowithoutbackground.png";
-  static const placeholder = "assets/images/logo.png";
+  // static const placeholder = "assets/images/logo.png";
+  static const placeholder = "assets/images/autocar_splash.png";
+
   static const placeholder2 = "assets/images/placeholder.png";
   static const imageCar1 = "assets/images/car.png";
   static const imageCar = "assets/images/cars.png";

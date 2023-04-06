@@ -34,6 +34,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+  		<string>sms</string>
+  		<string>tel</string>
+	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs access to the photo library to use the photo to send it with invoice.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>

@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import '../debugger/my_debuger.dart';
 import '../widget/card_with_image.dart';
 import '../widget/loading_widget.dart';
-import 'details_screen.dart';
 
 class Favert extends StatefulWidget {
   const Favert({Key? key}) : super(key: key);
@@ -84,15 +83,17 @@ class _FavertState extends State<Favert> {
                       myLogs("id", id);
                       return GestureDetector(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: ((context) => DetailsScreen(
-                                  listImageSliderCar: [],
-                                  title: title,
-                                  price: price,
-                                  offerId: id,
-                                  youtupeLink: youtupeLink,
-                                )),
-                          ));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //   builder: ((context) => DetailsScreen(
+                          //         listImageSliderCar: [],
+                          //         title: title,
+                          //         carModel: ,
+                          //         currency: ,
+                          //         price: price,
+                          //         offerId: id,
+                          //         youtupeLink: youtupeLink,
+                          //       )),
+                          // ));
                         },
                         child: Container(
                           decoration: const BoxDecoration(
@@ -112,7 +113,7 @@ class _FavertState extends State<Favert> {
                                   height: 120,
                                   filterQuality: FilterQuality.high,
                                   imageUrl: image,
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.cover,
                                   placeholder: (context, url) => FadeInImage(
                                     placeholder:
                                         AssetImage(AppConfig.placeholder),

@@ -5,10 +5,24 @@
      <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+      <!-- Provide required visibility configuration for API level 30 and above -->
+        <queries>
+  <!-- If your app checks for SMS support -->
+         <intent>
+          <action android:name="android.intent.action.VIEW" />
+           <data android:scheme="sms" />
+         </intent>
+  <!-- If your app checks for call support -->
+         <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="tel" />
+         </intent>
+        </queries>
    <application
         android:label="اوتوكارز"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -39,6 +53,7 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+       
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
